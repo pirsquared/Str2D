@@ -5,7 +5,7 @@ setup(
     version='0.1',
     author='Sean Smith',
     author_email='pirsquared.snv@gmail.com',
-    py_modules=['str2d'],
+    packages=['str2d'],
     license='Creative Commons Attribution-Noncommercial-Share Alike license',
-    long_description=open('README.txt').read(),
+    long_description=open('README.md').read(),
 )
