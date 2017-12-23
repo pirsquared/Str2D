@@ -8,4 +8,7 @@ setup(
     packages=['str2d'],
     license='Creative Commons Attribution-Noncommercial-Share Alike license',
     long_description=open('README.md').read(),
+    setup_requires=['pytest-runner'],
+    tests_require=['pytest'],
+
 )

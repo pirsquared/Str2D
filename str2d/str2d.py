@@ -64,7 +64,7 @@ class Str2D(object):
         return self
 
     @property
-    def kwargs(self):
+    def _kwargs(self):
         return {k: v for k, v in self.__dict__.items() if k != 's'}
 
     @property
@@ -128,7 +128,7 @@ class Str2D(object):
         else:
             n = n % self.height
             i = self.s[n:] + self.s[:n]
-        return type(self)(i, **self.kwargs)
+        return type(self)(i, **self._kwargs)
 
     def hroll(self, n):
         return self.roll(n, axis=1)
@@ -139,7 +139,7 @@ class Str2D(object):
     def shuffle(self, seed=None):
         s = utils.shuffle(''.join(self.s), seed=seed)
         i = utils.chunk(s, self.width)
-        return type(self)(i, **self.kwargs)
+        return type(self)(i, **self._kwargs)
 
     def asstr2d(self, other):
         if isinstance(other, type(self)):
@@ -159,8 +159,8 @@ class Str2D(object):
             other = self.asstr2d(other)
 
         height = max(self.height, other.height)
-        a = self._norm_height(min_height=height)._norm_width()
-        b = other._norm_height(min_height=height)._norm_width()
+        a = self.__copy__()._norm_height(min_height=height)._norm_width()
+        b = other.__copy__()._norm_height(min_height=height)._norm_width()
 
         if side.lower() == 'left':
             tup = (a.s, b.s)
@@ -171,7 +171,7 @@ class Str2D(object):
 
         return type(self)(
             tuple(map(''.join, zip(*tup))),
-            **self.kwargs
+            **self._kwargs
         )
 
     def __radd__(self, other):
@@ -202,7 +202,7 @@ class Str2D(object):
             raise ValueError(f'side: "{side}" has to be "left" or "right"')
 
         other = self.asstr2d(other)
-        return type(self)(tup, **self.kwargs)
+        return type(self)(tup, **self._kwargs)
 
     def __rtruediv__(self, other, side='left'):
         return self.__truediv__(other, side='right')
@@ -225,13 +225,43 @@ class Str2D(object):
     def __ne__(self, other):
         return not self == other
 
-    # Now methods for most of above
+    def add(self, other, sep='', side='left'):
+        if sep:
+            if isinstance(other, str) and len(other) == 1:
+                other = self.border_left(other)
+            else:
+                other = self.asstr2d(other)
 
-    def add(self, other, sep=''):
-        return self
+            if side=='left':
+                los = [self, other]
+            elif side=='right':
+                los = [other, self]
 
-    def radd(self, other):
-        return self.__radd__(other)
+            return type(self).hjoin(sep, los)
+        else:
+            return self.__add__(other)
+
+    def radd(self, other, sep=''):
+        return self.add(other, sep, side='right')
+
+    def div(self, other, sep='', side='left'):
+        if sep:
+            if isinstance(other, str) and len(other) == 1:
+                other = self.border_top(other)
+            else:
+                other = self.asstr2d(other)
+
+            if side == 'left':
+                los = [self, other]
+            elif side == 'right':
+                los = [other, self]
+
+            return type(self).vjoin(sep, los)
+        else:
+            return self.__truediv__(other)
+
+    def rdiv(self, other, sep=''):
+        return self.div(other, sep, side='right')
 
 ################################################################################
 # dunders
@@ -242,13 +272,18 @@ class Str2D(object):
 
     def __getitem__(self, other):
         if isinstance(other, slice):
-            return type(self)(self.s[other], **self.kwargs)
+            return type(self)(self.s[other], **self._kwargs)
         elif (hasattr(other, '__iter__') and
               isinstance(other[0], slice) and
               len(other) == 1):
-            return type(self)((x[other[0]] for x in self.s), **self.kwargs)
+            return type(self)((x[other[0]] for x in self.s), **self._kwargs)
         else:
             raise ValueError(f'I don\'t like how you did that!')
+
+    def __copy__(self):
+        newone = type(self)(self.s)
+        newone.__dict__.update(self.__dict__)
+        return newone
 
 ################################################################################
 # Borders
@@ -259,7 +294,7 @@ class Str2D(object):
         b = bl + tb * self.width + br
         f = lambda x: f'{lr}{x}{lr}'
         tups = (t,) + tuple(map(f, self.s)) + (b,)
-        return type(self)(tups, **self.kwargs)
+        return type(self)(tups, **self._kwargs)
 
     def buffer(self, char, n=1):
         if n:
@@ -301,42 +336,55 @@ class Str2D(object):
 ################################################################################
 
     def strip2d(self, *args):
-        return type(self)(self.__repr__().strip(*args), **self.kwargs)
+        return type(self)(self.__repr__().strip(*args), **self._kwargs)
 
     def strip(self, *args):
-        strip = lambda s: s.strip(*args)
-        return type(self)(map(strip, self.s), **self.kwargs)
+        def _strip(s):
+            return s.strip(*args)
+
+        return type(self)(map(_strip, self.s), **self._kwargs)
 
     def replace(self, *args, **kwargs):
-        replace = lambda s: s.replace(*args, **kwargs)
-        return type(self)(map(replace, self.s), **self.kwargs)
+        def _replace(s):
+            return s.replace(*args, **kwargs)
+
+        return type(self)(map(_replace, self.s), **self._kwargs)
 
     def lower(self, *args, **kwargs):
-        lower = lambda s: s.lower(*args, **kwargs)
-        return type(self)(map(lower, self.s), **self.kwargs)
+        def _lower(s):
+            return s.lower(*args, **kwargs)
+
+        return type(self)(map(_lower, self.s), **self._kwargs)
 
     def upper(self, *args, **kwargs):
-        upper = lambda s: s.upper(*args, **kwargs)
-        return type(self)(map(upper, self.s), **self.kwargs)
+        def _upper(s):
+            return s.upper(*args, **kwargs)
+
+        return type(self)(map(_upper, self.s), **self._kwargs)
 
     def title(self, *args, **kwargs):
-        title = lambda s: s.title(*args, **kwargs)
-        return type(self)(map(title, self.s), **self.kwargs)
+        def _title(s):
+            return s.title(*args, **kwargs)
+
+        return type(self)(map(_title, self.s), **self._kwargs)
 
     def count(self, *args, **kwargs):
-        title = lambda s: s.count(*args, **kwargs)
-        return sum(map(title, self.s))
+        def _count(s):
+            return s.count(*args, **kwargs)
+
+        return sum(map(_count, self.s))
 
     @classmethod
     def _join(cls, char, others, axis=1):
         is_border_char = isinstance(char, str) and char.count('\n') == 0
+        others = tuple(others)
         if axis == 1:
             if is_border_char:
                 j = max(others, key=lambda s: s.height).border_left(char)
             else:
                 j = cls(char)
 
-            f = lambda left, right: left + j + right
+            return reduce(lambda l, r: l + j + r, others)
 
         elif axis == 0:
             if is_border_char:
@@ -344,15 +392,13 @@ class Str2D(object):
             else:
                 j = cls(char)
 
-            f = lambda left, right: left / j / right
-
-        return reduce(f, others)
+            return reduce(lambda l, r: l / j / r, others)
 
     @classmethod
     def equal_width(cls, others):
         others = list(others)
         width = max(map(lambda s: s.width, others))
-        return [cls(s.s, **{**s.kwargs, **{'min_width': width}})
+        return [cls(s.s, **{**s._kwargs, **{'min_width': width}})
                 for s in others]
 
     @classmethod
@@ -383,7 +429,7 @@ class Str2D(object):
 
         s = utils.mask(''.join(self.s), ''.join(msk.s), char, replace)
         i = utils.chunk(s, self.width)
-        return type(self)(i, **self.kwargs)
+        return type(self)(i, **self._kwargs)
 
     def layer(self, msk, char=' '):
         msk = self.asstr2d(msk)
@@ -393,4 +439,4 @@ class Str2D(object):
 
         s = utils.mask(''.join(self.s), ''.join(msk.s), char, None)
         i = utils.chunk(s, self.width)
-        return type(self)(i, **self.kwargs)
+        return type(self)(i, **self._kwargs)
