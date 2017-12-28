@@ -1,5 +1,7 @@
 from functools import reduce
 from str2d import utils
+from pandas import DataFrame, Series
+from numpy import ndarray
 
 
 class Str2D(object):
@@ -16,10 +18,14 @@ class Str2D(object):
 
         if isinstance(inp, str):
             self.s = tuple(inp.split('\n'))
+        elif isinstance(inp, (DataFrame, Series, ndarray)):
+            self.s = tuple(inp.__str__().split('\n'))
         elif hasattr(inp, '__iter__'):
             self.s = tuple(map(str, inp))
         elif isinstance(inp, type(self)):
             self.s = inp.s
+        else:
+            self.s = tuple(inp.__repr__().split('\n'))
 
         self._norm_height(min_height)
         self._norm_width(min_width)
@@ -214,6 +220,9 @@ class Str2D(object):
             div = lambda self, other: self / other
             return reduce(div, (self for _ in range(n)))
 
+    def __rfloordiv__(self, n):
+        return self // n
+
     def __eq__(self, other):
         if isinstance(other, str):
             return self.__repr__() == other
@@ -273,12 +282,15 @@ class Str2D(object):
     def __getitem__(self, other):
         if isinstance(other, slice):
             return type(self)(self.s[other], **self._kwargs)
-        elif (hasattr(other, '__iter__') and
-              isinstance(other[0], slice) and
-              len(other) == 1):
-            return type(self)((x[other[0]] for x in self.s), **self._kwargs)
+        elif all(map(lambda x: isinstance(x, slice), other)):
+            return type(self)(
+                map(
+                    lambda s: s.__getitem__(other[1]),
+                    self.s.__getitem__(other[0])
+                )
+            )
         else:
-            raise ValueError(f'I don\'t like how you did that!')
+            raise ValueError(f'"{other}" must be slices')
 
     def __copy__(self):
         newone = type(self)(self.s)
@@ -331,12 +343,21 @@ class Str2D(object):
     def box_sgl(self):
         return self.box('─', '│', '┌', '┐', '└', '┘')
 
+    def fill(self, char=' '):
+        return type(self)(
+            '\n'.join([char * self.width] * self.height),
+            **self._kwargs
+        )
+
 ################################################################################
 # String analogs
 ################################################################################
 
     def strip2d(self, *args):
-        return type(self)(self.__repr__().strip(*args), **self._kwargs)
+        return type(self)(
+            self.__repr__().strip(*args),
+            **self._kwargs
+        ).strip(*args)
 
     def strip(self, *args):
         def _strip(s):
