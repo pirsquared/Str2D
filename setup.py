@@ -7,7 +7,7 @@ setup(
     author_email='pirsquared.snv@gmail.com',
     packages=['str2d'],
     license='Creative Commons Attribution-Noncommercial-Share Alike license',
-    long_description=open('README.md').read(),
+    long_description=open('README.rst').read(),
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],
 

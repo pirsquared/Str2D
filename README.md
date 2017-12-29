@@ -1,1 +1,0 @@
-I wanted a clean way to stitch together multi-lined strings.
