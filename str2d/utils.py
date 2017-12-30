@@ -3,18 +3,21 @@ import random
 import operator
 
 
-def chunk(s: str, n: int) -> map:
-    """Split a long string into `n` size pieces
+def chunk(s: str, chunk_size: int) -> map:
+    """Split a long string into pieces of size=chunk_size
 
     :param s: Thing to be chunked
-    :param n: Size of each chunk
+    :param chunk_size: Size of each chunk
     :return: map object that is an iterable of strings
+             Attention: the last incomplete chunk is dropped (not included)
 
-    >>> from str2d import utils
-    ... tuple(utils.chunk('abcdefghij', 2))
+    >>> tuple(chunk('abcdefghij', 2))
     ('ab', 'cd', 'ef', 'gh', 'ij')
+
+    >>> tuple(chunk('abcdefghij', 3))
+    ('abc', 'def', 'ghi')
     """
-    return map(''.join, zip(*(s[i::n] for i in range(n))))
+    return map(''.join, zip(*(s[i::chunk_size] for i in range(chunk_size))))
 
 
 def shuffle(s: str, seed=None) -> str:
@@ -24,8 +27,7 @@ def shuffle(s: str, seed=None) -> str:
     :param seed: random seed passed to random
     :return: str
 
-    >>> from str2d import utils
-    ... utils.shuffle('abcdefghij', seed=3.1415)
+    >>> shuffle('abcdefghij', seed=3.1415)
     'gdjhfcebia'
     """
     random.seed(seed)
@@ -46,12 +48,10 @@ def mask(inp: str, msk: str, char: str = ' ',
     :param invert: We could invert the mask
     :return: str
 
-    >>> from str2d import utils
-    ... utils.mask('abcdefghij', '-' * 5 + ' ' * 5, invert=True)
+    >>> mask('abcdefghij', '-' * 5 + ' ' * 5, invert=True)
     'abcde     '
 
-    >>> from str2d import utils
-    ... utils.mask('abcdefghij', '-' * 5 + ' ' * 5, invert=False)
+    >>> mask('abcdefghij', '-' * 5 + ' ' * 5, invert=False)
     '-----fghij'
     """
 
@@ -60,3 +60,9 @@ def mask(inp: str, msk: str, char: str = ' ',
         s if op(m, char) else (replace or m)
         for s, m in zip(inp, msk)
     )
+
+
+if __name__ == '__main__':
+
+    import doctest
+    doctest.testmod()
