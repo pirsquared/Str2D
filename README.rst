@@ -1,4 +1,29 @@
-Place Holder
-============
+Str2D - String Squared
+======================
 
-Until I figure out how to link to sphinx documentation.
+Install
+-------
+
+`pip install git+https://github.com/pirsquared/Str2D`
+
+Usage
+-----
+
+Coming Soon!
+
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Contents:
+
+   Modules <modules>
+   Motivation <motivation>
+   Purpose <purpose>
+   About <about>
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
