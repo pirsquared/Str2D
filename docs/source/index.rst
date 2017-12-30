@@ -11,7 +11,7 @@ Usage
 
 Simple operations
 
-Addition
+Addition is intended to adjoin to objects side by side.
 
 .. code-block:: python
 
@@ -41,11 +41,53 @@ Or
 
 .. code-block:: python
 
-    letters_3x3 + '|' + numbers_3x2
+   letters_3x3 + '|' + numbers_3x2
 
    abc|012
    def|345
    ghi|678
+
+Division will stack to objects on top of one another
+
+.. code-block:: python
+
+   letters_3x3 / numbers_3x3
+
+   abc
+   def
+   ghi
+   012
+   345
+   678
+
+But like with addition, we can add a separator
+
+.. code-block:: python
+
+   letters_3x3.div(numbers_3x3, sep='-')
+
+   abc
+   def
+   ghi
+   ---
+   012
+   345
+   678
+
+Or equivalently
+
+.. code-block:: python
+
+   letters_3x3 / '-' / numbers_3x3
+
+   abc
+   def
+   ghi
+   ---
+   012
+   345
+   678
+
 
 .. toctree::
    :maxdepth: 1
@@ -55,9 +97,6 @@ Or
    Motivation <motivation>
    Purpose <purpose>
    About <about>
-
-
-   `Repository <https://github.com/pirsquared/Str2D/tree/master>`_
 
 Indices and tables
 ==================
