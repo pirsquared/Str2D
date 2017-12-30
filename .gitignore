@@ -1,0 +1,111 @@
+# Editor temporary/working/backup files #
+#########################################
+.#*
+*\#*\#
+[#]*#
+*~
+*$
+*.bak
+*flymake*
+*.iml
+*.kdev4
+*.log
+*.swp
+*.pdb
+.project
+.pydevproject
+.settings
+.idea
+.vagrant
+.noseids
+.ipynb_checkpoints
+.tags
+.cache/
+
+# Compiled source #
+###################
+*.a
+*.com
+*.class
+*.dll
+*.exe
+*.pxi
+*.o
+*.py[ocd]
+*.so
+.build_cache_dir
+MANIFEST
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.rar
+#*.tar
+*.zip
+
+# Python files #
+################
+# setup.py working directory
+build
+# sphinx build directory
+doc/_build
+# setup.py dist directory
+dist
+# Egg metadata
+*.egg-info
+.eggs
+.pypirc
+# tox testing tool
+.tox
+# rope
+.ropeproject
+# wheel files
+*.whl
+**/wheelhouse/*
+# coverage
+.coverage
+coverage.xml
+coverage_html_report
+
+# Logs and databases #
+######################
+*.log
+*.sqlite
+
+# OS generated files #
+######################
+.DS_Store
+ehthumbs.db
+.tmtags
+tags
+vendor.tags
+tmtagsHistory
+*.sublime-project
+*.sublime-workspace
+.bundle
+.directory
+.gdb_history
+Icon?
+Thumbs.db
+
+# Data files #
+##############
+*.dta
+*.xpt
+*.h5
+pandas/io/*.dat
+pandas/io/*.json
+scikits
+
+# Generated Sources #
+#####################
+!skts.c
+!np_datetime.c
+!np_datetime_strings.c
+*.c
+*.cpp

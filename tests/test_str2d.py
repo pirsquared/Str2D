@@ -155,6 +155,8 @@ class TestStr2D(object):
         assert s[:, :1] + s[:, 1:] == s
         assert s[::-1] == s.V
         assert s[:, ::-1] == s.H
+        assert s[0] == '12'
+        assert s[1][1] == '3'
 
     def test_copy(self):
         s = Str2D('12\n43')
@@ -227,4 +229,7 @@ class TestStr2D(object):
         s = Str2D('12\n43')
         assert Str2D('@@\n@@').layer(s.mask(' *\n* ')) == '1@\n@3'
 
+    def test_iter(self):
+        s = Str2D('12\n43')
+        assert tuple(s.__iter__()) == s.s
 
