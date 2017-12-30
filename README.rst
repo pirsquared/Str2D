@@ -1,29 +1,12 @@
 Str2D - String Squared
 ======================
 
-Install
--------
+Installation
+------------
 
 `pip install git+https://github.com/pirsquared/Str2D`
 
-Usage
------
+Documentation
+-------------
 
-Coming Soon!
-
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Contents:
-
-   Modules <modules>
-   Motivation <motivation>
-   Purpose <purpose>
-   About <about>
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+`Str2D Docs <https://pirsquared.github.io/Str2D/includeme.html>`_
