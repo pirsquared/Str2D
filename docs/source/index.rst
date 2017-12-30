@@ -18,8 +18,8 @@ Addition is intended to adjoin to objects side by side.
     from str2d import Str2D
 
 
-    letters_3x3 = Str2D('abc\\ndef\\nghi')
-    numbers_3x3 = Str2D('012\\n345\\n678')
+    letters_3x3 = Str2D('abc\ndef\nghi')
+    numbers_3x3 = Str2D('012\n345\n678')
 
     letters_3x3 + numbers_3x3
 
