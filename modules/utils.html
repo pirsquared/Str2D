@@ -1,0 +1,203 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Documentation for utils.py &#8212; Str2D 0.1.1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Motivation" href="../motivation.html" />
+    <link rel="prev" title="Documentation for str2d.py" href="str2d.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-str2d.utils">
+<span id="documentation-for-utils-py"></span><h1>Documentation for <cite>utils.py</cite><a class="headerlink" href="#module-str2d.utils" title="Permalink to this headline">¶</a></h1>
+<p>General string parsing and manipulation functions</p>
+<dl class="function">
+<dt id="str2d.utils.chunk">
+<code class="descclassname">str2d.utils.</code><code class="descname">chunk</code><span class="sig-paren">(</span><em>s: str</em>, <em>n: int</em><span class="sig-paren">)</span> &#x2192; map<a class="reference internal" href="../_modules/str2d/utils.html#chunk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#str2d.utils.chunk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Split a long string into <cite>n</cite> size pieces</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>s</strong> – Thing to be chunked</li>
+<li><strong>n</strong> – Size of each chunk</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">map object that is an iterable of strings</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">str2d</span> <span class="k">import</span> <span class="n">utils</span>
+<span class="gp">... </span><span class="nb">tuple</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">chunk</span><span class="p">(</span><span class="s1">&#39;abcdefghij&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="go">(&#39;ab&#39;, &#39;cd&#39;, &#39;ef&#39;, &#39;gh&#39;, &#39;ij&#39;)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="str2d.utils.mask">
+<code class="descclassname">str2d.utils.</code><code class="descname">mask</code><span class="sig-paren">(</span><em>inp: str</em>, <em>msk: str</em>, <em>char: str = ' '</em>, <em>replace: str = None</em>, <em>invert: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/str2d/utils.html#mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#str2d.utils.mask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mask a string</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>inp</strong> – String to mask</li>
+<li><strong>msk</strong> – String to use as mask</li>
+<li><strong>char</strong> – Character within <cite>msk</cite> that will do the masking</li>
+<li><strong>replace</strong> – What to replace <cite>char</cite> with.  If <cite>None</cite> will use characters
+from <cite>msk</cite></li>
+<li><strong>invert</strong> – We could invert the mask</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">str</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">str2d</span> <span class="k">import</span> <span class="n">utils</span>
+<span class="gp">... </span><span class="n">utils</span><span class="o">.</span><span class="n">mask</span><span class="p">(</span><span class="s1">&#39;abcdefghij&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">*</span> <span class="mi">5</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="go">&#39;abcde     &#39;</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">str2d</span> <span class="k">import</span> <span class="n">utils</span>
+<span class="gp">... </span><span class="n">utils</span><span class="o">.</span><span class="n">mask</span><span class="p">(</span><span class="s1">&#39;abcdefghij&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">*</span> <span class="mi">5</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="go">&#39;-----fghij&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="str2d.utils.shuffle">
+<code class="descclassname">str2d.utils.</code><code class="descname">shuffle</code><span class="sig-paren">(</span><em>s: str</em>, <em>seed=None</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/str2d/utils.html#shuffle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#str2d.utils.shuffle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Randomly shuffle a string.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>s</strong> – String to shuffle</li>
+<li><strong>seed</strong> – random seed passed to random</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">str</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">str2d</span> <span class="k">import</span> <span class="n">utils</span>
+<span class="gp">... </span><span class="n">utils</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="s1">&#39;abcdefghij&#39;</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mf">3.1415</span><span class="p">)</span>
+<span class="go">&#39;gdjhfcebia&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Str2D</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../modules.html">Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../motivation.html">Motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../purpose.html">Purpose</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../includeme.html">README</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../modules.html">Modules</a><ul>
+      <li>Previous: <a href="str2d.html" title="previous chapter">Documentation for <cite>str2d.py</cite></a></li>
+      <li>Next: <a href="../motivation.html" title="next chapter">Motivation</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Sean Smith.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/modules/utils.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
