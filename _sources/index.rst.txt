@@ -20,7 +20,6 @@ Coming Soon!
    Motivation <motivation>
    Purpose <purpose>
    About <about>
-   ReadMe <includeme>
 
 Indices and tables
 ==================
