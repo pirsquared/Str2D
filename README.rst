@@ -9,4 +9,4 @@ Installation
 Documentation
 -------------
 
-`Str2D Docs <https://pirsquared.github.io/Str2D/includeme.html>`_
+`Str2D Docs <https://pirsquared.github.io/Str2D/index.html>`_

@@ -109,3 +109,5 @@ scikits
 !np_datetime_strings.c
 *.c
 *.cpp
+
+str2d-docs
