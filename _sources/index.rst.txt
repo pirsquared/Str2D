@@ -6,6 +6,17 @@ Install
 
 :code:`pip install git+https://github.com/pirsquared/Str2D`
 
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Contents:
+
+   Modules <modules>
+   Motivation <motivation>
+   Purpose <purpose>
+   About <about>
+
+
 Usage
 -----
 
@@ -87,16 +98,6 @@ Or equivalently
    012
    345
    678
-
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Contents:
-
-   Modules <modules>
-   Motivation <motivation>
-   Purpose <purpose>
-   About <about>
 
 Indices and tables
 ==================
