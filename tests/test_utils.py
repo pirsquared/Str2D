@@ -24,8 +24,8 @@ def test_shuffle():
 def test_mask():
     inp = 'abcd'
     msk = ' _ _'
-    m = partial(utils.mask, inp, msk)
+    m = partial(utils.apply_mask, inp, msk)
     assert m() == 'a_c_'
     assert m(char='_') == ' b d'
-    assert m(replace='*') == 'a*c*'
+    assert m(substitute_char='*') == 'a*c*'
     assert m(invert=True) == ' b d'

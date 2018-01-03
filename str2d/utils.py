@@ -3,60 +3,73 @@ import random
 import operator
 
 
-def chunk(s: str, n: int) -> map:
-    """Split a long string into `n` size pieces
+def chunk(inp: str, chunk_size: int) -> map:
+    """Split a long string into pieces of size=chunk_size
 
-    :param s: Thing to be chunked
-    :param n: Size of each chunk
+    :param inp: Thing to be chunked
+    :param chunk_size: Size of each chunk
     :return: map object that is an iterable of strings
+             Attention: the last incomplete chunk is dropped (not included)
 
-    >>> from str2d import utils
-    ... tuple(utils.chunk('abcdefghij', 2))
+    >>> tuple(chunk('abcdefghij', 2))
     ('ab', 'cd', 'ef', 'gh', 'ij')
+
+    >>> tuple(chunk('abcdefghij', 3))
+    ('abc', 'def', 'ghi')
     """
-    return map(''.join, zip(*(s[i::n] for i in range(n))))
+    return map(''.join, zip(*(inp[i::chunk_size] for i in range(chunk_size))))
 
 
-def shuffle(s: str, seed=None) -> str:
+def shuffle(inp: str, seed=None) -> str:
     """Randomly shuffle a string.
 
-    :param s: String to shuffle
+    :param inp: String to shuffle
     :param seed: random seed passed to random
-    :return: str
+    :return: str, a new string consisting of inp randomly shuffled
 
-    >>> from str2d import utils
-    ... utils.shuffle('abcdefghij', seed=3.1415)
+    >>> shuffle('abcdefghij', seed=3.1415)
     'gdjhfcebia'
     """
     random.seed(seed)
-    l = list(s)
-    random.shuffle(l)
-    return ''.join(l)
+    seq = list(inp)
+    random.shuffle(seq)
+    return ''.join(seq)
 
 
-def mask(inp: str, msk: str, char: str = ' ',
-         replace: str = None, invert: bool = False) -> str:
+def apply_mask(inp: str='', mask: str= '', char: str= ' ',
+               substitute_char: str=None, invert: bool=False) -> str:
     """Mask a string
 
-    :param inp: String to mask
-    :param msk: String to use as mask
-    :param char: Character within `msk` that will do the masking
-    :param replace: What to replace `char` with.  If `None` will use characters
-        from `msk`
+    :param inp: str, the string to apply the mask to
+    :param mask: str, the string used as mask on inp
+    :param char: Character in `mask` that does the masking - default is ` `
+    :param substitute_char: What to replace `char` with.  If `None`           # replace_with?
+                            uses characters from `msk`
     :param invert: We could invert the mask
     :return: str
 
-    >>> from str2d import utils
-    ... utils.mask('abcdefghij', '-' * 5 + ' ' * 5, invert=True)
+    >>> apply_mask(inp='abcdefghij', mask='-----     ', invert=True)
     'abcde     '
 
-    >>> from str2d import utils
-    ... utils.mask('abcdefghij', '-' * 5 + ' ' * 5, invert=False)
+    >>> apply_mask(inp='abcdefghij', mask='-----     ', invert=False)
     '-----fghij'
     """
-
+    try:
+        assert len(inp) == len(mask)
+    except AssertionError as a:
+        raise a
+        # ParameterLengthDoNotMatchError
+        # or could return inp if msk size does not match
     op = operator.ne if invert else operator.eq
     return ''.join(
-        s if op(m, char) else (replace or m)
-        for s, m in zip(inp, msk)
+        c if op(m, char) else (substitute_char or m)
+        for c, m in zip(inp, mask)
     )
+
+
+if __name__ == '__main__':
+
+    import doctest
+    print(doctest.testmod())
+
+

@@ -1211,7 +1211,7 @@ class Str2D(object):
         if msk.shape != self.shape:
             raise ValueError(f'shape of msk {msk.shape} != {self.shape}')
 
-        s = utils.mask(''.join(self.s), ''.join(msk.s), char, replace)
+        s = utils.apply_mask(''.join(self.s), ''.join(msk.s), char, replace)
         i = utils.chunk(s, self.width)
         return type(self)(i, **self._kwargs)
 
@@ -1227,6 +1227,6 @@ class Str2D(object):
         if msk.shape != self.shape:
             raise ValueError(f'shape of msk {msk.shape} != {self.shape}')
 
-        s = utils.mask(''.join(self.s), ''.join(msk.s), char, None)
+        s = utils.apply_mask(''.join(self.s), ''.join(msk.s), char, None)
         i = utils.chunk(s, self.width)
         return type(self)(i, **self._kwargs)
