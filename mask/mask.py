@@ -27,6 +27,7 @@ class Perforation(Enum):
         """returns PUNCHED if SOLID, SOLID if PUNCHED"""
         return (Perforation.PUNCHED, Perforation.SOLID)[self.value]
 
+
 SOLID = Perforation.SOLID
 PUNCHED = Perforation.PUNCHED
 
@@ -90,7 +91,7 @@ class Mask:
         return all(elt == SOLID for elt in self._mask)
 
     def __str__(self):
-        return ''.join([str(self.punched_repr) if pos==PUNCHED
+        return ''.join([str(self.punched_repr) if pos == PUNCHED
                         else self.solid_repr for pos in self._mask])
 
     def apply_to(self, sequence: Sequence):
