@@ -47,63 +47,76 @@
 <span class="kn">import</span> <span class="nn">operator</span>
 
 
-<div class="viewcode-block" id="chunk"><a class="viewcode-back" href="../../modules/utils.html#str2d.utils.chunk">[docs]</a><span class="k">def</span> <span class="nf">chunk</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">map</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Split a long string into `n` size pieces</span>
+<div class="viewcode-block" id="chunk"><a class="viewcode-back" href="../../modules/utils.html#str2d.utils.chunk">[docs]</a><span class="k">def</span> <span class="nf">chunk</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">chunk_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">map</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Split a long string into pieces of size=chunk_size</span>
 
-<span class="sd">    :param s: Thing to be chunked</span>
-<span class="sd">    :param n: Size of each chunk</span>
+<span class="sd">    :param inp: Thing to be chunked</span>
+<span class="sd">    :param chunk_size: Size of each chunk</span>
 <span class="sd">    :return: map object that is an iterable of strings</span>
+<span class="sd">             Attention: the last incomplete chunk is dropped (not included)</span>
 
-<span class="sd">    &gt;&gt;&gt; from str2d import utils</span>
-<span class="sd">    ... tuple(utils.chunk(&#39;abcdefghij&#39;, 2))</span>
+<span class="sd">    &gt;&gt;&gt; tuple(chunk(&#39;abcdefghij&#39;, 2))</span>
 <span class="sd">    (&#39;ab&#39;, &#39;cd&#39;, &#39;ef&#39;, &#39;gh&#39;, &#39;ij&#39;)</span>
+
+<span class="sd">    &gt;&gt;&gt; tuple(chunk(&#39;abcdefghij&#39;, 3))</span>
+<span class="sd">    (&#39;abc&#39;, &#39;def&#39;, &#39;ghi&#39;)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">,</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">::</span><span class="n">n</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">))))</span></div>
+    <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">,</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">inp</span><span class="p">[</span><span class="n">i</span><span class="p">::</span><span class="n">chunk_size</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">chunk_size</span><span class="p">))))</span></div>
 
 
-<div class="viewcode-block" id="shuffle"><a class="viewcode-back" href="../../modules/utils.html#str2d.utils.shuffle">[docs]</a><span class="k">def</span> <span class="nf">shuffle</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="viewcode-block" id="shuffle"><a class="viewcode-back" href="../../modules/utils.html#str2d.utils.shuffle">[docs]</a><span class="k">def</span> <span class="nf">shuffle</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Randomly shuffle a string.</span>
 
-<span class="sd">    :param s: String to shuffle</span>
+<span class="sd">    :param inp: String to shuffle</span>
 <span class="sd">    :param seed: random seed passed to random</span>
-<span class="sd">    :return: str</span>
+<span class="sd">    :return: str, a new string consisting of inp randomly shuffled</span>
 
-<span class="sd">    &gt;&gt;&gt; from str2d import utils</span>
-<span class="sd">    ... utils.shuffle(&#39;abcdefghij&#39;, seed=3.1415)</span>
+<span class="sd">    &gt;&gt;&gt; shuffle(&#39;abcdefghij&#39;, seed=3.1415)</span>
 <span class="sd">    &#39;gdjhfcebia&#39;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-    <span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
-    <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
-    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">l</span><span class="p">)</span></div>
+    <span class="n">seq</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="mask"><a class="viewcode-back" href="../../modules/utils.html#str2d.utils.mask">[docs]</a><span class="k">def</span> <span class="nf">mask</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">msk</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">char</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="p">,</span>
-         <span class="n">replace</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">invert</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="viewcode-block" id="apply_mask"><a class="viewcode-back" href="../../modules/utils.html#str2d.utils.apply_mask">[docs]</a><span class="k">def</span> <span class="nf">apply_mask</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">mask</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">char</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="p">,</span>
+               <span class="n">substitute_char</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">invert</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Mask a string</span>
 
-<span class="sd">    :param inp: String to mask</span>
-<span class="sd">    :param msk: String to use as mask</span>
-<span class="sd">    :param char: Character within `msk` that will do the masking</span>
-<span class="sd">    :param replace: What to replace `char` with.  If `None` will use characters</span>
-<span class="sd">        from `msk`</span>
+<span class="sd">    :param inp: str, the string to apply the mask to</span>
+<span class="sd">    :param mask: str, the string used as mask on inp</span>
+<span class="sd">    :param char: Character in `mask` that does the masking - default is ` `</span>
+<span class="sd">    :param substitute_char: What to replace `char` with.  If `None`           # replace_with?</span>
+<span class="sd">                            uses characters from `msk`</span>
 <span class="sd">    :param invert: We could invert the mask</span>
 <span class="sd">    :return: str</span>
 
-<span class="sd">    &gt;&gt;&gt; from str2d import utils</span>
-<span class="sd">    ... utils.mask(&#39;abcdefghij&#39;, &#39;-&#39; * 5 + &#39; &#39; * 5, invert=True)</span>
+<span class="sd">    &gt;&gt;&gt; apply_mask(inp=&#39;abcdefghij&#39;, mask=&#39;-----     &#39;, invert=True)</span>
 <span class="sd">    &#39;abcde     &#39;</span>
 
-<span class="sd">    &gt;&gt;&gt; from str2d import utils</span>
-<span class="sd">    ... utils.mask(&#39;abcdefghij&#39;, &#39;-&#39; * 5 + &#39; &#39; * 5, invert=False)</span>
+<span class="sd">    &gt;&gt;&gt; apply_mask(inp=&#39;abcdefghij&#39;, mask=&#39;-----     &#39;, invert=False)</span>
 <span class="sd">    &#39;-----fghij&#39;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span> <span class="k">as</span> <span class="n">a</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">a</span>
+        <span class="c1"># ParameterLengthDoNotMatchError</span>
+        <span class="c1"># or could return inp if msk size does not match</span>
     <span class="n">op</span> <span class="o">=</span> <span class="n">operator</span><span class="o">.</span><span class="n">ne</span> <span class="k">if</span> <span class="n">invert</span> <span class="k">else</span> <span class="n">operator</span><span class="o">.</span><span class="n">eq</span>
     <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-        <span class="n">s</span> <span class="k">if</span> <span class="n">op</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">char</span><span class="p">)</span> <span class="k">else</span> <span class="p">(</span><span class="n">replace</span> <span class="ow">or</span> <span class="n">m</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">msk</span><span class="p">)</span>
+        <span class="n">c</span> <span class="k">if</span> <span class="n">op</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">char</span><span class="p">)</span> <span class="k">else</span> <span class="p">(</span><span class="n">substitute_char</span> <span class="ow">or</span> <span class="n">m</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
     <span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+
+    <span class="kn">import</span> <span class="nn">doctest</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">())</span>
+
+
 </pre></div>
 
       </div>

@@ -51,45 +51,19 @@
 <span id="documentation-for-utils-py"></span><h1>Documentation for <cite>utils.py</cite><a class="headerlink" href="#module-str2d.utils" title="Permalink to this headline">¶</a></h1>
 <p>General string parsing and manipulation functions</p>
 <dl class="function">
-<dt id="str2d.utils.chunk">
-<code class="descclassname">str2d.utils.</code><code class="descname">chunk</code><span class="sig-paren">(</span><em>s: str</em>, <em>n: int</em><span class="sig-paren">)</span> &#x2192; map<a class="reference internal" href="../_modules/str2d/utils.html#chunk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#str2d.utils.chunk" title="Permalink to this definition">¶</a></dt>
-<dd><p>Split a long string into <cite>n</cite> size pieces</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>s</strong> – Thing to be chunked</li>
-<li><strong>n</strong> – Size of each chunk</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">map object that is an iterable of strings</p>
-</td>
-</tr>
-</tbody>
-</table>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">str2d</span> <span class="k">import</span> <span class="n">utils</span>
-<span class="gp">... </span><span class="nb">tuple</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">chunk</span><span class="p">(</span><span class="s1">&#39;abcdefghij&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-<span class="go">(&#39;ab&#39;, &#39;cd&#39;, &#39;ef&#39;, &#39;gh&#39;, &#39;ij&#39;)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="function">
-<dt id="str2d.utils.mask">
-<code class="descclassname">str2d.utils.</code><code class="descname">mask</code><span class="sig-paren">(</span><em>inp: str</em>, <em>msk: str</em>, <em>char: str = ' '</em>, <em>replace: str = None</em>, <em>invert: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/str2d/utils.html#mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#str2d.utils.mask" title="Permalink to this definition">¶</a></dt>
+<dt id="str2d.utils.apply_mask">
+<code class="descclassname">str2d.utils.</code><code class="descname">apply_mask</code><span class="sig-paren">(</span><em>inp: str = ''</em>, <em>mask: str = ''</em>, <em>char: str = ' '</em>, <em>substitute_char: str = None</em>, <em>invert: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/str2d/utils.html#apply_mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#str2d.utils.apply_mask" title="Permalink to this definition">¶</a></dt>
 <dd><p>Mask a string</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>inp</strong> – String to mask</li>
-<li><strong>msk</strong> – String to use as mask</li>
-<li><strong>char</strong> – Character within <cite>msk</cite> that will do the masking</li>
-<li><strong>replace</strong> – What to replace <cite>char</cite> with.  If <cite>None</cite> will use characters
-from <cite>msk</cite></li>
+<li><strong>inp</strong> – str, the string to apply the mask to</li>
+<li><strong>mask</strong> – str, the string used as mask on inp</li>
+<li><strong>char</strong> – Character in <cite>mask</cite> that does the masking - default is ` `</li>
+<li><strong>substitute_char</strong> – What to replace <cite>char</cite> with.  If <cite>None</cite>           # replace_with?
+uses characters from <cite>msk</cite></li>
 <li><strong>invert</strong> – We could invert the mask</li>
 </ul>
 </td>
@@ -99,39 +73,66 @@ from <cite>msk</cite></li>
 </tr>
 </tbody>
 </table>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">str2d</span> <span class="k">import</span> <span class="n">utils</span>
-<span class="gp">... </span><span class="n">utils</span><span class="o">.</span><span class="n">mask</span><span class="p">(</span><span class="s1">&#39;abcdefghij&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">*</span> <span class="mi">5</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">apply_mask</span><span class="p">(</span><span class="n">inp</span><span class="o">=</span><span class="s1">&#39;abcdefghij&#39;</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="s1">&#39;-----     &#39;</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="go">&#39;abcde     &#39;</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">str2d</span> <span class="k">import</span> <span class="n">utils</span>
-<span class="gp">... </span><span class="n">utils</span><span class="o">.</span><span class="n">mask</span><span class="p">(</span><span class="s1">&#39;abcdefghij&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">*</span> <span class="mi">5</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">apply_mask</span><span class="p">(</span><span class="n">inp</span><span class="o">=</span><span class="s1">&#39;abcdefghij&#39;</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="s1">&#39;-----     &#39;</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="go">&#39;-----fghij&#39;</span>
 </pre></div>
 </div>
 </dd></dl>
 
 <dl class="function">
+<dt id="str2d.utils.chunk">
+<code class="descclassname">str2d.utils.</code><code class="descname">chunk</code><span class="sig-paren">(</span><em>inp: str</em>, <em>chunk_size: int</em><span class="sig-paren">)</span> &#x2192; map<a class="reference internal" href="../_modules/str2d/utils.html#chunk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#str2d.utils.chunk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Split a long string into pieces of size=chunk_size</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>inp</strong> – Thing to be chunked</li>
+<li><strong>chunk_size</strong> – Size of each chunk</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">map object that is an iterable of strings
+Attention: the last incomplete chunk is dropped (not included)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">tuple</span><span class="p">(</span><span class="n">chunk</span><span class="p">(</span><span class="s1">&#39;abcdefghij&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="go">(&#39;ab&#39;, &#39;cd&#39;, &#39;ef&#39;, &#39;gh&#39;, &#39;ij&#39;)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">tuple</span><span class="p">(</span><span class="n">chunk</span><span class="p">(</span><span class="s1">&#39;abcdefghij&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="go">(&#39;abc&#39;, &#39;def&#39;, &#39;ghi&#39;)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
 <dt id="str2d.utils.shuffle">
-<code class="descclassname">str2d.utils.</code><code class="descname">shuffle</code><span class="sig-paren">(</span><em>s: str</em>, <em>seed=None</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/str2d/utils.html#shuffle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#str2d.utils.shuffle" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">str2d.utils.</code><code class="descname">shuffle</code><span class="sig-paren">(</span><em>inp: str</em>, <em>seed=None</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/str2d/utils.html#shuffle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#str2d.utils.shuffle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Randomly shuffle a string.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>s</strong> – String to shuffle</li>
+<li><strong>inp</strong> – String to shuffle</li>
 <li><strong>seed</strong> – random seed passed to random</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">str</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">str, a new string consisting of inp randomly shuffled</p>
 </td>
 </tr>
 </tbody>
 </table>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">str2d</span> <span class="k">import</span> <span class="n">utils</span>
-<span class="gp">... </span><span class="n">utils</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="s1">&#39;abcdefghij&#39;</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mf">3.1415</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">shuffle</span><span class="p">(</span><span class="s1">&#39;abcdefghij&#39;</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mf">3.1415</span><span class="p">)</span>
 <span class="go">&#39;gdjhfcebia&#39;</span>
 </pre></div>
 </div>
