@@ -4,7 +4,7 @@ from stencil import Mask
 from stencil import SOLID, PUNCHED
 
 
-class TestMask(unittest.TestCase):
+class TestMaskInternals(unittest.TestCase):
     """tests for the internals of Mask"""
 
     def setUp(self):
@@ -16,7 +16,7 @@ class TestMask(unittest.TestCase):
         self.mask2__0_1_0 = Mask(size=3)
         self.mask2__0_1_0._punch_mask([False, True, False])
 
-        # all instances of Mask created below (within setUp() require
+        # all instances of Mask created below, but within setUp() require
         # protected access to inject values and avoid using the methods
         # of Mask or the Mask factories to build
         self.all_punched_mask = Mask(size=12)
@@ -34,12 +34,12 @@ class TestMask(unittest.TestCase):
         self.assertIsInstance(self.blank_that_remains_blank, Mask)
 
     def test_blank_is_a_blank(self):
-        """test is_a_blank with a blank"""
+        """test is_a_blank() with a blank"""
         self.assertTrue(self.blank_that_remains_blank.is_a_blank())
         self.assertTrue(all(pos is SOLID for pos in self.blank_that_remains_blank.mask))
 
     def test_mask_is_not_a_blank(self):
-        """test is_a_blank with a mask whose values were injected"""
+        """test is_a_blank() with a mask whose values were injected"""
         self.assertFalse(self.all_punched_mask.is_a_blank())
         self.assertTrue(any(pos is not SOLID for pos in self.all_punched_mask.mask))
     # -------------- END TEST INSTANCE and INIT -----------------------------
@@ -55,31 +55,31 @@ class TestMask(unittest.TestCase):
         self.assertTrue(self.mask1__0_1_0 == self.mask2__0_1_0)
 
     def test_equality_masks_with_same_punched_pattern_are_equal_but_not_case_A(self):
-        """if their self.punched_repr was changed"""
+        """case_A: if their self.punched_repr was changed"""
         self.mask1__0_1_0.punched_repr = '*'
         self.assertFalse(self.mask1__0_1_0 == self.mask2__0_1_0)
 
     def test_equality_masks_with_same_punched_pattern_are_equal_but_not_case_B(self):
-        """if their self.solid_repr was changed"""
+        """case_B: if their self.solid_repr was changed"""
         self.mask1__0_1_0.solid_repr = 'w'
         self.assertFalse(self.mask1__0_1_0 == self.mask2__0_1_0)
 
     def test_equality_masks_with_same_punched_pattern_are_equal_but_not_case_C(self):
-        """if their Mask.punched_repr was changed between instance creation"""
-        Mask.punched_repr = '*'
+        """case_C: if their Mask.punched_repr was changed between instance creation"""
+        Mask.generic_punched_repr = '*'
         mask_case_c__0_1_0 = Mask(size=3)
         mask_case_c__0_1_0._punch_mask([False, True, False])
         self.assertFalse(self.mask1__0_1_0 == mask_case_c__0_1_0)
 
     def test_equality_masks_with_same_punched_pattern_are_equal_but_not_case_D(self):
-        """if their Mask.solid_repr was changed between instance creation"""
-        Mask.solid_repr = '*'
+        """case_D: if their Mask.solid_repr was changed between instance creation"""
+        Mask.generic_solid_repr = '*'
         mask_case_d__0_1_0 = Mask(size=3)
         mask_case_d__0_1_0._punch_mask([False, True, False])
         self.assertFalse(self.mask1__0_1_0 == mask_case_d__0_1_0)
 
     def test_equality_masks_with_same_punched_pattern_are_equal_in_case_E(self):
-        """if Mask.punched_repr was changed before the two instance compared are created"""
+        """case_E: if Mask.punched_repr was changed before the two instance compared are created"""
         Mask.punched_repr = '*'
         mask_case_e1__0_1_0 = Mask(size=3)
         mask_case_e1__0_1_0._punch_mask([False, True, False])
@@ -88,7 +88,7 @@ class TestMask(unittest.TestCase):
         self.assertTrue(mask_case_e1__0_1_0 == mask_case_e2__0_1_0)
 
     def test_equality_masks_with_same_punched_pattern_are_equal_in_case_F(self):
-        """if Mask.solid_repr was changed before the two instance compared are created"""
+        """case_F: if Mask.solid_repr was changed before the two instance compared are created"""
         Mask.solid_repr = '*'
         mask_case_f1__0_1_0 = Mask(size=3)
         mask_case_f1__0_1_0._punch_mask([False, True, False])
@@ -96,7 +96,7 @@ class TestMask(unittest.TestCase):
         mask_case_f2__0_1_0._punch_mask([False, True, False])
         self.assertTrue(mask_case_f1__0_1_0 == mask_case_f2__0_1_0)
 
-    # not tested: case where both solid_repr and punched_repr are changed
+    # not tested: case where both Mask.generic_solid_repr and Mask.generic_punched_repr are changed
     # -------------- END TEST EQUALITY -----------------------------
 
 
