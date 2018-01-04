@@ -111,3 +111,6 @@ scikits
 *.cpp
 
 str2d-docs
+
+# mypy cache:
+stencil/.mypy_cache/*.*
