@@ -102,7 +102,11 @@ class Mask:
         return self._mask
 
     def __eq__(self, other):
-        return self.mask == other.mask
+        """two masks are equal if their SOLID/PUNCHED patterns are equal
+        and their punched_repr and solid_repr are equal"""
+        return self.mask == other.mask and \
+            self.punched_repr == other.punched_repr and \
+            self.solid_repr == other.solid_repr
 
     def apply_to(self, sequence: Sequence):
         """applies the mask to the sequence provided, and return a new
