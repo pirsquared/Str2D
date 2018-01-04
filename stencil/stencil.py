@@ -62,14 +62,17 @@ class Mask:
     conceal the elements.
     """
 
-    def __init__(self, size: int=None, punched_repr='^', solid_repr='-'):
+    punched_repr = '^'
+    solid_repr = '-'
+
+    def __init__(self, size: int=None):
         """Make a 'blank': a solid Mask of size=size without punched positions
         """
         assert size is not None and size > 0, "a Mask must have a size > 0"
-        self.punched_repr = punched_repr
-        self.solid_repr = solid_repr
         self.size = size
         self._mask = [SOLID for _ in range(self.size)]
+        self.punched_repr = Mask.punched_repr
+        self.solid_repr = Mask.solid_repr
 
     def _punch_mask(self, pattern: Sequence) -> None:
         """Punches a blank Mask at the positions marked True in pattern.
@@ -93,6 +96,13 @@ class Mask:
     def __str__(self):
         return ''.join([str(self.punched_repr) if pos == PUNCHED
                         else self.solid_repr for pos in self._mask])
+
+    @property
+    def mask(self):
+        return self._mask
+
+    def __eq__(self, other):
+        return self.mask == other.mask
 
     def apply_to(self, sequence: Sequence):
         """applies the mask to the sequence provided, and return a new
