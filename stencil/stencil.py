@@ -1,12 +1,10 @@
 """
 stencil.py
 
-                     ### PROTOTYPE ###
-
 a module to produce Stencils and Masks that selectively conceal or reveal
 elements of a sequence.
-More of a discrete Jacquard than a continuous stencil, but the noun stencil
-is universally understood.
+More of a discrete Jacquard than a continuous stencil, but, maybe, the noun
+stencil is more universally understood.
 
 # there is wonderful trivia and vocabulary to learn and maybe use here:
 # https://en.wikipedia.org/wiki/Jacquard_loom#Principles_of_operation
@@ -14,7 +12,7 @@ is universally understood.
 
 
 from enum import Enum
-from typing import Iterable, Sequence
+from typing import ClassVar, Iterable, List, Sequence, Tuple, Type, Union
 
 
 class Perforation(Enum):
@@ -23,7 +21,7 @@ class Perforation(Enum):
     SOLID = 0
     PUNCHED = 1
 
-    def toggle(self):
+    def toggle(self) -> 'Perforation':
         """returns PUNCHED if SOLID, SOLID if PUNCHED"""
         return (Perforation.PUNCHED, Perforation.SOLID)[self.value]
 
@@ -60,48 +58,65 @@ class Mask:
     """a "cover" on a sequence that is "perforated" at some positions to
     let the elements through, while the other positions are blocked and
     conceal the elements.
+
+    :class_var punched_repr: str, the character used to generically represent
+                                  a PUNCHED position in a Mask
+    :class_var solid_repr: str, the character used to generically represent
+                                a SOLID position in a Mask
     """
 
-    punched_repr = '^'
-    solid_repr = '-'
+    # for fault of a better name: calling these class variables punched_repr and
+    # solid_repr created masking issues with mypy as follows:
+    # stencil.py:79: error: Cannot assign to class variable "punched_repr" via instance
+    # stencil.py:80: error: Cannot assign to class variable "solid_repr" via instance
+    # @TODO: dicsuss this design issue with Sean
+    generic_punched_repr = '^'   # type: ClassVar[str]
+    generic_solid_repr = '-'     # type: ClassVar[str]
 
-    def __init__(self, size: int=None):
+    def __init__(self, size: int=None) -> None:
         """Make a 'blank': a solid Mask of size=size without punched positions
+
+        :param size: int, the size of the mask
         """
         assert size is not None and size > 0, "a Mask must have a size > 0"
-        self.size = size
-        self._mask = [SOLID for _ in range(self.size)]
-        self.punched_repr = Mask.punched_repr
-        self.solid_repr = Mask.solid_repr
+        self.size: int = size
+        self._mask: Union[List, Tuple] = [SOLID for _ in range(self.size)]
+        # the following allows to maintain a degree of immutability for
+        # instances of Mask even if class variables are modified at some point
+        # this should maybe be a named tuple to guarantee immutability
+        self.punched_repr: str = Mask.generic_punched_repr
+        self.solid_repr: str = Mask.generic_solid_repr
+
+    @property
+    def mask(self) -> Union[List, Tuple]:
+        return self._mask
 
     def _punch_mask(self, pattern: Sequence) -> None:
         """Punches a blank Mask at the positions marked True in pattern.
-        This can only be done once.
 
+        This can only be done once.
+        This method has side effects: it modifies self._mask
         :param pattern: a sequence of boolean where
                         True represents the sites to be punched,
                         and False the sites to remain solid
         """
-        assert self.is_a_blank(), "you must use a blank, a Mask cannot be re-punched"
+        assert self.is_a_blank(), \
+            "you must use a blank, a Mask cannot be re-punched"
         assert len(pattern) == self.size, \
             "you must use a pattern that matches the blank size"
         self._mask = tuple([PUNCHED if pos
                             else SOLID for pos in pattern])
 
-    def is_a_blank(self):
+    def is_a_blank(self) -> bool:
         """return True if the Mask is a blank, False otherwise
         """
         return all(elt == SOLID for elt in self._mask)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return ''.join([str(self.punched_repr) if pos == PUNCHED
                         else self.solid_repr for pos in self._mask])
 
-    @property
-    def mask(self):
-        return self._mask
-
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         """two masks are equal if their SOLID/PUNCHED patterns are equal
         and their punched_repr and solid_repr are equal"""
         return self.mask == other.mask and \
@@ -134,7 +149,7 @@ class Mask:
         # be subtstituted is passed?
         raise NotImplemented
 
-    def make_inverted_mask(self):
+    def make_inverted_mask(self) -> 'Mask':
         """inverses the mask pattern and return a new Mask object where punched
         positions are solid and solid positions are punched
         """
@@ -144,7 +159,7 @@ class Mask:
         return inverted_mask
 
     @staticmethod
-    def make_from_pattern(pattern: Sequence, to_punch: Iterable='^'):
+    def make_from_pattern(pattern: Sequence, to_punch: Iterable='^') -> 'Mask':
         """Mask factory that makes and returns a new Mask object from a Sequence
         of values that can be compared to the values in to_punch
 
