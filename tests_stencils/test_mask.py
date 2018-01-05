@@ -116,6 +116,7 @@ class TestMaskInternals(unittest.TestCase):
 
     # not tested: case where both Mask.generic_solid_repr and Mask.generic_punched_repr are changed
     # @TODO: discuss design with Sean --> changing class variables values that represent masked pos is maybe a bad idea
+    # @TODO: tests for __ne__ or !=
     # -------------- END TEST EQUALITY -----------------------------
 
     # -------------- TEST _punch_mask - not unit test, it accesses the internals ------
