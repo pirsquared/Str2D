@@ -290,6 +290,20 @@ class TestMaskUsage(unittest.TestCase):
         mask = Mask.from_pattern(pattern=pattern, values_to_punch='^')
         self.assertEqual(expected, mask.apply_to(input_str))
 
+    def test_all_solid_apply_to_str_with_substitute_is_empty_str(self):
+        input_str = 'all your bases are belong to us'
+        pattern =   '-------------------------------'
+        expected =  '-------------------------------'
+        mask = Mask.from_pattern(pattern=pattern, values_to_punch='^')
+        self.assertEqual(pattern, mask.apply_to(input_str, substitute=''))
+
+    def test_mask_apply_to_str_1_with_substitute_is_empty_str(self):
+        input_str = 'all your bases are belong to us'
+        pattern =   '^^^------^^^^^-----^^^^^^----^^'
+        expected =  'all------bases-----belong----us'
+        mask = Mask.from_pattern(pattern=pattern, values_to_punch='^')
+        self.assertEqual(expected, mask.apply_to(input_str, substitute=''))
+
     def test_mask_apply_to_str_with_substitute(self):
         input_str = 'all your bases are belong to us'
         pattern =   '^^^------^^^^^-----^^^^^^----^^'

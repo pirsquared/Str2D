@@ -205,8 +205,9 @@ class Mask:
                  have been concealed by the substitute character.
 
         @TODO: make polymorphic to accept other Sequence objects, not only str
+        @TODO: ? add method remove where characters at punched locations are not replaced
         """
-        if substitute is None:
+        if substitute == '':
             substitute = self.solid_repr
         return ''.join([str(elt) if mask_value is PUNCHED
                         else substitute
