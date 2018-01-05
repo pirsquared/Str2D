@@ -120,10 +120,10 @@ class TestMaskUsage(unittest.TestCase):
 
         # the two following instances are 'negative' of each other and
         # can be compared via the invert() method
-        self.odd_are_punched = Mask(size=12)
-        self.odd_are_punched._mask = tuple(SOLID if pos % 2 else PUNCHED for pos in range(12))
         self.even_are_punched = Mask(size=12)
-        self.even_are_punched._mask = tuple(PUNCHED if pos % 2 else SOLID for pos in range(12))
+        self.even_are_punched._mask = tuple(SOLID if pos % 2 else PUNCHED for pos in range(12))
+        self.odd_are_punched = Mask(size=12)
+        self.odd_are_punched._mask = tuple(PUNCHED if pos % 2 else SOLID for pos in range(12))
 
     # -------------- TEST invert -------------------------------------------------
     def test_invert_does_not_mutate_original_mask(self):
@@ -152,10 +152,37 @@ class TestMaskUsage(unittest.TestCase):
         self.assertEqual(back, self.even_are_punched)
     # -------------- END TEST invert ---------------------------------------------
 
+    # -------------- TEST MASK FACTORY from_pattern() ----------------------------
+    def test_make_fully_punched(self):
+        size = 12
+        pattern = '^' * size
+        fully_punched = Mask.from_pattern(pattern=pattern)
+        self.assertTrue(fully_punched == self.all_punched_mask)
 
+    def test_make_oddly_punched(self):
+        size = 12
+        pattern = ''.join('^' if idx % 2 == 1 else 'w' for idx in range(size))
+        oddly_punched = Mask.from_pattern(pattern=pattern)
+        self.assertTrue(oddly_punched == self.odd_are_punched)
 
+    def test_make_evenly_punched(self):
+        size = 12
+        pattern = ''.join('^' if idx % 2 == 0 else 'w' for idx in range(size))
+        evenly_punched = Mask.from_pattern(pattern=pattern)
+        self.assertTrue(evenly_punched == self.even_are_punched)
 
-
+    def test_make_evenly_punched_from_collection_of_values_to_punch(self):
+        """this takes a sequence of values to punch, and assembles it in a pattern
+        where locations at an even indice must be punched, and locations at odd indices
+        must remain solid. It then creates a mask using this pattern, and the same
+        values_to_punch provided in a diferent order to the factory"""
+        size = 12
+        values_to_punch_in_order = ['3', ' ', 'x', '?', 'w', 't']
+        values_to_punch_in_disorder = set(elt for elt in ('t', '3', 'x', ' ', 'w', '?'))
+        pattern = ''.join(values_to_punch_in_order[idx//2] if idx % 2 == 0 else '-' for idx in range(size))
+        evenly_punched = Mask.from_pattern(pattern=pattern, values_to_punch=values_to_punch_in_disorder)
+        self.assertTrue(evenly_punched == self.even_are_punched)
+    # -------------- END TEST MASK FACTORY from_pattern() ------------------------
 
 
 if __name__ == '__main__':
