@@ -123,6 +123,36 @@ class Mask:
             self.punched_repr == other.punched_repr and \
             self.solid_repr == other.solid_repr
 
+    def invert_mask(self) -> 'Mask':
+        """inverses the mask pattern and return a new Mask object where punched
+        positions are solid and solid positions are punched
+        """
+        inverted_mask = Mask(size=self.size)
+        inverted_mask._punch_mask([True if perf.toggle() == PUNCHED else False
+                                   for perf in self._mask])
+        return inverted_mask
+
+    @staticmethod
+    def from_pattern(pattern: Sequence, to_punch: Iterable= '^') -> 'Mask':
+        """Mask factory that makes and returns a new Mask object from a pattern
+        of values, a sequence, that can be compared to the values in to_punch to
+        determine which positions to punch, and which to retain solid
+
+        :param pattern: a Sequence whose elements indicate where to punch and
+                        where to keep solid - these elements are evaluated in
+                        comparison to the ones provided in to_punch
+        :param to_punch: a collection of elements representing a
+                         punching action - each position in pattern for which
+                         the value is in to_punch is marked punched, all other
+                         positions are marked solid.
+        :return: A new Mask object representative of pattern
+        """
+        # ? opimization if to_punch is large > 64, maybe?:
+        # _to_punch = set([elt for elt in to_punch])
+        mask = Mask(size=len(pattern))
+        mask._punch_mask([True if elt in to_punch else False for elt in pattern])
+        return mask
+
     def apply_to(self, sequence: Sequence):
         """applies the mask to the sequence provided, and return a new
         sequence of same length where only the elements located at punched
@@ -148,35 +178,6 @@ class Mask:
         # maybe also need a multi substitute where a sequence of elements to
         # be subtstituted is passed?
         raise NotImplemented
-
-    def make_inverted_mask(self) -> 'Mask':
-        """inverses the mask pattern and return a new Mask object where punched
-        positions are solid and solid positions are punched
-        """
-        inverted_mask = Mask(size=self.size)
-        inverted_mask._punch_mask([True if perf.toggle() == PUNCHED else False
-                                   for perf in self._mask])
-        return inverted_mask
-
-    @staticmethod
-    def make_from_pattern(pattern: Sequence, to_punch: Iterable='^') -> 'Mask':
-        """Mask factory that makes and returns a new Mask object from a Sequence
-        of values that can be compared to the values in to_punch
-
-        :param pattern: a Sequence whose elements can be compared to params
-                        `to_punch` and `to_keep_solid` and evaluated True or
-                        False
-        :param to_punch: a collection of elements representing a
-                         punching action - each position in pattern for which
-                         the value is in to_punch is marked punched, all other
-                         positions are marked solid.
-        :return: A new Mask object representative of pattern
-        """
-        # ? opimization if to_punch is large > 64, maybe?:
-        # _to_punch = set([elt for elt in to_punch])
-        mask = Mask(size=len(pattern))
-        mask._punch_mask([True if elt in to_punch else False for elt in pattern])
-        return mask
 
     # @staticmethod
     # def make_mask_from_iterable(inp: Iterable='', values_to_mask: Iterable='',
@@ -217,12 +218,12 @@ def tests():
     print("test mask:")
     inp = 'the truth is out there'
     print(inp)
-    mask = Mask.make_from_pattern('^   ^     ^  ^   ^    ')
+    mask = Mask.from_pattern('^   ^     ^  ^   ^    ')
     print(mask)
     print(mask.apply_to(inp))
     print()
     print("test inverted mask:")
-    inverted_mask = mask.make_inverted_mask()
+    inverted_mask = mask.invert_mask()
     print(inp)
     print(inverted_mask)
     print(inverted_mask.apply_to(inp))
