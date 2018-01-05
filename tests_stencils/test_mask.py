@@ -125,32 +125,32 @@ class TestMaskUsage(unittest.TestCase):
         self.even_are_punched = Mask(size=12)
         self.even_are_punched._mask = tuple(PUNCHED if pos % 2 else SOLID for pos in range(12))
 
-    # -------------- TEST invert_mask -------------------------------------------------
+    # -------------- TEST invert -------------------------------------------------
     def test_invert_does_not_mutate_original_mask(self):
         self.assertEqual(self.mask2__0_1_0, self.mask1__0_1_0)  # two masks equal before
-        self.mask1__0_1_0.invert_mask()
+        self.mask1__0_1_0.invert()
         self.assertEqual(self.mask2__0_1_0, self.mask1__0_1_0)  # still equal after
 
     def test_invert_full_solid(self):
         # this is also accessing the internals...
-        fully_punched = self.blank_ready_to_punch.invert_mask()
+        fully_punched = self.blank_ready_to_punch.invert()
         self.assertTrue(fully_punched._mask == tuple(PUNCHED for _ in range(self.blank_ready_to_punch.size)))
 
     def test_invert_full_punched(self):
-        full_solid = self.all_punched_mask.invert_mask()
+        full_solid = self.all_punched_mask.invert()
         self.assertTrue(full_solid.is_a_blank())
 
     def test_0101___to_1010___(self):
-        self.assertEqual(self.odd_are_punched.invert_mask(), self.even_are_punched)
+        self.assertEqual(self.odd_are_punched.invert(), self.even_are_punched)
 
     def test_1010___to_0101___(self):
-        self.assertEqual(self.even_are_punched.invert_mask(), self.odd_are_punched)
+        self.assertEqual(self.even_are_punched.invert(), self.odd_are_punched)
 
     def test_invert_and_then_revert_to_original(self):
-        go = self.even_are_punched.invert_mask()
-        back = go.invert_mask()
+        go = self.even_are_punched.invert()
+        back = go.invert()
         self.assertEqual(back, self.even_are_punched)
-    # -------------- END TEST invert_mask ---------------------------------------------
+    # -------------- END TEST invert ---------------------------------------------
 
 
 

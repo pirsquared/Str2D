@@ -123,7 +123,7 @@ class Mask:
             self.punched_repr == other.punched_repr and \
             self.solid_repr == other.solid_repr
 
-    def invert_mask(self) -> 'Mask':
+    def invert(self) -> 'Mask':
         """inverses the mask pattern and return a new Mask object where punched
         positions are solid and solid positions are punched
         """
@@ -223,7 +223,7 @@ def tests():
     print(mask.apply_to(inp))
     print()
     print("test inverted mask:")
-    inverted_mask = mask.invert_mask()
+    inverted_mask = mask.invert()
     print(inp)
     print(inverted_mask)
     print(inverted_mask.apply_to(inp))
