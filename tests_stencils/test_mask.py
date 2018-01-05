@@ -57,6 +57,11 @@ class TestMaskInternals(unittest.TestCase):
         self.assertTrue(any(pos is not SOLID for pos in self.all_punched_mask.mask))
     # -------------- END TEST INSTANCE and INIT -----------------------------
 
+    # -------------- TEST @property mask ---------------------------------
+    def test_property_mask(self):
+        self.assertEqual(self.mask1__0_1_0.mask, (SOLID, PUNCHED, SOLID))
+    # -------------- TEST @property mask ---------------------------------
+
     # -------------- TEST EQUALITY ---------------------------------
     def test_equality_blanks_of_same_size_are_equal(self):
         self.assertTrue(Mask(size=12) == self.blank_that_remains_blank)
