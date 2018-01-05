@@ -189,26 +189,6 @@ class Mask:
         raise NotImplemented
 
     # @staticmethod
-    # def make_mask_from_iterable(inp: Iterable='', values_to_mask: Iterable='',
-    #                             masking_value='^', replacement_value='-'):
-    #     """makes and returns a Mask object from an iterable of True or False values
-    #
-    #     :param inp: a sequence of elements
-    #     :param values_to_mask: Iterable, a collection of the values to mask
-    #                            must be Hashable too
-    #     :param masking_value: str of length=1, the character that marks the
-    #                            masked positions
-    #     :param replacement_value: str of length=1, the character that replaces
-    #                               the original at the masked positions
-    #     :return: A Mask object
-    #     """
-    #     _values_to_mask = set(values_to_mask)
-    #     pattern = [True if c in _values_to_mask else False for c in inp]
-    #     mask = Mask(punched_repr=masking_value,
-    #                 solid_repr=replacement_value)
-    #     mask._punch_mask(pattern)
-
-    # @staticmethod
     # def make_from_indices(inp: Iterable='', indices_of_values_to_mask: Iterable='',
     #                             masking_value='^', replacement_value='-'):
     #     """
