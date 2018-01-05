@@ -252,6 +252,48 @@ class TestMaskUsage(unittest.TestCase):
         self.assertTrue(evenly_punched == self.even_are_punched)
     # -------------- END TEST MASK FACTORY from_pattern() ------------------------
 
+    # -------------- TEST apply_to() ---------------------------------------------
+    def test_all_solid_apply_to_str(self):
+        input_str = 'all your bases are belong to us'
+        pattern =   '-------------------------------'
+        expected =  '-------------------------------'
+        mask = Mask.from_pattern(pattern=pattern, values_to_punch='^')
+        self.assertEqual(pattern, mask.apply_to(input_str))
+
+    def test_mask_apply_to_str_1(self):
+        input_str = 'all your bases are belong to us'
+        pattern =   '^^^------^^^^^-----^^^^^^----^^'
+        expected =  'all------bases-----belong----us'
+        mask = Mask.from_pattern(pattern=pattern, values_to_punch='^')
+        self.assertEqual(expected, mask.apply_to(input_str))
+
+    def test_mask_apply_to_str_with_substitute(self):
+        input_str = 'all your bases are belong to us'
+        pattern =   '^^^------^^^^^-----^^^^^^----^^'
+        expected =  'all      bases     belong    us'
+        mask = Mask.from_pattern(pattern=pattern, values_to_punch='^')
+        self.assertEqual(expected, mask.apply_to(input_str, substitute=' '))
+
+    def test_mask_invert_apply_to_str(self):
+        """not quite unit test --> chaining of Mask methods"""
+        input_str = 'all your bases are belong to us'
+        pattern =   '^^^------^^^^^-----^^^^^^----^^'
+        expected =  '--- your ----- are ------ to --'
+        mask = Mask.from_pattern(pattern=pattern, values_to_punch='^')
+        self.assertEqual(expected, mask.invert().apply_to(input_str))
+
+    def test_mask_invert_apply_to_str_with_substitute(self):
+        """not quite unit test --> chaining of Mask methods"""
+        input_str = 'all your bases are belong to us'
+        pattern =   '^^^------^^^^^-----^^^^^^----^^'
+        expected =  '    your       are        to   '
+        mask = Mask.from_pattern(pattern=pattern, values_to_punch='^')
+        self.assertEqual(expected, mask.invert().apply_to(input_str, substitute=' '))
+
+    # -------------- END TEST apply_to() -----------------------------------------
+
+    # Errors thrown not tested -----> @TODO create specific MaskingErrors first
+
 
 if __name__ == '__main__':
     unittest.main()

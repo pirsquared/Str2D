@@ -142,11 +142,13 @@ class Mask:
                         where to keep solid - these elements are evaluated in
                         comparison to the ones provided in to_punch
 
-                        if pattern is None, or of size=0, raises an AssertionError
+                        if pattern is None, or of size=0, raises an
+                        AssertionError
                         @TODO: make specific errors
 
-                        if pattern does not contain elements from values_to_punch,
-                        it returns a blank of the size of pattern
+                        if pattern does not contain elements from
+                        values_to_punch, it returns a blank of the size of
+                        pattern
 
         :param values_to_punch: a collection of elements representing a
                          punching action - each position in pattern for which
@@ -157,36 +159,34 @@ class Mask:
         """
         # ? opimization if values_to_punch is large > 64, maybe?:
         # _to_punch = set([elt for elt in values_to_punch])
-        assert pattern is not None and len(pattern) > 0, "you must provide a valid pattern"
+        assert pattern is not None and len(pattern) > 0, \
+            "you must provide a valid pattern"
         mask = Mask(size=len(pattern))
-        mask._punch_mask([True if elt in values_to_punch else False for elt in pattern])
+        mask._punch_mask([True if elt in values_to_punch else False
+                          for elt in pattern])
         return mask
 
-    def apply_to(self, sequence: Sequence):
+    def apply_to(self, sequence: Sequence,
+                 substitute: str=None) -> Sequence:
         """applies the mask to the sequence provided, and return a new
         sequence of same length where only the elements located at punched
         positions on the mask are visible; the other elements are concealed
+        with self.solid_repr by default, or a substitute if one is provided
 
         :param sequence: a sequence to be masked
-        :return: a new sequence masked
+        :param substitute: a character to be substituted to the SOLID
+                           positions in the mask
+        :return: a new sequence where the elements marked SOLID on the mask
+                 have been concealed by the substitute character.
 
                *** ATTENTION, not polymorphic ***
         @TODO: make polymorphic to accept other Sequence objects
         """
+        if substitute is None:
+            substitute = self.solid_repr
         return ''.join([str(elt) if mask_value is PUNCHED
-                        else self.solid_repr
+                        else substitute
                         for elt, mask_value in zip(sequence, self._mask)])
-
-    def substitute_at(self, seq, elt):
-        """constructs a new sequence where the elements at marked locations
-        in mask are replaced by elt
-        :param seq:
-        :param elt:
-        :return:
-        """
-        # maybe also need a multi substitute where a sequence of elements to
-        # be subtstituted is passed?
-        raise NotImplemented
 
     # @staticmethod
     # def make_from_indices(inp: Iterable='', indices_of_values_to_mask: Iterable='',
@@ -221,7 +221,6 @@ def tests():
 if __name__ == '__main__':
 
     tests()
-
 
     # Use A Generic Sequence
     # a = [1, 2, 3]
