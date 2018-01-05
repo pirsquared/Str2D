@@ -4,6 +4,9 @@ from stencil import Mask
 from stencil import SOLID, PUNCHED
 
 
+# @TODO: extract setUp() from both test classes
+
+
 class TestMaskInternals(unittest.TestCase):
     """tests for the internals of Mask"""
 
