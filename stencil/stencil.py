@@ -133,7 +133,7 @@ class Mask:
         return inverted_mask
 
     @staticmethod
-    def from_pattern(pattern: Sequence, to_punch: Iterable= '^') -> 'Mask':
+    def from_pattern(pattern: Sequence=None, values_to_punch: Iterable='^') -> 'Mask':
         """Mask factory that makes and returns a new Mask object from a pattern
         of values, a sequence, that can be compared to the values in to_punch to
         determine which positions to punch, and which to retain solid
@@ -141,16 +141,25 @@ class Mask:
         :param pattern: a Sequence whose elements indicate where to punch and
                         where to keep solid - these elements are evaluated in
                         comparison to the ones provided in to_punch
-        :param to_punch: a collection of elements representing a
+
+                        if pattern is None, or of size=0, raises an AssertionError
+                        @TODO: make specific errors
+
+                        if pattern does not contain elements from values_to_punch,
+                        it returns a blank of the size of pattern
+
+        :param values_to_punch: a collection of elements representing a
                          punching action - each position in pattern for which
                          the value is in to_punch is marked punched, all other
                          positions are marked solid.
+
         :return: A new Mask object representative of pattern
         """
-        # ? opimization if to_punch is large > 64, maybe?:
-        # _to_punch = set([elt for elt in to_punch])
+        # ? opimization if values_to_punch is large > 64, maybe?:
+        # _to_punch = set([elt for elt in values_to_punch])
+        assert pattern is not None and len(pattern) > 0, "you must provide a valid pattern"
         mask = Mask(size=len(pattern))
-        mask._punch_mask([True if elt in to_punch else False for elt in pattern])
+        mask._punch_mask([True if elt in values_to_punch else False for elt in pattern])
         return mask
 
     def apply_to(self, sequence: Sequence):
