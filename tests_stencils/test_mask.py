@@ -252,6 +252,29 @@ class TestMaskUsage(unittest.TestCase):
         self.assertTrue(evenly_punched == self.even_are_punched)
     # -------------- END TEST MASK FACTORY from_pattern() ------------------------
 
+    # -------------- TEST MASK FACTORY from_indices() ----------------------------
+    def test_make_even_mask_from_indices(self):
+        indices_to_punch = [0, 2, 4, 6, 8, 10]
+        evens = Mask.from_indices(size=12, indices_to_punch=indices_to_punch)
+        self.assertEqual(self.even_are_punched, evens)
+
+    def test_make_odd_mask_from_indices(self):
+        indices_to_punch = [1, 3, 5, 7, 9, 11]
+        odds = Mask.from_indices(size=12, indices_to_punch=indices_to_punch)
+        self.assertEqual(self.odd_are_punched, odds)
+
+    def test_make_even_mask_from_negative_indices(self):
+        indices_to_punch = [-12, -10, -8, -6, -4, -2]
+        evens = Mask.from_indices(size=12, indices_to_punch=indices_to_punch)
+        self.assertEqual(self.even_are_punched, evens)
+
+    def test_make_odd_mask_from_negative_indices(self):
+        indices_to_punch = [-11, -9, -7, -5, -3, -1]
+        odds = Mask.from_indices(size=12, indices_to_punch=indices_to_punch)
+        self.assertEqual(self.odd_are_punched, odds)
+
+    # -------------- END TEST MASK FACTORY from_indices() ------------------------
+
     # -------------- TEST apply_to() ---------------------------------------------
     def test_all_solid_apply_to_str(self):
         input_str = 'all your bases are belong to us'
@@ -292,7 +315,7 @@ class TestMaskUsage(unittest.TestCase):
 
     # -------------- END TEST apply_to() -----------------------------------------
 
-    # Errors thrown not tested -----> @TODO create specific MaskingErrors first
+    # Errors thrown not tested --> @TODO create specific MaskingErrors first, replace assertions, then write the tests
 
 
 if __name__ == '__main__':

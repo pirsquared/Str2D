@@ -166,6 +166,29 @@ class Mask:
                           for elt in pattern])
         return mask
 
+    @staticmethod
+    def from_indices(size: int=None, indices_to_punch: Iterable[int]=None):
+        """Mask factory that makes a new Mask object where the positions to
+        punch are at the given indices.
+
+        # similar to np.where()
+
+        :param size: int, the size of the mask to create
+        :param indices_to_punch: the indices of the positions to punch
+                                 indices can be negative values
+        :return: A new Mask object where the positions to punch are at
+                 the given indices
+        """
+        assert size is not None and size > 0
+        assert max(indices_to_punch) < size
+        assert min(indices_to_punch) >= -size  # accept negative indices
+        mask = Mask(size=size)
+        pattern = [False for _ in range(size)]
+        for pos_to_punch in indices_to_punch:
+            pattern[pos_to_punch] = True
+        mask._punch_mask(pattern=pattern)
+        return mask
+
     def apply_to(self, sequence: Sequence,
                  substitute: str=None) -> Sequence:
         """applies the mask to the sequence provided, and return a new
@@ -179,28 +202,13 @@ class Mask:
         :return: a new sequence where the elements marked SOLID on the mask
                  have been concealed by the substitute character.
 
-               *** ATTENTION, not polymorphic ***
-        @TODO: make polymorphic to accept other Sequence objects
+        @TODO: make polymorphic to accept other Sequence objects, not only str
         """
         if substitute is None:
             substitute = self.solid_repr
         return ''.join([str(elt) if mask_value is PUNCHED
                         else substitute
                         for elt, mask_value in zip(sequence, self._mask)])
-
-    # @staticmethod
-    # def make_from_indices(inp: Iterable='', indices_of_values_to_mask: Iterable='',
-    #                             masking_value='^', replacement_value='-'):
-    #     """
-    #     # similar to np.where()
-    #
-    #     :param inp:
-    #     :param indices_of_values_to_mask:
-    #     :param masking_value:
-    #     :param replacement_value:
-    #     :return:
-    #     """
-    #     raise NotImplemented
 
 
 def tests():
