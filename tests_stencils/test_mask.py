@@ -99,6 +99,16 @@ class TestMaskInternals(unittest.TestCase):
     # not tested: case where both Mask.generic_solid_repr and Mask.generic_punched_repr are changed
     # -------------- END TEST EQUALITY -----------------------------
 
+    # -------------- TEST _punch_mask - not unit test, it accesses the internals ------
+    def test_punch_mask_all_through(self):
+        """not a unit test --> it accesses the internals"""
+        self.blank_ready_to_punch._punch_mask([True for _ in range(self.blank_ready_to_punch.size)])
+        self.assertEqual(self.all_punched_mask, self.blank_ready_to_punch)
+    # -------------- END TEST _punch_mask ---------------------------------------------
+
+
+
+
 
 if __name__ == '__main__':
     unittest.main()
