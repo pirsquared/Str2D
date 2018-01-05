@@ -69,7 +69,7 @@ class Mask:
     # solid_repr created masking issues with mypy as follows:
     # stencil.py:79: error: Cannot assign to class variable "punched_repr" via instance
     # stencil.py:80: error: Cannot assign to class variable "solid_repr" via instance
-    # @TODO: dicsuss this design issue with Sean
+    # @TODO: dicsuss this design issue with Sean, either get rid of it, or install complex machinery to secure it
     generic_punched_repr = '^'   # type: ClassVar[str]
     generic_solid_repr = '-'     # type: ClassVar[str]
 

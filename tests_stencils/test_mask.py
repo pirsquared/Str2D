@@ -6,6 +6,10 @@ from stencil import SOLID, PUNCHED
 
 # @TODO: extract setUp() from both test classes
 
+# keep track of original defaults to reset them in tearDown()
+_STANDARD_PUNCHED_REPR = Mask.generic_punched_repr
+_STANDARD_SOLID_REPR = Mask.generic_solid_repr
+
 
 class TestMaskInternals(unittest.TestCase):
     """tests for the internals of Mask"""
@@ -24,6 +28,19 @@ class TestMaskInternals(unittest.TestCase):
         # of Mask or the Mask factories to build
         self.all_punched_mask = Mask(size=12)
         self.all_punched_mask._mask = tuple(PUNCHED for _ in range(12))
+
+        # the two following instances are 'negative' of each other and
+        # can be compared via the invert() method
+        self.even_are_punched = Mask(size=12)
+        self.even_are_punched._mask = tuple(SOLID if pos % 2 else PUNCHED for pos in range(12))
+        self.odd_are_punched = Mask(size=12)
+        self.odd_are_punched._mask = tuple(PUNCHED if pos % 2 else SOLID for pos in range(12))
+
+    def tearDown(self):
+
+        # a hacky fix for the changes of class variable values that create problems in tests:
+        Mask.generic_punched_repr = _STANDARD_PUNCHED_REPR
+        Mask.generic_solid_repr = _STANDARD_SOLID_REPR
 
     # -------------- TEST INSTANCE and INIT ---------------------------------
     def test_blank_mask_instance(self):
@@ -61,22 +78,22 @@ class TestMaskInternals(unittest.TestCase):
         self.assertFalse(self.mask1__0_1_0 == self.mask2__0_1_0)
 
     def test_equality_masks_with_same_punched_pattern_are_equal_but_not_case_C(self):
-        """case_C: if their Mask.punched_repr was changed between instance creation"""
+        """case_C: if their Mask.generic_punched_repr was changed between instance creation"""
         Mask.generic_punched_repr = '*'
         mask_case_c__0_1_0 = Mask(size=3)
         mask_case_c__0_1_0._punch_mask([False, True, False])
         self.assertFalse(self.mask1__0_1_0 == mask_case_c__0_1_0)
 
     def test_equality_masks_with_same_punched_pattern_are_equal_but_not_case_D(self):
-        """case_D: if their Mask.solid_repr was changed between instance creation"""
+        """case_D: if their Mask.generic_solid_repr was changed between instance creation"""
         Mask.generic_solid_repr = '*'
         mask_case_d__0_1_0 = Mask(size=3)
         mask_case_d__0_1_0._punch_mask([False, True, False])
         self.assertFalse(self.mask1__0_1_0 == mask_case_d__0_1_0)
 
     def test_equality_masks_with_same_punched_pattern_are_equal_in_case_E(self):
-        """case_E: if Mask.punched_repr was changed before the two instance compared are created"""
-        Mask.punched_repr = '*'
+        """case_E: if Mask.generic_punched_repr was changed before the two instance compared are created"""
+        Mask.generic_punched_repr = '*'
         mask_case_e1__0_1_0 = Mask(size=3)
         mask_case_e1__0_1_0._punch_mask([False, True, False])
         mask_case_e2__0_1_0 = Mask(size=3)
@@ -84,8 +101,8 @@ class TestMaskInternals(unittest.TestCase):
         self.assertTrue(mask_case_e1__0_1_0 == mask_case_e2__0_1_0)
 
     def test_equality_masks_with_same_punched_pattern_are_equal_in_case_F(self):
-        """case_F: if Mask.solid_repr was changed before the two instance compared are created"""
-        Mask.solid_repr = '*'
+        """case_F: if Mask.generic_solid_repr was changed before the two instance compared are created"""
+        Mask.generic_solid_repr = '*'
         mask_case_f1__0_1_0 = Mask(size=3)
         mask_case_f1__0_1_0._punch_mask([False, True, False])
         mask_case_f2__0_1_0 = Mask(size=3)
@@ -93,6 +110,7 @@ class TestMaskInternals(unittest.TestCase):
         self.assertTrue(mask_case_f1__0_1_0 == mask_case_f2__0_1_0)
 
     # not tested: case where both Mask.generic_solid_repr and Mask.generic_punched_repr are changed
+    # @TODO: discuss design with Sean --> changing class variables values that represent masked pos is maybe a bad idea
     # -------------- END TEST EQUALITY -----------------------------
 
     # -------------- TEST _punch_mask - not unit test, it accesses the internals ------
@@ -101,6 +119,46 @@ class TestMaskInternals(unittest.TestCase):
         self.blank_ready_to_punch._punch_mask([True for _ in range(self.blank_ready_to_punch.size)])
         self.assertEqual(self.all_punched_mask, self.blank_ready_to_punch)
     # -------------- END TEST _punch_mask ---------------------------------------------
+
+    # -------------- TEST __str__() ---------------------------------
+    def test_str_all_solid(self):
+        expected = '------------'
+        self.assertEqual(expected, str(self.blank_ready_to_punch))
+
+    def test_str_all_punched(self):
+        expected = '^^^^^^^^^^^^'
+        self.assertEqual(expected, str(self.all_punched_mask))
+
+    def test_str_odd_punched(self):
+        expected = '-^-^-^-^-^-^'
+        self.assertEqual(expected, str(self.odd_are_punched))
+
+    def test_str_even_punched(self):
+        expected = '^-^-^-^-^-^-'
+        self.assertEqual(expected, str(self.even_are_punched))
+
+    def test_str_when_Mask_generic_solid_repr_is_changed(self):
+        """Mask.generic_solid_repr is changed to '*'"""
+        Mask.generic_solid_repr = '*'
+        mask_1_0_1 = Mask.from_pattern('^-^')
+        expected = '^*^'
+        self.assertEqual(expected, str(mask_1_0_1))
+
+    def test_str_when_Mask_generic_punched_repr_is_changed(self):
+        """Mask.generic_punched_repr is changed to 'w'"""
+        Mask.generic_punched_repr = 'w'
+        mask_1_0_1 = Mask.from_pattern('^-^')
+        expected = 'w-w'
+        self.assertEqual(expected, str(mask_1_0_1))
+
+    def test_str_when_Mask_generic_solid_repr_is_changed_and_Mask_generic_punched_repr_is_changed(self):
+        """Mask.generic_solid_repr is changed to '*' and Mask.generic_punched_repr is changed to 'w'"""
+        Mask.generic_solid_repr = '*'
+        Mask.generic_punched_repr = 'w'
+        mask_1_0_1 = Mask.from_pattern('^-^')
+        expected = 'w*w'
+        self.assertEqual(expected, str(mask_1_0_1))
+    # -------------- END TEST __str__() -----------------------------
 
 
 class TestMaskUsage(unittest.TestCase):
@@ -127,6 +185,13 @@ class TestMaskUsage(unittest.TestCase):
         self.even_are_punched._mask = tuple(SOLID if pos % 2 else PUNCHED for pos in range(12))
         self.odd_are_punched = Mask(size=12)
         self.odd_are_punched._mask = tuple(PUNCHED if pos % 2 else SOLID for pos in range(12))
+
+    def tearDown(self):
+
+        # Restore the default values of Mask class variables to avoid module reload
+        # a hacky fix for the changes of class variable values that create problems in tests:
+        Mask.generic_punched_repr = _STANDARD_PUNCHED_REPR
+        Mask.generic_solid_repr = _STANDARD_SOLID_REPR
 
     # -------------- TEST invert -------------------------------------------------
     def test_invert_does_not_mutate_original_mask(self):
