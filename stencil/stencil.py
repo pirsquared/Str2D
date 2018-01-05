@@ -73,7 +73,7 @@ class Mask:
     generic_punched_repr = '^'   # type: ClassVar[str]
     generic_solid_repr = '-'     # type: ClassVar[str]
 
-    def __init__(self, size: int=None) -> None:
+    def __init__(self, size: int=0) -> None:
         """Make a 'blank': a solid Mask of size=size without punched positions
 
         :param size: int, the size of the mask
@@ -116,9 +116,10 @@ class Mask:
         return ''.join([str(self.punched_repr) if pos == PUNCHED
                         else self.solid_repr for pos in self._mask])
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other: 'Mask') -> bool:
         """two masks are equal if their SOLID/PUNCHED patterns are equal
         and their punched_repr and solid_repr are equal"""
+        assert other is not None and type(other) == Mask
         return self.mask == other.mask and \
             self.punched_repr == other.punched_repr and \
             self.solid_repr == other.solid_repr
@@ -133,7 +134,7 @@ class Mask:
         return inverted_mask
 
     @staticmethod
-    def from_pattern(pattern: Sequence=None, values_to_punch: Iterable='^') -> 'Mask':
+    def from_pattern(pattern: Sequence='', values_to_punch: Iterable='^') -> 'Mask':
         """Mask factory that makes and returns a new Mask object from a pattern
         of values, a sequence, that can be compared to the values in to_punch to
         determine which positions to punch, and which to retain solid
@@ -167,7 +168,8 @@ class Mask:
         return mask
 
     @staticmethod
-    def from_indices(size: int=None, indices_to_punch: Iterable[int]=None):
+    def from_indices(size: int=0,
+                     indices_to_punch: Iterable[int]=set()) -> 'Mask':
         """Mask factory that makes a new Mask object where the positions to
         punch are at the given indices.
 
@@ -190,7 +192,7 @@ class Mask:
         return mask
 
     def apply_to(self, sequence: Sequence,
-                 substitute: str=None) -> Sequence:
+                 substitute: str='-') -> Sequence:
         """applies the mask to the sequence provided, and return a new
         sequence of same length where only the elements located at punched
         positions on the mask are visible; the other elements are concealed
@@ -211,7 +213,7 @@ class Mask:
                         for elt, mask_value in zip(sequence, self._mask)])
 
 
-def tests():
+def tests() -> None:
     print("test mask:")
     inp = 'the truth is out there'
     print(inp)
@@ -227,7 +229,7 @@ def tests():
 
 
 if __name__ == '__main__':
-
+    # pass
     tests()
 
     # Use A Generic Sequence
