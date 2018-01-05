@@ -12,7 +12,7 @@ stencil is more universally understood.
 
 
 from enum import Enum
-from typing import ClassVar, Iterable, List, Sequence, Tuple, Type, Union
+from typing import ClassVar, Iterable, List, Sequence, Tuple, Union
 
 
 class Perforation(Enum):
