@@ -4,15 +4,13 @@ from stencil import Mask
 from stencil import SOLID, PUNCHED
 
 
-# @TODO: extract setUp() from both test classes
-
 # keep track of original defaults to reset them in tearDown()
 _STANDARD_PUNCHED_REPR = Mask.generic_punched_repr
 _STANDARD_SOLID_REPR = Mask.generic_solid_repr
 
 
-class TestMaskInternals(unittest.TestCase):
-    """tests for the internals of Mask"""
+class TestMaskBase(unittest.TestCase):
+    """Shared setUp() and tearDown() for Mask tests"""
 
     def setUp(self):
         self.blank_that_remains_blank = Mask(size=12)
@@ -41,6 +39,10 @@ class TestMaskInternals(unittest.TestCase):
         # a hacky fix for the changes of class variable values that create problems in tests:
         Mask.generic_punched_repr = _STANDARD_PUNCHED_REPR
         Mask.generic_solid_repr = _STANDARD_SOLID_REPR
+
+
+class TestMaskInternals(TestMaskBase):
+    """tests for the internals of Mask"""
 
     # -------------- TEST INSTANCE and INIT ---------------------------------
     def test_blank_mask_instance(self):
@@ -217,37 +219,8 @@ class TestMaskInternals(unittest.TestCase):
     # -------------- END TEST __str__() -----------------------------
 
 
-class TestMaskUsage(unittest.TestCase):
+class TestMaskUsage(TestMaskBase):
     """tests for the internals of Mask"""
-
-    def setUp(self):
-        self.blank_that_remains_blank = Mask(size=12)
-        self.blank_ready_to_punch = Mask(size=12)
-
-        self.mask1__0_1_0 = Mask(size=3)
-        self.mask1__0_1_0._punch_mask([False, True, False])
-        self.mask2__0_1_0 = Mask(size=3)
-        self.mask2__0_1_0._punch_mask([False, True, False])
-
-        # all instances of Mask created below, but within setUp() require
-        # protected access to inject values and avoid using the methods
-        # of Mask or the Mask factories to build
-        self.all_punched_mask = Mask(size=12)
-        self.all_punched_mask._mask = tuple(PUNCHED for _ in range(12))
-
-        # the two following instances are 'negative' of each other and
-        # can be compared via the invert() method
-        self.even_are_punched = Mask(size=12)
-        self.even_are_punched._mask = tuple(SOLID if pos % 2 else PUNCHED for pos in range(12))
-        self.odd_are_punched = Mask(size=12)
-        self.odd_are_punched._mask = tuple(PUNCHED if pos % 2 else SOLID for pos in range(12))
-
-    def tearDown(self):
-
-        # Restore the default values of Mask class variables to avoid module reload
-        # a hacky fix for the changes of class variable values that create problems in tests:
-        Mask.generic_punched_repr = _STANDARD_PUNCHED_REPR
-        Mask.generic_solid_repr = _STANDARD_SOLID_REPR
 
     # -------------- TEST invert -------------------------------------------------
     def test_invert_does_not_mutate_original_mask(self):
