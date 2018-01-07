@@ -63,19 +63,8 @@ class Mask:
                                   a PUNCHED position in a Mask
     :class_var solid_repr: str, the character used to generically represent
                                 a SOLID position in a Mask
-
-    @TODO: because a mask cannot be repunched, there is a need for a combining masks method that will create a new mask from a combination of provided ones.
-    @TODO: mask.get_pattern() --> obtain a string pattern from a mask - alias for __str__() ?
-    @TODO: Pattern factories --> make mask patterns from... "patterns"
-    @TODO: a class Pattern? Are Patterns objects in their own right
-    @TODO: a Shield? a Mask subclass that is used to protect a string from modification at some positions? -- String2D with attribute shielded?
     """
 
-    # for fault of a better name: calling these class variables punched_repr and
-    # solid_repr created masking issues with mypy as follows:
-    # stencil.py:79: error: Cannot assign to class variable "punched_repr" via instance
-    # stencil.py:80: error: Cannot assign to class variable "solid_repr" via instance
-    # @TODO: dicsuss this design issue with Sean, either get rid of it, or install complex machinery to secure it
     generic_punched_repr = '^'   # type: ClassVar[str]
     generic_solid_repr = '-'     # type: ClassVar[str]
 
@@ -84,12 +73,11 @@ class Mask:
 
         :param size: int, the size of the mask
         """
+        # @TODO: Error
         assert size is not None and size > 0, "a Mask must have a size > 0"
         self.size: int = size
         self._mask: Union[List, Tuple] = [SOLID for _ in range(self.size)]
-        # the following allows to maintain a degree of immutability for
-        # instances of Mask even if class variables are modified at some point
-        # this should maybe be a named tuple to guarantee immutability
+
         self.punched_repr: str = Mask.generic_punched_repr
         self.solid_repr: str = Mask.generic_solid_repr
 
@@ -106,6 +94,7 @@ class Mask:
                         True represents the sites to be punched,
                         and False the sites to remain solid
         """
+        # @TODO: Error
         assert self.is_a_blank(), \
             "you must use a blank, a Mask cannot be re-punched"
         assert len(pattern) == self.size, \
@@ -125,6 +114,7 @@ class Mask:
     def __eq__(self, other: 'Mask') -> bool:
         """two masks are equal if their SOLID/PUNCHED patterns are equal
         and their punched_repr and solid_repr are equal"""
+        # @TODO: Error
         assert other is not None and type(other) == Mask
         return self.mask == other.mask and \
             self.punched_repr == other.punched_repr and \
@@ -166,6 +156,7 @@ class Mask:
         """
         # ? opimization if values_to_punch is large > 64, maybe?:
         # _to_punch = set([elt for elt in values_to_punch])
+        # @TODO: Error
         assert pattern is not None and len(pattern) > 0, \
             "you must provide a valid pattern"
         mask = Mask(size=len(pattern))
@@ -187,6 +178,7 @@ class Mask:
         :return: A new Mask object where the positions to punch are at
                  the given indices
         """
+        # @TODO: Error
         assert size is not None and size > 0
         assert max(indices_to_punch) < size
         assert min(indices_to_punch) >= -size  # accept negative indices
@@ -209,10 +201,9 @@ class Mask:
                            positions in the mask
         :return: a new sequence where the elements marked SOLID on the mask
                  have been concealed by the substitute character.
-
-        @TODO: make polymorphic to accept other Sequence objects, not only str
-        @TODO: ? add method remove where characters at punched locations are not replaced
         """
+        # @TODO: Error
+        assert len(sequence) == self.size
         if substitute == '':
             substitute = self.solid_repr
         return ''.join([str(elt) if mask_value is PUNCHED
