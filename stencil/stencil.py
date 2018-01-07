@@ -73,7 +73,6 @@ class Mask:
 
         :param size: int, the size of the mask
         """
-        # @TODO: Error
         assert size is not None and size > 0, "a Mask must have a size > 0"
         self.size: int = size
         self._mask: Union[List, Tuple] = [SOLID for _ in range(self.size)]
@@ -94,7 +93,6 @@ class Mask:
                         True represents the sites to be punched,
                         and False the sites to remain solid
         """
-        # @TODO: Error
         assert self.is_a_blank(), \
             "you must use a blank, a Mask cannot be re-punched"
         assert len(pattern) == self.size, \
@@ -114,7 +112,6 @@ class Mask:
     def __eq__(self, other: 'Mask') -> bool:
         """two masks are equal if their SOLID/PUNCHED patterns are equal
         and their punched_repr and solid_repr are equal"""
-        # @TODO: Error
         assert other is not None and type(other) == Mask
         return self.mask == other.mask and \
             self.punched_repr == other.punched_repr and \
@@ -141,7 +138,6 @@ class Mask:
 
                         if pattern is None, or of size=0, raises an
                         AssertionError
-                        @TODO: make specific errors
 
                         if pattern does not contain elements from
                         values_to_punch, it returns a blank of the size of
@@ -156,7 +152,6 @@ class Mask:
         """
         # ? opimization if values_to_punch is large > 64, maybe?:
         # _to_punch = set([elt for elt in values_to_punch])
-        # @TODO: Error
         assert pattern is not None and len(pattern) > 0, \
             "you must provide a valid pattern"
         mask = Mask(size=len(pattern))
@@ -178,10 +173,11 @@ class Mask:
         :return: A new Mask object where the positions to punch are at
                  the given indices
         """
-        # @TODO: Error
-        assert size is not None and size > 0
-        assert max(indices_to_punch) < size
-        assert min(indices_to_punch) >= -size  # accept negative indices
+        assert size is not None and size > 0, 'size of mask must be > 0'
+        assert max(indices_to_punch) < size, \
+            'the positive indices provided are out of bounds'
+        assert min(indices_to_punch) >= -size, \
+            'the negative indices provided are out of bounds'
         mask = Mask(size=size)
         pattern = [False for _ in range(size)]
         for pos_to_punch in indices_to_punch:
@@ -202,7 +198,6 @@ class Mask:
         :return: a new sequence where the elements marked SOLID on the mask
                  have been concealed by the substitute character.
         """
-        # @TODO: Error
         assert len(sequence) == self.size
         if substitute == '':
             substitute = self.solid_repr
