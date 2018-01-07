@@ -1,0 +1,6 @@
+
+
+implement __ne__()
+Not necessary according to https://stackoverflow.com/questions/4352244/python-should-i-implement-ne-operator-based-on-eq
+except if python2
+
