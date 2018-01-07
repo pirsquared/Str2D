@@ -63,6 +63,12 @@ class Mask:
                                   a PUNCHED position in a Mask
     :class_var solid_repr: str, the character used to generically represent
                                 a SOLID position in a Mask
+
+    @TODO: because a mask cannot be repunched, there is a need for a combining masks method that will create a new mask from a combination of provided ones.
+    @TODO: mask.get_pattern() --> obtain a string pattern from a mask - alias for __str__() ?
+    @TODO: Pattern factories --> make mask patterns from... "patterns"
+    @TODO: a class Pattern? Are Patterns objects in their own right
+    @TODO: a Shield? a Mask subclass that is used to protect a string from modification at some positions? -- String2D with attribute shielded?
     """
 
     # for fault of a better name: calling these class variables punched_repr and
