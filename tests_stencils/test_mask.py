@@ -62,7 +62,7 @@ class TestMaskInternals(unittest.TestCase):
         self.assertEqual(self.mask1__0_1_0.mask, (SOLID, PUNCHED, SOLID))
     # -------------- TEST @property mask ---------------------------------
 
-    # -------------- TEST EQUALITY ---------------------------------
+    # -------------- TEST EQUALITY AND INEQUALITY ---------------------------------
     def test_equality_blanks_of_same_size_are_equal(self):
         self.assertTrue(Mask(size=12) == self.blank_that_remains_blank)
 
@@ -114,10 +114,60 @@ class TestMaskInternals(unittest.TestCase):
         mask_case_f2__0_1_0._punch_mask([False, True, False])
         self.assertTrue(mask_case_f1__0_1_0 == mask_case_f2__0_1_0)
 
+    def test_inequality_blanks_of_same_size_are_equal(self):
+        self.assertFalse(Mask(size=12) != self.blank_that_remains_blank)
+
+    def test_inequality_blanks_of_different_size_are_not_equal(self):
+        self.assertTrue(Mask(size=10) != self.blank_that_remains_blank)
+
+    def test_inequality_masks_with_same_punched_pattern_are_equal(self):
+        self.assertFalse(self.mask1__0_1_0 != self.mask2__0_1_0)
+
+    def test_inequality_masks_with_same_punched_pattern_are_equal_but_not_case_A(self):
+        """case_A: if their self.punched_repr was changed"""
+        self.mask1__0_1_0.punched_repr = '*'
+        self.assertTrue(self.mask1__0_1_0 != self.mask2__0_1_0)
+
+    def test_inequality_masks_with_same_punched_pattern_are_equal_but_not_case_B(self):
+        """case_B: if their self.solid_repr was changed"""
+        self.mask1__0_1_0.solid_repr = 'w'
+        self.assertTrue(self.mask1__0_1_0 != self.mask2__0_1_0)
+
+    def test_inequality_masks_with_same_punched_pattern_are_equal_but_not_case_C(self):
+        """case_C: if their Mask.generic_punched_repr was changed between instance creation"""
+        Mask.generic_punched_repr = '*'
+        mask_case_c__0_1_0 = Mask(size=3)
+        mask_case_c__0_1_0._punch_mask([False, True, False])
+        self.assertTrue(self.mask1__0_1_0 != mask_case_c__0_1_0)
+
+    def test_inequality_masks_with_same_punched_pattern_are_equal_but_not_case_D(self):
+        """case_D: if their Mask.generic_solid_repr was changed between instance creation"""
+        Mask.generic_solid_repr = '*'
+        mask_case_d__0_1_0 = Mask(size=3)
+        mask_case_d__0_1_0._punch_mask([False, True, False])
+        self.assertTrue(self.mask1__0_1_0 != mask_case_d__0_1_0)
+
+    def test_inequality_masks_with_same_punched_pattern_are_equal_in_case_E(self):
+        """case_E: if Mask.generic_punched_repr was changed before the two instance compared are created"""
+        Mask.generic_punched_repr = '*'
+        mask_case_e1__0_1_0 = Mask(size=3)
+        mask_case_e1__0_1_0._punch_mask([False, True, False])
+        mask_case_e2__0_1_0 = Mask(size=3)
+        mask_case_e2__0_1_0._punch_mask([False, True, False])
+        self.assertFalse(mask_case_e1__0_1_0 != mask_case_e2__0_1_0)
+
+    def test_inequality_masks_with_same_punched_pattern_are_equal_in_case_F(self):
+        """case_F: if Mask.generic_solid_repr was changed before the two instance compared are created"""
+        Mask.generic_solid_repr = '*'
+        mask_case_f1__0_1_0 = Mask(size=3)
+        mask_case_f1__0_1_0._punch_mask([False, True, False])
+        mask_case_f2__0_1_0 = Mask(size=3)
+        mask_case_f2__0_1_0._punch_mask([False, True, False])
+        self.assertFalse(mask_case_f1__0_1_0 != mask_case_f2__0_1_0)
+
     # not tested: case where both Mask.generic_solid_repr and Mask.generic_punched_repr are changed
     # @TODO: discuss design with Sean --> changing class variables values that represent masked pos is maybe a bad idea
-    # @TODO: tests for __ne__ or !=
-    # -------------- END TEST EQUALITY -----------------------------
+    # -------------- END TEST EQUALITY AND INEQUALITY -----------------------------
 
     # -------------- TEST _punch_mask - not unit test, it accesses the internals ------
     def test_punch_mask_all_through(self):
