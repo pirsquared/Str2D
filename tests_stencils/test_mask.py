@@ -77,6 +77,15 @@ class TestMaskInternals(TestMaskBase):
     # -------------- TEST @property mask ---------------------------------
 
     # -------------- TEST EQUALITY AND INEQUALITY ---------------------------------
+    def test_mask_equal_None(self):
+        with self.assertRaises(AssertionError) as context:
+            # Attention: must use '==' for this test, do not refactor to 'is None'
+            a = self.mask1__0_1_0 == None
+
+    def test_mask_equal_some_other_object(self):
+        with self.assertRaises(AssertionError) as context:
+            a = self.mask1__0_1_0 == [1, 2, 3]
+
     def test_equality_blanks_of_same_size_are_equal(self):
         self.assertTrue(Mask(size=12) == self.blank_that_remains_blank)
 
