@@ -188,8 +188,6 @@ class TestMaskInternals(TestMaskBase):
         mask_case_f2__0_1_0._punch_mask([False, True, False])
         self.assertFalse(mask_case_f1__0_1_0 != mask_case_f2__0_1_0)
 
-    # not tested: case where both Mask.generic_solid_repr and Mask.generic_punched_repr are changed
-    # @TODO: discuss design with Sean --> changing class variables values that represent masked pos is maybe a bad idea
     # -------------- END TEST EQUALITY AND INEQUALITY -----------------------------
 
     # -------------- TEST _punch_mask - not unit test, it accesses the internals ------

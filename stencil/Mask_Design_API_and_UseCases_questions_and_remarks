@@ -11,6 +11,10 @@ class Mask:
     # stencil.py:79: error: Cannot assign to class variable "punched_repr" via instance
     # stencil.py:80: error: Cannot assign to class variable "solid_repr" via instance
     # @TODO: dicsuss this design issue with Sean, either get rid of it, or install complex machinery to secure it
+
+-->    # not tested: case where both Mask.generic_solid_repr and Mask.generic_punched_repr are changed
+-->    # @TODO: discuss design with Sean --> changing class variables values that represent masked pos is maybe a bad idea
+
     generic_punched_repr = '^'   # type: ClassVar[str]
     generic_solid_repr = '-'     # type: ClassVar[str]
 
@@ -48,5 +52,3 @@ class Mask:
 @TODO: Pattern factories --> make mask patterns from... "patterns"
 @TODO: a class Pattern? Are Patterns objects in their own right
 @TODO: a Shield? a Mask subclass that is used to protect a string from modification at some positions? -- String2D with attribute shielded?
-
-
