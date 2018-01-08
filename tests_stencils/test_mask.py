@@ -48,6 +48,18 @@ class TestMaskInternals(TestMaskBase):
     def test_blank_mask_instance(self):
         self.assertIsInstance(self.blank_that_remains_blank, Mask)
 
+    def test_mask_with_size_is_None(self):
+        with self.assertRaises(AssertionError) as context:
+            none_mask = Mask(size=None)
+
+    def test_mask_with_size_is_default_0(self):
+        with self.assertRaises(AssertionError) as context:
+            none_mask = Mask()
+
+    def test_mask_with_size_is_0(self):
+        with self.assertRaises(AssertionError) as context:
+            none_mask = Mask(size=0)
+
     def test_blank_is_a_blank(self):
         """test is_a_blank() with a blank"""
         self.assertTrue(self.blank_that_remains_blank.is_a_blank())
