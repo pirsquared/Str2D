@@ -214,24 +214,8 @@ class Mask:
                         for elt, mask_value in zip(sequence, self._mask)])
 
 
-def tests() -> None:
-    print("test mask:")
-    inp = 'the truth is out there'
-    print(inp)
-    mask = Mask.from_pattern('^   ^     ^  ^   ^    ')
-    print(mask)
-    print(mask.apply_to(inp))
-    print()
-    print("test inverted mask:")
-    inverted_mask = mask.invert()
-    print(inp)
-    print(inverted_mask)
-    print(inverted_mask.apply_to(inp))
-
-
 if __name__ == '__main__':
-    # pass
-    tests()
+    pass
 
     # Use A Generic Sequence
     # a = [1, 2, 3]
