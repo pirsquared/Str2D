@@ -73,7 +73,8 @@ class Mask:
 
         :param size: int, the size of the mask
         """
-        assert size is not None and size > 0, "a Mask must have a size > 0"
+        assert size is not None and size > 0, \
+            f"a Mask must have a size > 0, the size provided was size={size}"
         self.size: int = size
         self._mask: Union[List, Tuple] = [SOLID for _ in range(self.size)]
 
@@ -96,7 +97,8 @@ class Mask:
         assert self.is_a_blank(), \
             "you must use a blank, a Mask cannot be re-punched"
         assert len(pattern) == self.size, \
-            "you must use a pattern that matches the blank size"
+            "you must use a pattern that matches the blank size: \
+            \npattern size:{len(pattern)} != mask size:{self.size}"
         self._mask = tuple([PUNCHED if pos
                             else SOLID for pos in pattern])
 
@@ -152,8 +154,9 @@ class Mask:
         """
         # ? opimization if values_to_punch is large > 64, maybe?:
         # _to_punch = set([elt for elt in values_to_punch])
-        assert pattern is not None and len(pattern) > 0, \
-            "you must provide a valid pattern"
+        assert pattern is not None, 'pattern must not be None'
+        assert len(pattern) > 0, \
+            f"you must provide a valid pattern, the pattern provides had size={len(pattern)}"
         mask = Mask(size=len(pattern))
         mask._punch_mask([True if elt in values_to_punch else False
                           for elt in pattern])
@@ -173,11 +176,14 @@ class Mask:
         :return: A new Mask object where the positions to punch are at
                  the given indices
         """
-        assert size is not None and size > 0, 'size of mask must be > 0'
+        assert size is not None and size > 0, \
+            f"a Mask must have a size > 0, the size provided was size={size}"
+        _mitp1 = max(indices_to_punch)
         assert max(indices_to_punch) < size, \
-            'the positive indices provided are out of bounds'
+            f'some of the positive indices provided are too large: {_mitp1} >= {size}'
+        _mitp2 = min(indices_to_punch)
         assert min(indices_to_punch) >= -size, \
-            'the negative indices provided are out of bounds'
+            f'some of the negative indices provided are too small: {_mitp2} < -{size}'
         mask = Mask(size=size)
         pattern = [False for _ in range(size)]
         for pos_to_punch in indices_to_punch:
@@ -198,7 +204,9 @@ class Mask:
         :return: a new sequence where the elements marked SOLID on the mask
                  have been concealed by the substitute character.
         """
-        assert len(sequence) == self.size
+        assert len(sequence) == self.size, \
+            f"the Mask must be the same size as the sequence to apply it to: \
+             \nlen(sequence): {len(sequence)} != mask size: {self.size}"
         if substitute == '':
             substitute = self.solid_repr
         return ''.join([str(elt) if mask_value is PUNCHED

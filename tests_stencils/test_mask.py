@@ -271,6 +271,14 @@ class TestMaskUsage(TestMaskBase):
     # -------------- END TEST invert ---------------------------------------------
 
     # -------------- TEST MASK FACTORY from_pattern() ----------------------------
+    def test_make_mask_from_pattern_pattern_is_None(self):
+        with self.assertRaises(AssertionError) as context:
+            a = Mask.from_pattern(pattern=None)
+
+    def test_make_mask_from_pattern_pattern_is_size_0(self):
+        with self.assertRaises(AssertionError) as context:
+            a = Mask.from_pattern(pattern=[])
+
     def test_make_fully_punched(self):
         size = 12
         pattern = '^' * size
@@ -303,6 +311,27 @@ class TestMaskUsage(TestMaskBase):
     # -------------- END TEST MASK FACTORY from_pattern() ------------------------
 
     # -------------- TEST MASK FACTORY from_indices() ----------------------------
+    def test_make_mask_from_indices_size_is_None(self):
+        with self.assertRaises(AssertionError) as context:
+            indices_to_punch = [0, 2, 4, 6, 8, 10]
+            evens = Mask.from_indices(size=None, indices_to_punch=indices_to_punch)
+
+    def test_make_mask_from_indices_size_is_0(self):
+        with self.assertRaises(AssertionError) as context:
+            indices_to_punch = [0, 2, 4, 6, 8, 10]
+            evens = Mask.from_indices(size=0, indices_to_punch=indices_to_punch)
+
+    def test_make_mask_from_indices_too_large(self):
+        with self.assertRaises(AssertionError) as context:
+            indices_to_punch = [0, 2, 4, 14, 10]
+            evens = Mask.from_indices(size=12, indices_to_punch=indices_to_punch)
+
+    def test_make_mask_from_indices_too_small(self):
+        with self.assertRaises(AssertionError) as context:
+            indices_to_punch = [-13, -10, -2]
+            evens = Mask.from_indices(size=12, indices_to_punch=indices_to_punch)
+            self.assertEqual(self.even_are_punched, evens)
+
     def test_make_even_mask_from_indices(self):
         indices_to_punch = [0, 2, 4, 6, 8, 10]
         evens = Mask.from_indices(size=12, indices_to_punch=indices_to_punch)
@@ -326,12 +355,20 @@ class TestMaskUsage(TestMaskBase):
     # -------------- END TEST MASK FACTORY from_indices() ------------------------
 
     # -------------- TEST apply_to() ---------------------------------------------
+    def test_apply_to_sequence_of_different_size_than_mask(self):
+        with self.assertRaises(AssertionError) as context:
+            input_str = 'all your bases are belong to us'
+            unmatching_pattern = '-----------------------------'     # pattern size != input_str size
+            dummy_expected = '-------------------------------'
+            mask = Mask.from_pattern(pattern=unmatching_pattern, values_to_punch='^')
+            self.assertEqual(dummy_expected, mask.apply_to(input_str))
+
     def test_all_solid_apply_to_str(self):
         input_str = 'all your bases are belong to us'
         pattern =   '-------------------------------'
         expected =  '-------------------------------'
         mask = Mask.from_pattern(pattern=pattern, values_to_punch='^')
-        self.assertEqual(pattern, mask.apply_to(input_str))
+        self.assertEqual(expected, mask.apply_to(input_str))
 
     def test_mask_apply_to_str_1(self):
         input_str = 'all your bases are belong to us'
@@ -378,9 +415,6 @@ class TestMaskUsage(TestMaskBase):
         self.assertEqual(expected, mask.invert().apply_to(input_str, substitute=' '))
 
     # -------------- END TEST apply_to() -----------------------------------------
-
-    # Errors thrown not tested --> @TODO create specific MaskingErrors first, replace assertions, then write the tests
-
 
 if __name__ == '__main__':
     unittest.main()
