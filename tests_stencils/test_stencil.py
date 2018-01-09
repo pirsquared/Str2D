@@ -29,6 +29,12 @@ class TestStencil(TestStencilBase):
     def test_instance(self):
         self.assertIsInstance(Stencil(), Stencil)
 
+    def test_from_masks(self):
+        mask1__0_1_0 = Mask(size=3)
+        mask1__0_1_0.from_pattern('_^_')
+        stencil = Stencil.from_masks([mask1__0_1_0, mask1__0_1_0])
+        self.assertIsInstance(stencil, Stencil)
+
     def test_str_1(self):
         expected = "^-^-^-^-^-^-\n-^-^-^-^-^-^\n^-^-^-^-^-^-\n-^-^-^-^-^-^\n^-^-^-^-^-^-\n-^-^-^-^-^-^\n^-^-^-^-^-^-\n-^-^-^-^-^-^\n^-^-^-^-^-^-\n-^-^-^-^-^-^\n^-^-^-^-^-^-\n-^-^-^-^-^-^"
         actual = str(self.stencil_12_12_alternate_even_odd)
