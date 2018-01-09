@@ -52,3 +52,19 @@ class Mask:
 @TODO: Pattern factories --> make mask patterns from... "patterns"
 @TODO: a class Pattern? Are Patterns objects in their own right
 @TODO: a Shield? a Mask subclass that is used to protect a string from modification at some positions? -- String2D with attribute shielded?
+
+
+class Crib:
+    """a superposition of several `Stencil`, where the perforated positions
+    remain perforated if all `Stencil` are perforated at that position, and
+    blocked otherwise
+    (A la "breaking the Enigma" kind of Crib)
+
+    # this could maybe be a function or method `make_crib(list of Stencil)`,
+    # returning an aggregate Stencil?
+
+    # Note (that probably takes us far out of scope):
+    # Stencils forming a Crib could be moved/perturbated, to discover a
+    # pattern?
+    # the Masks forming a Stencil could also be slided?
+    """
