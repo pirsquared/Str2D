@@ -1,4 +1,3 @@
-import textwrap
 import unittest
 
 from stencil import Mask
@@ -9,6 +8,7 @@ from stencil import Stencil
 class TestStencilBase(unittest.TestCase):
 
     def setUp(self):
+        # @TODO: use mocks for Mask?
         self.even_are_punched = Mask(size=12)
         self.even_are_punched._mask = tuple(SOLID if pos % 2 else PUNCHED for pos in range(12))
         self.odd_are_punched = Mask(size=12)

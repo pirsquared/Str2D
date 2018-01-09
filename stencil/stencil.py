@@ -2,7 +2,6 @@
 from typing import Sequence   #ClassVar, Iterable, List, Sequence, Tuple, Union
 
 from stencil.mask import Mask
-from stencil.perforation import SOLID, PUNCHED
 
 
 class Stencil:
@@ -19,10 +18,6 @@ class Stencil:
 
     def __str__(self):
         return '\n'.join([str(mask) for mask in self.masks])
-
-    # def apply_to(self, sequence: Sequence,
-    #              substitute: str='-') -> Sequence:
-    #     pass
 
     @staticmethod
     def from_masks(masks: Sequence['Mask']):
