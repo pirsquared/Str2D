@@ -1,4 +1,4 @@
-from stencil.stencil import Mask
-from stencil.stencil import Perforation
-from stencil.stencil import SOLID, PUNCHED
+from stencil.mask import Mask
+from stencil.perforation import Perforation
+from stencil.perforation import SOLID, PUNCHED
 from stencil.stencil import Stencil
