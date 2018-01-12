@@ -15,6 +15,7 @@ class Stencil:
         self.num_rows: int = 0
         self.num_cols: int = 0
         self.masks = None        # array of blanks [Mask(size=num_cols) for _ in range(num_rows)]
+        self.size = None
 
     def __str__(self):
         return '\n'.join([str(mask) for mask in self.masks])
@@ -33,6 +34,7 @@ class Stencil:
         stencil.num_rows = len(masks)
         stencil.num_cols = masks[0].size
         stencil.masks = masks
+        stencil.size = len(masks)
         return stencil
 
     def apply_to(self, seq_of_seq: Sequence[Sequence],
@@ -49,9 +51,11 @@ class Stencil:
         :return: a new sequence of sequences where the elements marked SOLID on
                  each mask have been concealed by the substitute character.
         """
+        assert len(seq_of_seq) == self.size, \
+            'the number of masks must match the number of sequences provided'
         sequences_with_stencil_applied = []
         for mask, seq in zip(self.masks, seq_of_seq):
-            sequences_with_stencil_applied.append(mask.apply_to(seq))
+            sequences_with_stencil_applied.append(mask.apply_to(seq, substitute=substitute))
         return '\n'.join(sequences_with_stencil_applied)
 
 
@@ -63,5 +67,14 @@ if __name__ == '__main__':
     masks = [Mask.from_pattern(pattern) for pattern in patterns]
     stencil = Stencil.from_masks(masks=masks)
 
-    result = stencil.apply_to(seq_of_seq=seq_of_s)
+    result = stencil.apply_to(seq_of_s)
+    print(result)
+
+    seq_of_s = [' 0  1  2  3', ' 4  5  6  7', ' 8  9 10 11', '12 13 14 15']
+    assert all(len(seq) == len(seq_of_s[0]) for seq in seq_of_s)
+    patterns = ['^^^  ^  ^  ', '  ^^^^  ^  ', '  ^  ^^^^^^', '^^^  ^  ^  ']
+    masks = [Mask.from_pattern(pattern) for pattern in patterns]
+    stencil = Stencil.from_masks(masks=masks)
+
+    result = stencil.apply_to(seq_of_s, '*')
     print(result)
