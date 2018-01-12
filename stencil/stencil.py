@@ -34,3 +34,19 @@ class Stencil:
         stencil.num_cols = masks[0].size
         stencil.masks = masks
         return stencil
+
+    def apply_to(self, sequence: Sequence[Sequence],
+                 substitute: str='-') -> Sequence[Sequence]:
+        """applies the Stencil to the sequence of sequences provided, and return
+        a new sequence of sequences of same dimensions where only the elements
+        located at punched positions on each masks are visible;
+        the other elements are concealed with the Masks self.solid_repr by default,
+        or a substitute if one is provided
+
+        :param sequence: a sequence of sequences to be masked
+        :param substitute: a character to be substituted to the SOLID
+                           positions in each mask
+        :return: a new sequence of sequences where the elements marked SOLID on
+                 each mask have been concealed by the substitute character.
+        """
+
