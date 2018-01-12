@@ -1,7 +1,7 @@
 import unittest
 
-from stencil import Mask
-from stencil import SOLID, PUNCHED
+from masking import Mask
+from masking import SOLID, PUNCHED
 
 
 # keep track of original defaults to reset them in tearDown()

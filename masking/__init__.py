@@ -11,7 +11,7 @@ stencil is more universally understood.
 """
 
 
-from stencil.mask import Mask
-from stencil.perforation import Perforation
-from stencil.perforation import SOLID, PUNCHED
-from stencil.stencil import Stencil
+from masking.mask import Mask
+from masking.perforation import Perforation
+from masking.perforation import SOLID, PUNCHED
+from masking.stencil import Stencil

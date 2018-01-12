@@ -1,8 +1,8 @@
 import unittest
 
-from stencil import Mask
-from stencil import SOLID, PUNCHED
-from stencil import Stencil
+from masking import Mask
+from masking import SOLID, PUNCHED
+from masking import Stencil
 
 
 class TestStencilBase(unittest.TestCase):

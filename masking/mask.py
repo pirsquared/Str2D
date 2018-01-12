@@ -1,7 +1,8 @@
 
 
 from typing import ClassVar, Iterable, List, Sequence, Tuple, Union
-from stencil.perforation import SOLID, PUNCHED
+from masking.perforation import SOLID, PUNCHED
+# from perforation import SOLID, PUNCHED
 
 
 class Mask:

@@ -1,7 +1,7 @@
 
 from typing import Sequence   #ClassVar, Iterable, List, Sequence, Tuple, Union
 
-from stencil.mask import Mask
+from masking.mask import Mask
 
 
 class Stencil:
@@ -50,3 +50,14 @@ class Stencil:
                  each mask have been concealed by the substitute character.
         """
 
+
+if __name__ == '__main__':
+
+    seq_of_seq = [' 0  1  2  3', ' 4  5  6  7', ' 8  9 10 11', '12 13 14 15']
+    assert all(len(seq) == len(seq_of_seq[0]) for seq in seq_of_seq)
+    pattern = '^^ ^^ ^^ ^^'
+    m0 = Mask.from_pattern(pattern)
+    stencil = Stencil.from_masks(masks=[m0 for _ in range(4)])
+
+    result = stencil.apply_to(sequence=seq_of_seq)
+    print(result)
