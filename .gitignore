@@ -113,4 +113,7 @@ scikits
 str2d-docs
 
 # mypy cache:
-stencil/.mypy_cache/*.*
+.mypy_cache/
+masking/__pycache__/
+str2d/__pycache__/
+tests_stencils/__pycache__/
