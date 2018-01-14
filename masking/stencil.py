@@ -76,6 +76,8 @@ class Stencil:
 
 if __name__ == '__main__':
 
+    # some printed tests to show the application of a stencil on a sequence of sequence
+
     print('regular:', end='\n')
     seq_of_s = [' 0  1  2  3', ' 4  5  6  7', ' 8  9 10 11', '12 13 14 15']
     assert all(len(seq) == len(seq_of_s[0]) for seq in seq_of_s)
