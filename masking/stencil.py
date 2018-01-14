@@ -14,7 +14,7 @@ class Stencil:
     def __init__(self):
         self.num_rows: int = 0
         self.num_cols: int = 0
-        self.masks = None        # array of blanks [Mask(size=num_cols) for _ in range(num_rows)]
+        self.masks = None
         self.size = None
 
     def __str__(self):
@@ -24,6 +24,14 @@ class Stencil:
         """inverses the stencil patterns and return a new Stencil object where
         all Masks are inverted
         """
+
+        # produces the correct output, however, it does not quite produce a
+        # 'clean result' on a grid -> see printed output from a main xeq
+        # inverted masked elements are combined with table separators.
+        # in a workflow pipeline, the mask/stencil ought to be applied on the elements
+        # rather than on the string
+        # I think we need to clarify and separate the use cases.
+
         inverted_masks = [m.invert() for m in self.masks]
         return Stencil.from_masks(masks=inverted_masks)
 
