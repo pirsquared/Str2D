@@ -31,6 +31,7 @@ class TestStencilBase(unittest.TestCase):
 
 
 class TestStencil(TestStencilBase):
+    # @TODO: add tests for raised AssertErrors
 
     def test_instance(self):
         self.assertIsInstance(Stencil(), Stencil)
