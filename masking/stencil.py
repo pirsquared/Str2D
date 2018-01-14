@@ -64,17 +64,17 @@ if __name__ == '__main__':
     seq_of_s = [' 0  1  2  3', ' 4  5  6  7', ' 8  9 10 11', '12 13 14 15']
     assert all(len(seq) == len(seq_of_s[0]) for seq in seq_of_s)
     patterns = ['^^^  ^  ^  ', '  ^^^^  ^  ', '  ^  ^^^^^^', '^^^  ^  ^  ']
-    masks = [Mask.from_pattern(pattern) for pattern in patterns]
-    stencil = Stencil.from_masks(masks=masks)
+    masks_1 = [Mask.from_pattern(pattern) for pattern in patterns]
+    stencil_1 = Stencil.from_masks(masks=masks_1)
 
-    result = stencil.apply_to(seq_of_s)
+    result = stencil_1.apply_to(seq_of_s)
     print(result)
 
     seq_of_s = [' 0  1  2  3', ' 4  5  6  7', ' 8  9 10 11', '12 13 14 15']
     assert all(len(seq) == len(seq_of_s[0]) for seq in seq_of_s)
     patterns = ['^^^  ^  ^  ', '  ^^^^  ^  ', '  ^  ^^^^^^', '^^^  ^  ^  ']
-    masks = [Mask.from_pattern(pattern) for pattern in patterns]
-    stencil = Stencil.from_masks(masks=masks)
+    masks_2 = [Mask.from_pattern(pattern) for pattern in patterns]
+    stencil_2 = Stencil.from_masks(masks=masks_2)
 
-    result = stencil.apply_to(seq_of_s, '*')
+    result = stencil_2.apply_to(seq_of_s, '*')
     print(result)
