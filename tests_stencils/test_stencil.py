@@ -61,6 +61,18 @@ class TestStencil(TestStencilBase):
         expected = ' 0 ** ** **\n**  5 ** **\n** ** 10 11\n12 ** ** **'
         self.assertEqual(expected, actual)
 
+    def test_invert_stencil_using_apply_to(self):
+        inverted_stencil_1 = self.stencil_1.invert()
+        expected = '--- 1- 2- 3\n 4---- 6- 7\n 8- 9------\n---13-14-15'
+        actual = inverted_stencil_1.apply_to(self.seq_of_seq_1)
+        self.assertEqual(expected, actual)
+
+    def test_invert_stencil_using_apply_to_w_substitute(self):
+        inverted_stencil_1 = self.stencil_1.invert()
+        expected = '### 1# 2# 3\n 4#### 6# 7\n 8# 9######\n###13#14#15'
+        actual = inverted_stencil_1.apply_to(self.seq_of_seq_1,  substitute='#')
+        self.assertEqual(expected, actual)
+
 
 if __name__ == '__main__':
     unittest.main()
