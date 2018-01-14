@@ -23,6 +23,12 @@ class TestStencilBase(unittest.TestCase):
                     self.odd_are_punched, self.even_are_punched, self.odd_are_punched, self.even_are_punched]
         self.stencil_12_12_alternate_odd_even = Stencil.from_masks(masks_oe)
 
+        self.seq_of_seq_1 = [' 0  1  2  3', ' 4  5  6  7', ' 8  9 10 11', '12 13 14 15']
+        assert all(len(seq) == len(self.seq_of_seq_1[0]) for seq in self.seq_of_seq_1)
+        patterns = ['^^^  ^  ^  ', '  ^^^^  ^  ', '  ^  ^^^^^^', '^^^  ^  ^  ']
+        masks = [Mask.from_pattern(pattern) for pattern in patterns]
+        self.stencil_1 = Stencil.from_masks(masks=masks)
+
 
 class TestStencil(TestStencilBase):
 
@@ -44,6 +50,16 @@ class TestStencil(TestStencilBase):
         expected = "-^-^-^-^-^-^\n^-^-^-^-^-^-\n-^-^-^-^-^-^\n^-^-^-^-^-^-\n-^-^-^-^-^-^\n^-^-^-^-^-^-\n-^-^-^-^-^-^\n^-^-^-^-^-^-\n-^-^-^-^-^-^\n^-^-^-^-^-^-\n-^-^-^-^-^-^\n^-^-^-^-^-^-"
         actual = str(self.stencil_12_12_alternate_odd_even)
         self.assertEqual(actual, expected)
+
+    def test_apply_stencil_to_seqofseq(self):
+        actual = self.stencil_1.apply_to(self.seq_of_seq_1)
+        expected = ' 0 -- -- --\n--  5 -- --\n-- -- 10 11\n12 -- -- --'
+        self.assertEqual(expected, actual)
+
+    def test_apply_stencil_to_seqofseq_w_substitute(self):
+        actual = self.stencil_1.apply_to(self.seq_of_seq_1, substitute='*')
+        expected = ' 0 ** ** **\n**  5 ** **\n** ** 10 11\n12 ** ** **'
+        self.assertEqual(expected, actual)
 
 
 if __name__ == '__main__':
