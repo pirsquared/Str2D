@@ -1,5 +1,5 @@
 
-from typing import Sequence   #ClassVar, Iterable, List, Sequence, Tuple, Union
+from typing import Sequence
 
 from masking.mask import Mask
 
@@ -11,13 +11,13 @@ class Stencil:
     an aggregate of `Mask` of same length, defining a rectangle of
     SOLID and PUNCHED positions
     """
-    def __init__(self):
+    def __init__(self) -> None:
         self.num_rows: int = 0
         self.num_cols: int = 0
         self.masks = None
         self.size = None
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '\n'.join([str(mask) for mask in self.masks])
 
     def invert(self) -> 'Stencil':
@@ -36,7 +36,7 @@ class Stencil:
         return Stencil.from_masks(masks=inverted_masks)
 
     @staticmethod
-    def from_masks(masks: Sequence['Mask']):
+    def from_masks(masks: Sequence['Mask']) -> 'Stencil':
         """factory method to make a Stencil from a Sequence of Mask
 
         :param masks: a Sequence of Mask
