@@ -20,6 +20,13 @@ class Stencil:
     def __str__(self):
         return '\n'.join([str(mask) for mask in self.masks])
 
+    def invert(self) -> 'Stencil':
+        """inverses the stencil patterns and return a new Stencil object where
+        all Masks are inverted
+        """
+        inverted_masks = [m.invert() for m in self.masks]
+        return Stencil.from_masks(masks=inverted_masks)
+
     @staticmethod
     def from_masks(masks: Sequence['Mask']):
         """factory method to make a Stencil from a Sequence of Mask
@@ -61,6 +68,7 @@ class Stencil:
 
 if __name__ == '__main__':
 
+    print('regular:', end='\n')
     seq_of_s = [' 0  1  2  3', ' 4  5  6  7', ' 8  9 10 11', '12 13 14 15']
     assert all(len(seq) == len(seq_of_s[0]) for seq in seq_of_s)
     patterns = ['^^^  ^  ^  ', '  ^^^^  ^  ', '  ^  ^^^^^^', '^^^  ^  ^  ']
@@ -70,6 +78,7 @@ if __name__ == '__main__':
     result = stencil_1.apply_to(seq_of_s)
     print(result)
 
+    print('\nsubstitute *:', end='\n')
     seq_of_s = [' 0  1  2  3', ' 4  5  6  7', ' 8  9 10 11', '12 13 14 15']
     assert all(len(seq) == len(seq_of_s[0]) for seq in seq_of_s)
     patterns = ['^^^  ^  ^  ', '  ^^^^  ^  ', '  ^  ^^^^^^', '^^^  ^  ^  ']
@@ -77,4 +86,13 @@ if __name__ == '__main__':
     stencil_2 = Stencil.from_masks(masks=masks_2)
 
     result = stencil_2.apply_to(seq_of_s, '*')
+    print(result)
+
+    print('\nregular inverted:', end='\n')
+    inverted_stencil_1 = stencil_1.invert()
+    result = inverted_stencil_1.apply_to(seq_of_s)
+    print(result)
+
+    print('\nsubstitute # inverted:', end='\n')
+    result = inverted_stencil_1.apply_to(seq_of_s, substitute='#' )
     print(result)
