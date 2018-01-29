@@ -111,3 +111,9 @@ scikits
 *.cpp
 
 str2d-docs
+
+# mypy cache:
+.mypy_cache/
+masking/__pycache__/
+str2d/__pycache__/
+tests_stencils/__pycache__/

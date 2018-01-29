@@ -1230,3 +1230,8 @@ class Str2D(object):
         s = utils.apply_mask(''.join(self.s), ''.join(msk.s), char, None)
         i = utils.chunk(s, self.width)
         return type(self)(i, **self._kwargs)
+
+
+if __name__ == '__main__':
+
+    print("running str2D")
