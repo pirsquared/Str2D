@@ -1,0 +1,63 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "Str2D"
+version = "0.1.0"  # Update this version number before you upload a new version to PyPI
+description = "Manipulate 2D strings in Python."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [
+  { name = "Sean Smith", email = "pirsquared.pirr@gmail.com" }
+]
+requires-python = ">=3.8"
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent"
+]
+dependencies = [
+  "numpy", "pandas"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/pirsquared/Str2D"
+
+[project.optional-dependencies]
+dev = [
+  "pytest",
+  "pytest-cov",
+  "build",
+  "twine",
+  "black",
+  "pre-commit",
+  "pylint",
+  "sphinx",
+  "ipython",
+]
+
+[tool.black]
+line-length = 88
+target-version = ['py36']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.nox
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | migrations
+  | __pycache__
+  | old
+  | static
+  | unmanaged
+)/
+'''

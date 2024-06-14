@@ -41,5 +41,5 @@ class TestPerforation(unittest.TestCase):
         self.assertIs(Perforation.PUNCHED, PUNCHED)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

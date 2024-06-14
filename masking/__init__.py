@@ -10,7 +10,6 @@ stencil is more universally understood.
 # https://en.wikipedia.org/wiki/Jacquard_loom#Principles_of_operation
 """
 
-
 from masking.mask import Mask
 from masking.perforation import Perforation
 from masking.perforation import SOLID, PUNCHED

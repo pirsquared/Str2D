@@ -1,0 +1,13 @@
+[MASTER]
+
+[MESSAGES CONTROL]
+disable=
+    too-few-public-methods
+
+[FORMAT]
+max-line-length=88
+
+[TYPECHECK]
+docstring-min-length=10
+ignored-modules=pyarrow.lib
+

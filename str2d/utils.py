@@ -1,4 +1,5 @@
 """General string parsing and manipulation functions"""
+
 import random
 import operator
 
@@ -17,7 +18,7 @@ def chunk(inp: str, chunk_size: int) -> map:
     >>> tuple(chunk('abcdefghij', 3))
     ('abc', 'def', 'ghi')
     """
-    return map(''.join, zip(*(inp[i::chunk_size] for i in range(chunk_size))))
+    return map("".join, zip(*(inp[i::chunk_size] for i in range(chunk_size))))
 
 
 def shuffle(inp: str, seed=None) -> str:
@@ -33,11 +34,16 @@ def shuffle(inp: str, seed=None) -> str:
     random.seed(seed)
     seq = list(inp)
     random.shuffle(seq)
-    return ''.join(seq)
+    return "".join(seq)
 
 
-def apply_mask(inp: str='', mask: str= '', char: str= ' ',
-               substitute_char: str=None, invert: bool=False) -> str:
+def apply_mask(
+    inp: str = "",
+    mask: str = "",
+    char: str = " ",
+    substitute_char: str = None,
+    invert: bool = False,
+) -> str:
     """Mask a string
 
     :param inp: str, the string to apply the mask to
@@ -61,15 +67,13 @@ def apply_mask(inp: str='', mask: str= '', char: str= ' ',
         # ParameterLengthDoNotMatchError
         # or could return inp if msk size does not match
     op = operator.ne if invert else operator.eq
-    return ''.join(
-        c if op(m, char) else (substitute_char or m)
-        for c, m in zip(inp, mask)
+    return "".join(
+        c if op(m, char) else (substitute_char or m) for c, m in zip(inp, mask)
     )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     import doctest
+
     print(doctest.testmod())
-
-

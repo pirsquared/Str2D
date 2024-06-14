@@ -1,7 +1,6 @@
-
-
 from typing import ClassVar, Iterable, List, Sequence, Tuple, Union
 from masking.perforation import SOLID, PUNCHED
+
 # from perforation import SOLID, PUNCHED
 
 
@@ -16,16 +15,17 @@ class Mask:
                                 a SOLID position in a Mask
     """
 
-    generic_punched_repr = '^'   # type: ClassVar[str]
-    generic_solid_repr = '-'     # type: ClassVar[str]
+    generic_punched_repr = "^"  # type: ClassVar[str]
+    generic_solid_repr = "-"  # type: ClassVar[str]
 
-    def __init__(self, size: int=0) -> None:
+    def __init__(self, size: int = 0) -> None:
         """Make a 'blank': a solid Mask of size=size without punched positions
 
         :param size: int, the size of the mask
         """
-        assert size is not None and size > 0, \
-            f"a Mask must have a size > 0, the size provided was size={size}"
+        assert (
+            size is not None and size > 0
+        ), f"a Mask must have a size > 0, the size provided was size={size}"
         self.size: int = size
         self._mask: Union[List, Tuple] = [SOLID for _ in range(self.size)]
 
@@ -45,42 +45,47 @@ class Mask:
                         True represents the sites to be punched,
                         and False the sites to remain solid
         """
-        assert self.is_a_blank(), \
-            "you must use a blank, a Mask cannot be re-punched"
-        assert len(pattern) == self.size, \
-            "you must use a pattern that matches the blank size: \
+        assert self.is_a_blank(), "you must use a blank, a Mask cannot be re-punched"
+        assert (
+            len(pattern) == self.size
+        ), "you must use a pattern that matches the blank size: \
             \npattern size:{len(pattern)} != mask size:{self.size}"
-        self._mask = tuple([PUNCHED if pos
-                            else SOLID for pos in pattern])
+        self._mask = tuple([PUNCHED if pos else SOLID for pos in pattern])
 
     def is_a_blank(self) -> bool:
-        """return True if the Mask is a blank, False otherwise
-        """
+        """return True if the Mask is a blank, False otherwise"""
         return all(elt == SOLID for elt in self._mask)
 
     def __str__(self) -> str:
-        return ''.join([str(self.punched_repr) if pos == PUNCHED
-                        else self.solid_repr for pos in self._mask])
+        return "".join(
+            [
+                str(self.punched_repr) if pos == PUNCHED else self.solid_repr
+                for pos in self._mask
+            ]
+        )
 
-    def __eq__(self, other: 'Mask') -> bool:
+    def __eq__(self, other: "Mask") -> bool:
         """two masks are equal if their SOLID/PUNCHED patterns are equal
         and their punched_repr and solid_repr are equal"""
         assert other is not None and type(other) == Mask
-        return self.mask == other.mask and \
-            self.punched_repr == other.punched_repr and \
-            self.solid_repr == other.solid_repr
+        return (
+            self.mask == other.mask
+            and self.punched_repr == other.punched_repr
+            and self.solid_repr == other.solid_repr
+        )
 
-    def invert(self) -> 'Mask':
+    def invert(self) -> "Mask":
         """inverses the mask pattern and return a new Mask object where punched
         positions are solid and solid positions are punched
         """
         inverted_mask = Mask(size=self.size)
-        inverted_mask._punch_mask([True if perf.toggle() == PUNCHED else False
-                                   for perf in self._mask])
+        inverted_mask._punch_mask(
+            [True if perf.toggle() == PUNCHED else False for perf in self._mask]
+        )
         return inverted_mask
 
     @staticmethod
-    def from_pattern(pattern: Sequence='', values_to_punch: Iterable='^') -> 'Mask':
+    def from_pattern(pattern: Sequence = "", values_to_punch: Iterable = "^") -> "Mask":
         """Mask factory that makes and returns a new Mask object from a pattern
         of values, a sequence, that can be compared to the values in to_punch to
         determine which positions to punch, and which to retain solid
@@ -105,17 +110,16 @@ class Mask:
         """
         # ? opimization if values_to_punch is large > 64, maybe?:
         # _to_punch = set([elt for elt in values_to_punch])
-        assert pattern is not None, 'pattern must not be None'
-        assert len(pattern) > 0, \
-            f"you must provide a valid pattern, the pattern provides had size={len(pattern)}"
+        assert pattern is not None, "pattern must not be None"
+        assert (
+            len(pattern) > 0
+        ), f"you must provide a valid pattern, the pattern provides had size={len(pattern)}"
         mask = Mask(size=len(pattern))
-        mask._punch_mask([True if elt in values_to_punch else False
-                          for elt in pattern])
+        mask._punch_mask([True if elt in values_to_punch else False for elt in pattern])
         return mask
 
     @staticmethod
-    def from_indices(size: int=0,
-                     indices_to_punch: Iterable[int]=set()) -> 'Mask':
+    def from_indices(size: int = 0, indices_to_punch: Iterable[int] = set()) -> "Mask":
         """Mask factory that makes a new Mask object where the positions to
         punch are at the given indices.
 
@@ -127,14 +131,17 @@ class Mask:
         :return: A new Mask object where the positions to punch are at
                  the given indices
         """
-        assert size is not None and size > 0, \
-            f"a Mask must have a size > 0, the size provided was size={size}"
+        assert (
+            size is not None and size > 0
+        ), f"a Mask must have a size > 0, the size provided was size={size}"
         _mitp1 = max(indices_to_punch)
-        assert max(indices_to_punch) < size, \
-            f'some of the positive indices provided are too large: {_mitp1} >= {size}'
+        assert (
+            max(indices_to_punch) < size
+        ), f"some of the positive indices provided are too large: {_mitp1} >= {size}"
         _mitp2 = min(indices_to_punch)
-        assert min(indices_to_punch) >= -size, \
-            f'some of the negative indices provided are too small: {_mitp2} < -{size}'
+        assert (
+            min(indices_to_punch) >= -size
+        ), f"some of the negative indices provided are too small: {_mitp2} < -{size}"
         mask = Mask(size=size)
         pattern = [False for _ in range(size)]
         for pos_to_punch in indices_to_punch:
@@ -142,8 +149,7 @@ class Mask:
         mask._punch_mask(pattern=pattern)
         return mask
 
-    def apply_to(self, sequence: Sequence,
-                 substitute: str='-') -> Sequence:
+    def apply_to(self, sequence: Sequence, substitute: str = "-") -> Sequence:
         """applies the mask to the sequence provided, and return a new
         sequence of same length where only the elements located at punched
         positions on the mask are visible; the other elements are concealed
@@ -155,17 +161,21 @@ class Mask:
         :return: a new sequence where the elements marked SOLID on the mask
                  have been concealed by the substitute character.
         """
-        assert len(sequence) == self.size, \
-            f"the Mask must be the same size as the sequence to apply it to: \
+        assert (
+            len(sequence) == self.size
+        ), f"the Mask must be the same size as the sequence to apply it to: \
              \nlen(sequence): {len(sequence)} != mask size: {self.size}"
-        if substitute == '':
+        if substitute == "":
             substitute = self.solid_repr
-        return ''.join([str(elt) if mask_value is PUNCHED
-                        else substitute
-                        for elt, mask_value in zip(sequence, self._mask)])
+        return "".join(
+            [
+                str(elt) if mask_value is PUNCHED else substitute
+                for elt, mask_value in zip(sequence, self._mask)
+            ]
+        )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pass
 
     # Use A Generic Sequence
