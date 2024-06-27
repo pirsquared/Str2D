@@ -21,7 +21,7 @@ jobs:
         --user
     - name: Install dependencies
       run: |
-        pip install -r docs/requirements.txt
+        pip install -r requirements.txt
     - name: Build a binary wheel and a source tarball
       run: python3 -m build
     - name: Build documentation
