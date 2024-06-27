@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<svg baseProfile="tiny" height="100%" version="1.2" viewBox="0 0 100 100" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs />
+    <path d="M 10 20 v 70 m 20 0 v -30 M 20.00 12.68 A 20 20 45 1 1 20.00 47.32 M 50 10 A 20 20 0 0 1 50 50 l 20 40 M 70 10 A 20 20 0 0 1 70 50 l 20 40 " fill="none" stroke="black" stroke-linecap="round" stroke-width="4" />
+    <circle cx="30" cy="30" fill="black" r="5" stroke-linecap="round" />
+</svg>

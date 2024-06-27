@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module Documentation &mdash; Str2D 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
+  
+    <link rel="shortcut icon" href="_static/pirr_logo.svg"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=938c9ccc"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Motivation" href="motivation.html" />
+    <link rel="prev" title="Str2D - String Squared" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Str2D
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Module Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#str2d.Box"><code class="docutils literal notranslate"><span class="pre">Box</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Box.assign_box_char"><code class="docutils literal notranslate"><span class="pre">Box.assign_box_char()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Box.h"><code class="docutils literal notranslate"><span class="pre">Box.h</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Box.r"><code class="docutils literal notranslate"><span class="pre">Box.r</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Box.t"><code class="docutils literal notranslate"><span class="pre">Box.t</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Box.v"><code class="docutils literal notranslate"><span class="pre">Box.v</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#str2d.BoxParts"><code class="docutils literal notranslate"><span class="pre">BoxParts</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.BoxParts.b"><code class="docutils literal notranslate"><span class="pre">BoxParts.b</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.BoxParts.c"><code class="docutils literal notranslate"><span class="pre">BoxParts.c</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.BoxParts.h"><code class="docutils literal notranslate"><span class="pre">BoxParts.h</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.BoxParts.l"><code class="docutils literal notranslate"><span class="pre">BoxParts.l</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.BoxParts.ll"><code class="docutils literal notranslate"><span class="pre">BoxParts.ll</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.BoxParts.lr"><code class="docutils literal notranslate"><span class="pre">BoxParts.lr</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.BoxParts.r"><code class="docutils literal notranslate"><span class="pre">BoxParts.r</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.BoxParts.t"><code class="docutils literal notranslate"><span class="pre">BoxParts.t</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.BoxParts.ul"><code class="docutils literal notranslate"><span class="pre">BoxParts.ul</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.BoxParts.ur"><code class="docutils literal notranslate"><span class="pre">BoxParts.ur</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.BoxParts.v"><code class="docutils literal notranslate"><span class="pre">BoxParts.v</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#str2d.BoxStyle"><code class="docutils literal notranslate"><span class="pre">BoxStyle</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.BoxStyle.BOLD"><code class="docutils literal notranslate"><span class="pre">BoxStyle.BOLD</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.BoxStyle.DASHED"><code class="docutils literal notranslate"><span class="pre">BoxStyle.DASHED</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.BoxStyle.DOUBLE"><code class="docutils literal notranslate"><span class="pre">BoxStyle.DOUBLE</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.BoxStyle.LIGHT_DASHED"><code class="docutils literal notranslate"><span class="pre">BoxStyle.LIGHT_DASHED</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.BoxStyle.SINGLE"><code class="docutils literal notranslate"><span class="pre">BoxStyle.SINGLE</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#str2d.Str2D"><code class="docutils literal notranslate"><span class="pre">Str2D</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.add"><code class="docutils literal notranslate"><span class="pre">Str2D.add()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.alpha"><code class="docutils literal notranslate"><span class="pre">Str2D.alpha</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.box"><code class="docutils literal notranslate"><span class="pre">Str2D.box()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.box_around"><code class="docutils literal notranslate"><span class="pre">Str2D.box_around()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.box_over"><code class="docutils literal notranslate"><span class="pre">Str2D.box_over()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.char"><code class="docutils literal notranslate"><span class="pre">Str2D.char</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.circle"><code class="docutils literal notranslate"><span class="pre">Str2D.circle()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.div"><code class="docutils literal notranslate"><span class="pre">Str2D.div()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.equal_height"><code class="docutils literal notranslate"><span class="pre">Str2D.equal_height()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.equal_shape"><code class="docutils literal notranslate"><span class="pre">Str2D.equal_shape()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.equal_width"><code class="docutils literal notranslate"><span class="pre">Str2D.equal_width()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.expand"><code class="docutils literal notranslate"><span class="pre">Str2D.expand()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.h"><code class="docutils literal notranslate"><span class="pre">Str2D.h</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.height"><code class="docutils literal notranslate"><span class="pre">Str2D.height</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.hide"><code class="docutils literal notranslate"><span class="pre">Str2D.hide()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.hole"><code class="docutils literal notranslate"><span class="pre">Str2D.hole()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.isdigit"><code class="docutils literal notranslate"><span class="pre">Str2D.isdigit()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.join_h"><code class="docutils literal notranslate"><span class="pre">Str2D.join_h()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.join_v"><code class="docutils literal notranslate"><span class="pre">Str2D.join_v()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.kwargs"><code class="docutils literal notranslate"><span class="pre">Str2D.kwargs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.lower"><code class="docutils literal notranslate"><span class="pre">Str2D.lower()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.lstrip"><code class="docutils literal notranslate"><span class="pre">Str2D.lstrip()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.pad"><code class="docutils literal notranslate"><span class="pre">Str2D.pad()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.parse"><code class="docutils literal notranslate"><span class="pre">Str2D.parse()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.pi"><code class="docutils literal notranslate"><span class="pre">Str2D.pi()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.r"><code class="docutils literal notranslate"><span class="pre">Str2D.r</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.replace"><code class="docutils literal notranslate"><span class="pre">Str2D.replace()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.roll"><code class="docutils literal notranslate"><span class="pre">Str2D.roll()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.roll_h"><code class="docutils literal notranslate"><span class="pre">Str2D.roll_h()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.roll_v"><code class="docutils literal notranslate"><span class="pre">Str2D.roll_v()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.rstrip"><code class="docutils literal notranslate"><span class="pre">Str2D.rstrip()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.shape"><code class="docutils literal notranslate"><span class="pre">Str2D.shape</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.split"><code class="docutils literal notranslate"><span class="pre">Str2D.split()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.strip"><code class="docutils literal notranslate"><span class="pre">Str2D.strip()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.strip2d"><code class="docutils literal notranslate"><span class="pre">Str2D.strip2d()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.struct_array_from_bool_array"><code class="docutils literal notranslate"><span class="pre">Str2D.struct_array_from_bool_array()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.struct_array_from_char_array"><code class="docutils literal notranslate"><span class="pre">Str2D.struct_array_from_char_array()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.struct_array_from_string"><code class="docutils literal notranslate"><span class="pre">Str2D.struct_array_from_string()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.struct_pad"><code class="docutils literal notranslate"><span class="pre">Str2D.struct_pad()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.t"><code class="docutils literal notranslate"><span class="pre">Str2D.t</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.title"><code class="docutils literal notranslate"><span class="pre">Str2D.title()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.upper"><code class="docutils literal notranslate"><span class="pre">Str2D.upper()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.v"><code class="docutils literal notranslate"><span class="pre">Str2D.v</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.validate_fill"><code class="docutils literal notranslate"><span class="pre">Str2D.validate_fill()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.validate_halign"><code class="docutils literal notranslate"><span class="pre">Str2D.validate_halign()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.validate_valign"><code class="docutils literal notranslate"><span class="pre">Str2D.validate_valign()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.width"><code class="docutils literal notranslate"><span class="pre">Str2D.width</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#str2d.Str3D"><code class="docutils literal notranslate"><span class="pre">Str3D</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str3D.h"><code class="docutils literal notranslate"><span class="pre">Str3D.h</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str3D.r"><code class="docutils literal notranslate"><span class="pre">Str3D.r</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str3D.roll"><code class="docutils literal notranslate"><span class="pre">Str3D.roll()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str3D.t"><code class="docutils literal notranslate"><span class="pre">Str3D.t</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str3D.update"><code class="docutils literal notranslate"><span class="pre">Str3D.update()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str3D.v"><code class="docutils literal notranslate"><span class="pre">Str3D.v</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str3D.view"><code class="docutils literal notranslate"><span class="pre">Str3D.view</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#str2d.boundary"><code class="docutils literal notranslate"><span class="pre">boundary()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#str2d.box_style"><code class="docutils literal notranslate"><span class="pre">box_style()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#str2d.circle"><code class="docutils literal notranslate"><span class="pre">circle()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#str2d.hole"><code class="docutils literal notranslate"><span class="pre">hole()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#str2d.region"><code class="docutils literal notranslate"><span class="pre">region()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#str2d.space"><code class="docutils literal notranslate"><span class="pre">space()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#str2d.spec_to_len"><code class="docutils literal notranslate"><span class="pre">spec_to_len()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#str2d.spec_to_positions"><code class="docutils literal notranslate"><span class="pre">spec_to_positions()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="motivation.html">Motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Str2D</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Module Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/str2d.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-str2d">
+<span id="module-documentation"></span><h1>Module Documentation<a class="headerlink" href="#module-str2d" title="Link to this heading"></a></h1>
+<p>Manipulate 2D strings in Python.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="str2d.Box">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">str2d.</span></span><span class="sig-name descname"><span class="pre">Box</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spec_v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spec_h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#str2d.BoxStyle" title="str2d.BoxStyle"><span class="pre">BoxStyle</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">BoxStyle.SINGLE</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/str2d.html#Box"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Box" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><code class="xref py py-class docutils literal notranslate"><span class="pre">Str2D</span></code></a></p>
+<p>Create a box around the data.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Box.assign_box_char">
+<span class="sig-name descname"><span class="pre">assign_box_char</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/str2d.html#Box.assign_box_char"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Box.assign_box_char" title="Link to this definition"></a></dt>
+<dd><p>Assign the box characters.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="str2d.Box.h">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">h</span></span><a class="headerlink" href="#str2d.Box.h" title="Link to this definition"></a></dt>
+<dd><p>Return the horizontal flip of the data.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="str2d.Box.r">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">r</span></span><a class="headerlink" href="#str2d.Box.r" title="Link to this definition"></a></dt>
+<dd><p>Return the 90 degree rotation of the data.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="str2d.Box.t">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">t</span></span><a class="headerlink" href="#str2d.Box.t" title="Link to this definition"></a></dt>
+<dd><p>Return the transpose of the data.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="str2d.Box.v">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">v</span></span><a class="headerlink" href="#str2d.Box.v" title="Link to this definition"></a></dt>
+<dd><p>Return the vertical flip of the data.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="str2d.BoxParts">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">str2d.</span></span><span class="sig-name descname"><span class="pre">BoxParts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ul</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ur</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ll</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/str2d.html#BoxParts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.BoxParts" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Box parts.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="str2d.BoxParts.b">
+<span class="sig-name descname"><span class="pre">b</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#str2d.BoxParts.b" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="str2d.BoxParts.c">
+<span class="sig-name descname"><span class="pre">c</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#str2d.BoxParts.c" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="str2d.BoxParts.h">
+<span class="sig-name descname"><span class="pre">h</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#str2d.BoxParts.h" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="str2d.BoxParts.l">
+<span class="sig-name descname"><span class="pre">l</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#str2d.BoxParts.l" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="str2d.BoxParts.ll">
+<span class="sig-name descname"><span class="pre">ll</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#str2d.BoxParts.ll" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="str2d.BoxParts.lr">
+<span class="sig-name descname"><span class="pre">lr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#str2d.BoxParts.lr" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="str2d.BoxParts.r">
+<span class="sig-name descname"><span class="pre">r</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#str2d.BoxParts.r" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="str2d.BoxParts.t">
+<span class="sig-name descname"><span class="pre">t</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#str2d.BoxParts.t" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="str2d.BoxParts.ul">
+<span class="sig-name descname"><span class="pre">ul</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#str2d.BoxParts.ul" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="str2d.BoxParts.ur">
+<span class="sig-name descname"><span class="pre">ur</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#str2d.BoxParts.ur" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="str2d.BoxParts.v">
+<span class="sig-name descname"><span class="pre">v</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#str2d.BoxParts.v" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="str2d.BoxStyle">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">str2d.</span></span><span class="sig-name descname"><span class="pre">BoxStyle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names=&lt;not</span> <span class="pre">given&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start=1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/str2d.html#BoxStyle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.BoxStyle" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Box styles.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="str2d.BoxStyle.BOLD">
+<span class="sig-name descname"><span class="pre">BOLD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#str2d.BoxStyle.BOLD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="str2d.BoxStyle.DASHED">
+<span class="sig-name descname"><span class="pre">DASHED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#str2d.BoxStyle.DASHED" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="str2d.BoxStyle.DOUBLE">
+<span class="sig-name descname"><span class="pre">DOUBLE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#str2d.BoxStyle.DOUBLE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="str2d.BoxStyle.LIGHT_DASHED">
+<span class="sig-name descname"><span class="pre">LIGHT_DASHED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#str2d.BoxStyle.LIGHT_DASHED" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="str2d.BoxStyle.SINGLE">
+<span class="sig-name descname"><span class="pre">SINGLE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#str2d.BoxStyle.SINGLE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="str2d.Str2D">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">str2d.</span></span><span class="sig-name descname"><span class="pre">Str2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">halign</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'left'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">valign</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'top'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fill</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/str2d.html#Str2D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Manipulate 2D strings in Python.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.add" title="Link to this definition"></a></dt>
+<dd><p>Add the data.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="str2d.Str2D.alpha">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">alpha</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#str2d.Str2D.alpha" title="Link to this definition"></a></dt>
+<dd><p>Return the alpha data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.box">
+<span class="sig-name descname"><span class="pre">box</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'single'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">around</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/str2d.html#Str2D.box"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.box" title="Link to this definition"></a></dt>
+<dd><p>Create a box around the data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.box_around">
+<span class="sig-name descname"><span class="pre">box_around</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">style</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/str2d.html#Str2D.box_around"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.box_around" title="Link to this definition"></a></dt>
+<dd><p>Create a box around the data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.box_over">
+<span class="sig-name descname"><span class="pre">box_over</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">style</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/str2d.html#Str2D.box_over"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.box_over" title="Link to this definition"></a></dt>
+<dd><p>Create a box over the data.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="str2d.Str2D.char">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">char</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#str2d.Str2D.char" title="Link to this definition"></a></dt>
+<dd><p>Return the character data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.circle">
+<span class="sig-name descname"><span class="pre">circle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">char</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'*'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/str2d.html#Str2D.circle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.circle" title="Link to this definition"></a></dt>
+<dd><p>Create a circle.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.div">
+<span class="sig-name descname"><span class="pre">div</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.div"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.div" title="Link to this definition"></a></dt>
+<dd><p>Divide the data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.equal_height">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">equal_height</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.equal_height"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.equal_height" title="Link to this definition"></a></dt>
+<dd><p>Make the data have equal height.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.equal_shape">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">equal_shape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.equal_shape"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.equal_shape" title="Link to this definition"></a></dt>
+<dd><p>Make the data have equal shape.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.equal_width">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">equal_width</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.equal_width"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.equal_width" title="Link to this definition"></a></dt>
+<dd><p>Make the data have equal width.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.expand">
+<span class="sig-name descname"><span class="pre">expand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.expand"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.expand" title="Link to this definition"></a></dt>
+<dd><p>Expand the data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of columns to expand, by default 0.</p></li>
+<li><p><strong>y</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of rows to expand, by default 0.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Additional keyword arguments to pass to the pad method.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The expanded data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="str2d.Str2D.h">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">h</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></em><a class="headerlink" href="#str2d.Str2D.h" title="Link to this definition"></a></dt>
+<dd><p>Return the horizontal flip of the data.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="str2d.Str2D.height">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">height</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#str2d.Str2D.height" title="Link to this definition"></a></dt>
+<dd><p>Return the height of the data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.hide">
+<span class="sig-name descname"><span class="pre">hide</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">char</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'</span> <span class="pre">'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/str2d.html#Str2D.hide"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.hide" title="Link to this definition"></a></dt>
+<dd><p>Hide the data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.hole">
+<span class="sig-name descname"><span class="pre">hole</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">char</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'*'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/str2d.html#Str2D.hole"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.hole" title="Link to this definition"></a></dt>
+<dd><p>Create a hole.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.isdigit">
+<span class="sig-name descname"><span class="pre">isdigit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.isdigit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.isdigit" title="Link to this definition"></a></dt>
+<dd><p>Return whether the data is a digit.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.join_h">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">join_h</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.join_h"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.join_h" title="Link to this definition"></a></dt>
+<dd><p>Join the data horizontally.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.join_v">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">join_v</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.join_v"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.join_v" title="Link to this definition"></a></dt>
+<dd><p>Join the data vertically.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="str2d.Str2D.kwargs">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">kwargs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span></em><a class="headerlink" href="#str2d.Str2D.kwargs" title="Link to this definition"></a></dt>
+<dd><p>Return the keyword arguments used to create the object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.lower">
+<span class="sig-name descname"><span class="pre">lower</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.lower"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.lower" title="Link to this definition"></a></dt>
+<dd><p>Return the lowercase version of the data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.lstrip">
+<span class="sig-name descname"><span class="pre">lstrip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.lstrip"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.lstrip" title="Link to this definition"></a></dt>
+<dd><p>Return the left stripped version of the data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.pad">
+<span class="sig-name descname"><span class="pre">pad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.pad"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.pad" title="Link to this definition"></a></dt>
+<dd><p>Pad the data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*args</strong> (<em>tuple</em>) – Positional arguments to np.pad.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Keyword arguments to np.pad.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The padded data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.parse">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.parse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.parse" title="Link to this definition"></a></dt>
+<dd><p>Parse the input data into a structured array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>Optional</em><em>[</em><em>Any</em><em>]</em><em>, </em><em>optional</em>) – The input data, by default None.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Additional keyword arguments to pass to the Str2</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A structured array with fields ‘char’ and ‘alpha’ created from the input</dt><dd><p>data.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.pi">
+<span class="sig-name descname"><span class="pre">pi</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/str2d.html#Str2D.pi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.pi" title="Link to this definition"></a></dt>
+<dd><p>Replace the data with pi.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="str2d.Str2D.r">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">r</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></em><a class="headerlink" href="#str2d.Str2D.r" title="Link to this definition"></a></dt>
+<dd><p>Return the 90 degree rotation of the data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.replace">
+<span class="sig-name descname"><span class="pre">replace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.replace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.replace" title="Link to this definition"></a></dt>
+<dd><p>Replace the data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.roll">
+<span class="sig-name descname"><span class="pre">roll</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.roll"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.roll" title="Link to this definition"></a></dt>
+<dd><p>Roll the data along an axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>int</em>) – The number of positions to roll.</p></li>
+<li><p><strong>axis</strong> (<em>int</em>) – The axis to roll along.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The rolled data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.roll_h">
+<span class="sig-name descname"><span class="pre">roll_h</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.roll_h"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.roll_h" title="Link to this definition"></a></dt>
+<dd><p>Roll the data horizontally.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>int</em>) – The number of positions to roll.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The rolled data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.roll_v">
+<span class="sig-name descname"><span class="pre">roll_v</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.roll_v"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.roll_v" title="Link to this definition"></a></dt>
+<dd><p>Roll the data vertically.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>int</em>) – The number of positions to roll.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The rolled data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.rstrip">
+<span class="sig-name descname"><span class="pre">rstrip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.rstrip"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.rstrip" title="Link to this definition"></a></dt>
+<dd><p>Return the right stripped version of the data.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="str2d.Str2D.shape">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shape</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#str2d.Str2D.shape" title="Link to this definition"></a></dt>
+<dd><p>Return the shape of the data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.split">
+<span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.split"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.split" title="Link to this definition"></a></dt>
+<dd><p>Split the data along an axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>axis</strong> (<em>int</em>) – The axis to split along.</p></li>
+<li><p><strong>*args</strong> (<em>int</em>) – The indices to pass to np.split.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of the split data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D">Str2D</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.strip">
+<span class="sig-name descname"><span class="pre">strip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.strip"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.strip" title="Link to this definition"></a></dt>
+<dd><p>Return the stripped version of the data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.strip2d">
+<span class="sig-name descname"><span class="pre">strip2d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">char</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'</span> <span class="pre">'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.strip2d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.strip2d" title="Link to this definition"></a></dt>
+<dd><p>Strip the data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.struct_array_from_bool_array">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">struct_array_from_bool_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">char</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.struct_array_from_bool_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.struct_array_from_bool_array" title="Link to this definition"></a></dt>
+<dd><p>Create a structured array from a boolean array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>array</strong> (<em>np.ndarray</em>) – A 2D boolean array.</p></li>
+<li><p><strong>char</strong> (<em>str</em>) – The character to use when the boolean array is True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A structured array with fields ‘char’ and ‘alpha’ created from the input</dt><dd><p>boolean array.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.struct_array_from_char_array">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">struct_array_from_char_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.struct_array_from_char_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.struct_array_from_char_array" title="Link to this definition"></a></dt>
+<dd><p>Create a structured array from a character array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>array</strong> (<em>np.ndarray</em>) – A 2D character array.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A structured array with fields ‘char’ and ‘alpha’ created from the input</dt><dd><p>character array.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.struct_array_from_string">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">struct_array_from_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.struct_array_from_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.struct_array_from_string" title="Link to this definition"></a></dt>
+<dd><p>Create a structured array from a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>string</strong> (<em>str</em>) – A string to convert to a structured array.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A structured array with fields ‘char’ and ‘alpha’ created from the input</dt><dd><p>string.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.struct_pad">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">struct_pad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.struct_pad"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.struct_pad" title="Link to this definition"></a></dt>
+<dd><p>Pad a structured array with a fill value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>array</strong> (<em>np.ndarray</em>) – A structured array with fields ‘char’ and ‘alpha’.</p></li>
+<li><p><strong>*args</strong> (<em>tuple</em>) – Positional arguments to np.pad.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Keyword arguments to np.pad.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A structured array with fields ‘char’ and ‘alpha’ padded with the fill value
+specified in the ‘fill’ keyword argument.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="str2d.Str2D.t">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">t</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></em><a class="headerlink" href="#str2d.Str2D.t" title="Link to this definition"></a></dt>
+<dd><p>Return the transpose of the data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.title">
+<span class="sig-name descname"><span class="pre">title</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.title"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.title" title="Link to this definition"></a></dt>
+<dd><p>Return the title version of the data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.upper">
+<span class="sig-name descname"><span class="pre">upper</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.upper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.upper" title="Link to this definition"></a></dt>
+<dd><p>Return the uppercase version of the data.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="str2d.Str2D.v">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">v</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></em><a class="headerlink" href="#str2d.Str2D.v" title="Link to this definition"></a></dt>
+<dd><p>Return the vertical flip of the data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.validate_fill">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate_fill</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fill</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.validate_fill"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.validate_fill" title="Link to this definition"></a></dt>
+<dd><p>Validate the fill value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fill</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>str</em><em>, </em><em>Tuple</em><em>[</em><em>str</em><em>, </em><em>int</em><em>]</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – The fill value, by default None</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the fill character and fill alpha value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[str, int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.validate_halign">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate_halign</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">halign</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.validate_halign"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.validate_halign" title="Link to this definition"></a></dt>
+<dd><p>Validate the horizontal alignment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>halign</strong> (<em>str</em>) – The horizontal alignment.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The validated horizontal alignment.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.validate_valign">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate_valign</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">valign</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.validate_valign"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.validate_valign" title="Link to this definition"></a></dt>
+<dd><p>Validate the vertical alignment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>valign</strong> (<em>str</em>) – The vertical alignment.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The validated vertical alignment.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="str2d.Str2D.width">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">width</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#str2d.Str2D.width" title="Link to this definition"></a></dt>
+<dd><p>Return the width of the data.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="str2d.Str3D">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">str2d.</span></span><span class="sig-name descname"><span class="pre">Str3D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/str2d.html#Str3D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str3D" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Manipulate 3D strings in Python.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="str2d.Str3D.h">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">h</span></span><a class="headerlink" href="#str2d.Str3D.h" title="Link to this definition"></a></dt>
+<dd><p>Return the horizontal flip of the data.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="str2d.Str3D.r">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">r</span></span><a class="headerlink" href="#str2d.Str3D.r" title="Link to this definition"></a></dt>
+<dd><p>Return the 90 degree rotation of the data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str3D.roll">
+<span class="sig-name descname"><span class="pre">roll</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str3D" title="str2d.Str3D"><span class="pre">Str3D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str3D.roll"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str3D.roll" title="Link to this definition"></a></dt>
+<dd><p>Roll the data along an axis.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="str2d.Str3D.t">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">t</span></span><a class="headerlink" href="#str2d.Str3D.t" title="Link to this definition"></a></dt>
+<dd><p>Return the transpose of the data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str3D.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/str2d.html#Str3D.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str3D.update" title="Link to this definition"></a></dt>
+<dd><p>Update the data.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="str2d.Str3D.v">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">v</span></span><a class="headerlink" href="#str2d.Str3D.v" title="Link to this definition"></a></dt>
+<dd><p>Return the vertical flip of the data.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="str2d.Str3D.view">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">view</span></span><a class="headerlink" href="#str2d.Str3D.view" title="Link to this definition"></a></dt>
+<dd><p>Return the view of the data.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="str2d.boundary">
+<span class="sig-prename descclassname"><span class="pre">str2d.</span></span><span class="sig-name descname"><span class="pre">boundary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_range</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/str2d.html#boundary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.boundary" title="Link to this definition"></a></dt>
+<dd><p>Create a boundary.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="str2d.box_style">
+<span class="sig-prename descclassname"><span class="pre">str2d.</span></span><span class="sig-name descname"><span class="pre">box_style</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#str2d.BoxStyle" title="str2d.BoxStyle"><span class="pre">BoxStyle</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.BoxParts" title="str2d.BoxParts"><span class="pre">BoxParts</span></a></span></span><a class="reference internal" href="_modules/str2d.html#box_style"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.box_style" title="Link to this definition"></a></dt>
+<dd><p>Return the box style.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="str2d.circle">
+<span class="sig-prename descclassname"><span class="pre">str2d.</span></span><span class="sig-name descname"><span class="pre">circle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">char</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'*'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/str2d.html#circle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.circle" title="Link to this definition"></a></dt>
+<dd><p>Create a circle.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="str2d.hole">
+<span class="sig-prename descclassname"><span class="pre">str2d.</span></span><span class="sig-name descname"><span class="pre">hole</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">char</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'*'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/str2d.html#hole"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.hole" title="Link to this definition"></a></dt>
+<dd><p>Create a hole.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="str2d.region">
+<span class="sig-prename descclassname"><span class="pre">str2d.</span></span><span class="sig-name descname"><span class="pre">region</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_range</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/str2d.html#region"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.region" title="Link to this definition"></a></dt>
+<dd><p>Create a region.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="str2d.space">
+<span class="sig-prename descclassname"><span class="pre">str2d.</span></span><span class="sig-name descname"><span class="pre">space</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/str2d.html#space"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.space" title="Link to this definition"></a></dt>
+<dd><p>Create a space.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="str2d.spec_to_len">
+<span class="sig-prename descclassname"><span class="pre">str2d.</span></span><span class="sig-name descname"><span class="pre">spec_to_len</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spec</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/str2d.html#spec_to_len"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.spec_to_len" title="Link to this definition"></a></dt>
+<dd><p>Convert a specification to length.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="str2d.spec_to_positions">
+<span class="sig-prename descclassname"><span class="pre">str2d.</span></span><span class="sig-name descname"><span class="pre">spec_to_positions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spec</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/str2d.html#spec_to_positions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.spec_to_positions" title="Link to this definition"></a></dt>
+<dd><p>Convert a specification to positions.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Str2D - String Squared" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="motivation.html" class="btn btn-neutral float-right" title="Motivation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sean Smith.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -4,16 +4,15 @@ Str2D - String Squared
 Install
 -------
 
-:code:`pip install git+https://github.com/pirsquared/Str2D`
+:code:`pip install str2d`
 
 
 .. toctree::
    :maxdepth: 1
    :caption: Contents:
 
-   Modules <modules>
+   Module Documentation <str2d>
    Motivation <motivation>
-   Purpose <purpose>
    About <about>
 
 
@@ -24,15 +23,18 @@ Simple operations
 
 Addition is intended to adjoin to objects side by side.
 
-.. code-block:: python
+.. testsetup::
 
     from str2d import Str2D
 
+.. testcode::
 
     letters_3x3 = Str2D('abc\ndef\nghi')
     numbers_3x3 = Str2D('012\n345\n678')
 
     letters_3x3 + numbers_3x3
+
+.. testoutput::
 
     abc012
     def345
@@ -40,9 +42,11 @@ Addition is intended to adjoin to objects side by side.
 
 However, you can include a separator in several different ways
 
-.. code-block:: python
+.. testcode::
 
    letters_3x3.add(numbers_3x3, sep='|')
+
+.. testoutput::
 
    abc|012
    def|345
@@ -50,9 +54,11 @@ However, you can include a separator in several different ways
 
 Or
 
-.. code-block:: python
+.. testcode::
 
    letters_3x3 + '|' + numbers_3x2
+
+.. testoutput::
 
    abc|012
    def|345
@@ -60,9 +66,11 @@ Or
 
 Division will stack to objects on top of one another
 
-.. code-block:: python
+.. testcode::
 
    letters_3x3 / numbers_3x3
+
+.. testoutput::
 
    abc
    def
@@ -73,9 +81,11 @@ Division will stack to objects on top of one another
 
 But like with addition, we can add a separator
 
-.. code-block:: python
+.. testcode::
 
    letters_3x3.div(numbers_3x3, sep='-')
+
+.. testoutput::
 
    abc
    def
@@ -87,9 +97,11 @@ But like with addition, we can add a separator
 
 Or equivalently
 
-.. code-block:: python
+.. testcode::
 
    letters_3x3 / '-' / numbers_3x3
+
+.. testoutput::
 
    abc
    def
@@ -105,3 +117,4 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+

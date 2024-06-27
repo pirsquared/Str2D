@@ -1,66 +1,97 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Motivation &mdash; Str2D 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Motivation &#8212; Str2D 0.1.1 documentation</title>
-    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '0.1.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+    <link rel="shortcut icon" href="_static/pirr_logo.svg"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=938c9ccc"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Purpose" href="purpose.html" />
-    <link rel="prev" title="Documentation for utils.py" href="modules/utils.html" /> 
-  </head>
-  <body>
-      <div class="header" role="banner"><h1 class="heading"><a href="index.html">
-          <span>Str2D 0.1.1 documentation</span></a></h1>
-        <h2 class="heading"><span>Motivation</span></h2>
-      </div>
-      <div class="topnav" role="navigation" aria-label="top navigation">
-      
-        <p>
-        «&#160;&#160;<a href="modules/utils.html">Documentation for <cite>utils.py</cite></a>
-        &#160;&#160;::&#160;&#160;
-        <a class="uplink" href="index.html">Contents</a>
-        &#160;&#160;::&#160;&#160;
-        <a href="purpose.html">Purpose</a>&#160;&#160;»
-        </p>
+    <link rel="next" title="About" href="about.html" />
+    <link rel="prev" title="Module Documentation" href="str2d.html" /> 
+</head>
 
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Str2D
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="str2d.html">Module Documentation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Motivation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#tree">Tree</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
+</ul>
+
+        </div>
       </div>
-      <div class="content">
-        
-        
-  <div class="section" id="motivation">
-<h1>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h1>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Str2D</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Motivation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/motivation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="motivation">
+<h1>Motivation<a class="headerlink" href="#motivation" title="Link to this heading"></a></h1>
 <p>I wanted a clean way to stitch together multi-lined strings,
 side by side.</p>
-<div class="section" id="tree">
-<h2>Tree<a class="headerlink" href="#tree" title="Permalink to this headline">¶</a></h2>
+<section id="tree">
+<h2>Tree<a class="headerlink" href="#tree" title="Link to this heading"></a></h2>
 <p>I was motivated while trying to represent the tree structure
 of a heap.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
-<span class="kn">from</span> <span class="nn">str2d</span> <span class="kn">import</span> <span class="n">Str2D</span>
-
-
-<span class="k">def</span> <span class="nf">children</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">children</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
     <span class="n">k</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 
@@ -74,7 +105,7 @@ of a heap.</p>
     <span class="p">)</span>
 
     <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="n">n</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">s2d</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Str2D</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">(</span>
             <span class="n">s2d</span><span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">/</span>
@@ -83,123 +114,53 @@ of a heap.</p>
 
 <span class="n">nodes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">15</span><span class="p">))</span>
 
-<span class="n">show_node</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nodes</span><span class="p">)</span>
+<span class="n">show_node</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nodes</span><span class="p">)</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="s1">&#39;double&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span></span>                            <span class="mi">0</span>
-
-            <span class="mi">1</span>                               <span class="mi">2</span>
-
-    <span class="mi">3</span>               <span class="mi">4</span>               <span class="mi">5</span>               <span class="mi">6</span>
-
-<span class="mi">7</span>       <span class="mi">8</span>       <span class="mi">9</span>       <span class="mi">10</span>      <span class="mi">11</span>      <span class="mi">12</span>      <span class="mi">13</span>      <span class="mi">14</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>╔════════════════════════════════╗
+║               0                ║
+║                                ║
+║       1               2        ║
+║                                ║
+║   3       4       5       6    ║
+║                                ║
+║ 7   8   9   10  11  12  13  14 ║
+║                                ║
+╚════════════════════════════════╝
 </pre></div>
 </div>
-</div>
-<div class="section" id="side-by-side">
-<h2>Side by Side<a class="headerlink" href="#side-by-side" title="Permalink to this headline">¶</a></h2>
-<p>I’m often using the Pandas library and want to show two dataframes side by side.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">str2d</span> <span class="kn">import</span> <span class="n">Str2D</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
-
-<span class="n">df1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]],</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">])</span>
-<span class="n">df2</span> <span class="o">=</span> <span class="o">-</span><span class="n">df1</span> <span class="o">*</span> <span class="mi">37</span>
-
-<span class="n">Str2D</span><span class="p">(</span><span class="n">df1</span><span class="p">)</span><span class="o">.</span><span class="n">box_dbl</span><span class="p">()</span> <span class="o">+</span> <span class="n">Str2D</span><span class="p">(</span><span class="n">df2</span><span class="p">)</span><span class="o">.</span><span class="n">box_sgl</span><span class="p">()</span>
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre><span></span>╔═══════╗┌─────────┐
-║   X  Y║│    X   Y│
-║A  1  2║│A -37 -74│
-╚═══════╝└─────────┘
-</pre></div>
-</div>
-</div>
-<div class="section" id="winter-card">
-<h2>Winter Card<a class="headerlink" href="#winter-card" title="Permalink to this headline">¶</a></h2>
-<p>You can even get creative with it.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">str2d</span> <span class="kn">import</span> <span class="n">Str2D</span>
-<span class="kn">from</span> <span class="nn">str2d</span> <span class="kn">import</span> <span class="n">utils</span>
-
-<span class="kn">from</span> <span class="nn">string</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">ascii_letters</span><span class="p">,</span>
-    <span class="n">digits</span>
-<span class="p">)</span>
-<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
-<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">clear_output</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+</section>
+</section>
 
 
-<span class="n">_tree_</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">         ^</span>
-<span class="s2">        /#\</span>
-<span class="s2">       /###\</span>
-<span class="s2">      /#####\</span>
-<span class="s2">     /#######\</span>
-<span class="s2">    /#########\</span>
-<span class="s2">   /###########\</span>
-<span class="s2">     #########</span>
-<span class="s2">&quot;&quot;&quot;</span>
-
-<span class="n">t</span> <span class="o">=</span> <span class="n">Str2D</span><span class="p">(</span><span class="n">_tree_</span><span class="p">)</span>
-
-<span class="n">chars</span> <span class="o">=</span> <span class="n">ascii_letters</span> <span class="o">+</span> <span class="n">digits</span>
-<span class="n">s</span> <span class="o">=</span> <span class="n">Str2D</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">chunk</span><span class="p">((</span><span class="n">chars</span> <span class="o">*</span> <span class="mi">6</span><span class="p">)[:</span><span class="mi">180</span><span class="p">],</span> <span class="mi">18</span><span class="p">))</span>
-
-<span class="n">los</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="mf">3.1415</span><span class="p">)</span><span class="o">.</span><span class="n">mask</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">t</span><span class="p">]]</span>
-
-
-<span class="n">card</span> <span class="o">=</span> <span class="n">Str2D</span><span class="o">.</span><span class="n">vjoin</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="nb">map</span><span class="p">(</span>
-    <span class="n">partial</span><span class="p">(</span><span class="n">Str2D</span><span class="o">.</span><span class="n">hjoin</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">),</span>
-    <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">los</span><span class="p">[</span><span class="n">i</span><span class="p">::</span><span class="mi">3</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)])</span>
-<span class="p">))</span><span class="o">.</span><span class="n">buffer</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">box_dbl</span><span class="p">()</span>
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre><span></span>╔══════════════════════════════════════════════════════════╗
-║ nxMPRtNc3vXXTIubLI                    nxMPRtNc3vXXTIubLI ║
-║ UBdeCWVCs TzdkKl2w          ^         UBdeCWVCs TzdkKl2w ║
-║ 5CEoGpYI   kOcfcOB         /#\        5CEoGpYI   kOcfcOB ║
-║ 2JH36oS     hDaFAQ        /###\       2JH36oS     hDaFAQ ║
-║ iRz9wg       Ap8gm       /#####\      iRz9wg       Ap8gm ║
-║ gn0Hl         kEj7      /#######\     gn0Hl         kEj7 ║
-║ yy5Z           aQl     /#########\    yy5Z           aQl ║
-║ 4ON             ed    /###########\   4ON             ed ║
-║ tpbFE         TPMo      #########     tpbFE         TPMo ║
-║ srjXFmWhWuhuqNqHvj                    srjXFmWhWuhuqNqHvj ║
-║                                                          ║
-║                    nxMPRtNc3vXXTIubLI                    ║
-║          ^         UBdeCWVCs TzdkKl2w          ^         ║
-║         /#\        5CEoGpYI   kOcfcOB         /#\        ║
-║        /###\       2JH36oS     hDaFAQ        /###\       ║
-║       /#####\      iRz9wg       Ap8gm       /#####\      ║
-║      /#######\     gn0Hl         kEj7      /#######\     ║
-║     /#########\    yy5Z           aQl     /#########\    ║
-║    /###########\   4ON             ed    /###########\   ║
-║      #########     tpbFE         TPMo      #########     ║
-║                    srjXFmWhWuhuqNqHvj                    ║
-╚══════════════════════════════════════════════════════════╝
-</pre></div>
-</div>
-</div>
-</div>
-
-
-      </div>
-      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
-      
-        <p>
-        «&#160;&#160;<a href="modules/utils.html">Documentation for <cite>utils.py</cite></a>
-        &#160;&#160;::&#160;&#160;
-        <a class="uplink" href="index.html">Contents</a>
-        &#160;&#160;::&#160;&#160;
-        <a href="purpose.html">Purpose</a>&#160;&#160;»
-        </p>
-
-      </div>
-
-    <div class="footer" role="contentinfo">
-        &#169; Copyright 2017, Sean Smith.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="str2d.html" class="btn btn-neutral float-left" title="Module Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="about.html" class="btn btn-neutral float-right" title="About" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
-  </body>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sean Smith.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
 </html>
