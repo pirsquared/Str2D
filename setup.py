@@ -30,6 +30,7 @@ setup(
             "sphinx-rtd-theme",
             "sphinx-copybutton",
             "sphinx-autobuild",
+            "sphinx-autodoc-typehints",
             "ipython",
         ],
     },
