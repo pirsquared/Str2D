@@ -16,10 +16,7 @@ setup(
     author_email="pirsquared.pirr@gmail.com",
     url="https://github.com/pirsquared/Str2D",
     packages=find_packages(),
-    install_requires=[
-        "numpy",
-        "pandas",
-    ],
+    install_requires=["numpy", "pandas", "mpmath"],
     extras_require={
         "dev": [
             "pytest",
@@ -30,6 +27,9 @@ setup(
             "pre-commit",
             "pylint",
             "sphinx",
+            "sphinx-rtd-theme",
+            "sphinx-copybutton",
+            "sphinx-autobuild",
             "ipython",
         ],
     },

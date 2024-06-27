@@ -1,8 +1,15 @@
 [MASTER]
+# Add files or directories to the ignore-patterns list
+ignore-patterns=conf.py,docs/source/conf.py
 
 [MESSAGES CONTROL]
 disable=
-    too-few-public-methods
+    too-few-public-methods,
+    too-many-lines,
+    too-many-instance-attributes,
+    too-many-locals,
+    too-many-arguments,
+    too-many-public-methods
 
 [FORMAT]
 max-line-length=88
@@ -10,4 +17,3 @@ max-line-length=88
 [TYPECHECK]
 docstring-min-length=10
 ignored-modules=pyarrow.lib
-

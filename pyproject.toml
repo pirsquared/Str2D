@@ -18,7 +18,7 @@ classifiers = [
   "Operating System :: OS Independent"
 ]
 dependencies = [
-  "numpy", "pandas"
+  "numpy", "pandas", "mpmath"
 ]
 
 [project.urls]
@@ -34,6 +34,9 @@ dev = [
   "pre-commit",
   "pylint",
   "sphinx",
+  "sphinx-rtd-theme",
+  "sphinx-copybutton",
+  "sphinx-autobuild",
   "ipython",
 ]
 

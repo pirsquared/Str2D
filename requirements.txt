@@ -1,0 +1,8 @@
+pandas
+numpy
+mpmath
+ipython
+sphinx
+sphinx-rtd-theme
+sphinx-copybutton
+sphinx-autobuild
