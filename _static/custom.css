@@ -1,0 +1,42 @@
+:root {
+    --py-input-border-color: rgba(104, 133, 92, 1.0);
+    --py-input-border-width: 1px;
+    --py-output-border-color: rgba(160, 97, 119, 1.0);
+    --py-output-border-width: 1px;
+    --doc-table-bg-opacity: 0.25;
+    --doc-table-attr-color: rgba(217, 175, 107, var(--doc-table-bg-opacity));
+    --doc-table-ex-color: rgba(175, 100, 88, var(--doc-table-bg-opacity));
+    --doc-table-desc-color: rgba(115, 111, 76, var(--doc-table-bg-opacity));
+}
+
+
+#box-parts-doc-table-1 tbody tr > :nth-child(n+1):nth-child(-n+3),
+#box-parts-doc-table-1 thead tr > :nth-child(1),
+#box-parts-doc-table-2 tbody tr:nth-child(1) > * {
+    background-color: var(--doc-table-attr-color);
+}
+#box-parts-doc-table-1 tbody tr > :nth-child(n+4):nth-child(-n+6),
+#box-parts-doc-table-1 thead tr > :nth-child(2),
+#box-parts-doc-table-2 tbody tr:nth-child(2) > * {
+    background-color: var(--doc-table-ex-color);
+}
+#box-parts-doc-table-1 tbody tr > :nth-child(n+7):nth-child(-n+9),
+#box-parts-doc-table-1 thead tr > :nth-child(3),
+#box-parts-doc-table-2 tbody tr:nth-child(3) > * {
+    background-color: var(--doc-table-desc-color);
+}
+
+
+.highlight-python {
+    border: var(--py-input-border-width)
+            solid
+            var(--py-input-border-color)
+            !important;
+}
+
+.highlight-none > * {
+    border: var(--py-output-border-width)
+            solid
+            var(--py-output-border-color)
+            !important;
+}

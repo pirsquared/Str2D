@@ -7,6 +7,7 @@
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=8236e275" />
 
   
     <link rel="shortcut icon" href="../_static/pirr_logo.svg"/>
@@ -82,6 +83,7 @@
 
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">reduce</span><span class="p">,</span> <span class="n">cached_property</span><span class="p">,</span> <span class="n">lru_cache</span>
 <span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">textwrap</span> <span class="kn">import</span> <span class="n">indent</span>
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
 <span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">Series</span>
@@ -93,7 +95,75 @@
 <a class="viewcode-back" href="../str2d.html#str2d.BoxParts">[docs]</a>
 <span class="nd">@dataclass</span>
 <span class="k">class</span> <span class="nc">BoxParts</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Box parts.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Box parts organizes box drawing characters into attribute names that are short</span>
+<span class="sd">    and descriptive. This makes it easier to work with box drawing characters in code.</span>
+
+<span class="sd">    The tables below show the attribute names, examples, and descriptions of the parts.</span>
+
+<span class="sd">    .. _box-parts-doc-table-1:</span>
+
+<span class="sd">    +-------------+-----------+-------------------------------------------+</span>
+<span class="sd">    | Attribute   | Example   | Description                               |</span>
+<span class="sd">    | Name        | Value     |                                           |</span>
+<span class="sd">    +====+===+====+===+===+===+==============+============+===============+</span>
+<span class="sd">    | ul | t | ur | ┌ | ┬ | ┐ | | Upper-left | | Top T    | | Upper-right |</span>
+<span class="sd">    |    |   |    |   |   |   | | corner     | | cross    | | corner      |</span>
+<span class="sd">    +----+---+----+---+---+---+--------------+------------+---------------+</span>
+<span class="sd">    | l  | c | r  | ├ | ┼ | ┤ | | Left T     | | Center   | | Right T     |</span>
+<span class="sd">    |    |   |    |   |   |   | | cross      | | cross    | | cross       |</span>
+<span class="sd">    +----+---+----+---+---+---+--------------+------------+---------------+</span>
+<span class="sd">    | ll | b | lr | └ | ┴ | ┘ | | Lower-left | | Bottom T | | Lower-right |</span>
+<span class="sd">    |    |   |    |   |   |   | | corner     | | cross    | | corner      |</span>
+<span class="sd">    +----+---+----+---+---+---+--------------+------------+---------------+</span>
+
+
+<span class="sd">    .. _box-parts-doc-table-2:</span>
+
+<span class="sd">    +----------------+----------+------------+</span>
+<span class="sd">    | Attribute Name | v        | h          |</span>
+<span class="sd">    +----------------+----------+------------+</span>
+<span class="sd">    | Example Value  | │        | ─          |</span>
+<span class="sd">    +----------------+----------+------------+</span>
+<span class="sd">    | Description    | Vertical | Horizontal |</span>
+<span class="sd">    +----------------+----------+------------+</span>
+
+<span class="sd">    You can pass any unicode characters to the BoxParts class and it will categorize</span>
+<span class="sd">    them accordingly. But the expectation would be something like the example above.</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        from str2d import BoxParts</span>
+
+<span class="sd">        BoxParts(</span>
+<span class="sd">            v=&#39;│&#39;, h=&#39;─&#39;, ul=&#39;┌&#39;, ur=&#39;┐&#39;, lr=&#39;┘&#39;, ll=&#39;└&#39;,</span>
+<span class="sd">            l=&#39;├&#39;, r=&#39;┤&#39;, t=&#39;┬&#39;, b=&#39;┴&#39;, c=&#39;┼&#39;</span>
+<span class="sd">        )</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">        ┌─┬─┐</span>
+<span class="sd">        │ │ │</span>
+<span class="sd">        ├─┼─┤</span>
+<span class="sd">        │ │ │</span>
+<span class="sd">        └─┴─┘</span>
+
+<span class="sd">    Or you can pass the any characters you want to the BoxParts class and it will</span>
+<span class="sd">    categorize them accordingly.  In this example we use the unicode character for</span>
+<span class="sd">    a full block to be all the box parts.</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        BoxParts(*&quot;█&quot;*11)</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">        █████</span>
+<span class="sd">        █ █ █</span>
+<span class="sd">        █████</span>
+<span class="sd">        █ █ █</span>
+<span class="sd">        █████</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">v</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># Vertical line</span>
     <span class="n">h</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># Horizontal line</span>
@@ -105,65 +175,323 @@
     <span class="n">r</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># Right T (cross)</span>
     <span class="n">t</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># Top T (cross)</span>
     <span class="n">b</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># Bottom T (cross)</span>
-    <span class="n">c</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># Center cross</span></div>
+    <span class="n">c</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># Center cross</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the box parts as a string to illustrate what the box looks like.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ul</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">ur</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">c</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ll</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">lr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the box parts as a string to illustrate what the box looks like.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+<div class="viewcode-block" id="BoxParts.to_str2d">
+<a class="viewcode-back" href="../str2d.html#str2d.BoxParts.to_str2d">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_str2d</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert the box parts to a Str2D object.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Str2D</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="n">halign</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="n">valign</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">)</span></div>
+</div>
 
 
 
 <div class="viewcode-block" id="BoxStyle">
 <a class="viewcode-back" href="../str2d.html#str2d.BoxStyle">[docs]</a>
 <span class="k">class</span> <span class="nc">BoxStyle</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Box styles.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;BoxStyle is an enumeration of different box styles that can be used to draw</span>
+<span class="sd">    boxes around text.  The box styles are made up of BoxParts objects that contain</span>
+<span class="sd">    the box drawing characters.  The main purpose of this class is to provide a way</span>
+<span class="sd">    to apply box drawing over Str2D objects.</span>
 
-    <span class="n">SINGLE</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">DOUBLE</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">BOLD</span> <span class="o">=</span> <span class="mi">2</span>
-    <span class="n">DASHED</span> <span class="o">=</span> <span class="mi">3</span>
-    <span class="n">LIGHT_DASHED</span> <span class="o">=</span> <span class="mi">4</span></div>
+<span class="sd">    You can see all the box styles by calling the swatches method.</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        from str2d import BoxStyle</span>
+
+<span class="sd">        BoxStyle.swatches()</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">                                                        DASHED      DASHED</span>
+<span class="sd">                                            DASHED      DOUBLE      DOUBLE</span>
+<span class="sd">                    SINGLE      DASHED      DOUBLE      LIGHT       HEAVY</span>
+<span class="sd">        SINGLE      HEAVY       DOUBLE      HEAVY       HEAVY       LIGHT</span>
+<span class="sd">        ┌─┬─┐       ┏━┳━┓       ┌╌┬╌┐       ┏╍┳╍┓       ┍╍┯╍┑       ┎╌┰╌┒</span>
+<span class="sd">        │ │ │       ┃ ┃ ┃       ╎ ╎ ╎       ╏ ╏ ╏       ╎ ╎ ╎       ╏ ╏ ╏</span>
+<span class="sd">        ├─┼─┤       ┣━╋━┫       ├╌┼╌┤       ┣╍╋╍┫       ┝╍┿╍┥       ┠╌╂╌┨</span>
+<span class="sd">        │ │ │       ┃ ┃ ┃       ╎ ╎ ╎       ╏ ╏ ╏       ╎ ╎ ╎       ╏ ╏ ╏</span>
+<span class="sd">        └─┴─┘       ┗━┻━┛       └╌┴╌┘       ┗╍┻╍┛       ┕╍┷╍┙       ┖╌┸╌┚</span>
+
+<span class="sd">                                DASHED      DASHED</span>
+<span class="sd">                    DASHED      TRIPLE      TRIPLE                  DASHED</span>
+<span class="sd">        DASHED      TRIPLE      LIGHT       HEAVY       DASHED      QUADRUPLE</span>
+<span class="sd">        TRIPLE      HEAVY       HEAVY       LIGHT       QUADRUPLE   HEAVY</span>
+<span class="sd">        ┌┄┬┄┐       ┏┅┳┅┓       ┍┅┯┅┑       ┎┄┰┄┒       ┌┈┬┈┐       ┏┉┳┉┓</span>
+<span class="sd">        ┆ ┆ ┆       ┇ ┇ ┇       ┆ ┆ ┆       ┇ ┇ ┇       ┊ ┊ ┊       ┋ ┋ ┋</span>
+<span class="sd">        ├┄┼┄┤       ┣┅╋┅┫       ┝┅┿┅┥       ┠┄╂┄┨       ├┈┼┈┤       ┣┉╋┉┫</span>
+<span class="sd">        ┆ ┆ ┆       ┇ ┇ ┇       ┆ ┆ ┆       ┇ ┇ ┇       ┊ ┊ ┊       ┋ ┋ ┋</span>
+<span class="sd">        └┄┴┄┘       ┗┅┻┅┛       ┕┅┷┅┙       ┖┄┸┄┚       └┈┴┈┘       ┗┉┻┉┛</span>
+
+<span class="sd">        DASHED      DASHED</span>
+<span class="sd">        QUADRUPLE   QUADRUPLE               DASHED      DASHED      DASHED</span>
+<span class="sd">        LIGHT       HEAVY       SINGLE      DOUBLE      TRIPLE      QUADRUPLE</span>
+<span class="sd">        HEAVY       LIGHT       ROUND       ROUND       ROUND       ROUND</span>
+<span class="sd">        ┍┉┯┉┑       ┎┈┰┈┒       ╭─┬─╮       ╭╌┬╌╮       ╭┄┬┄╮       ╭┈┬┈╮</span>
+<span class="sd">        ┊ ┊ ┊       ┋ ┋ ┋       │ │ │       ╎ ╎ ╎       ┆ ┆ ┆       ┊ ┊ ┊</span>
+<span class="sd">        ┝┉┿┉┥       ┠┈╂┈┨       ├─┼─┤       ├╌┼╌┤       ├┄┼┄┤       ├┈┼┈┤</span>
+<span class="sd">        ┊ ┊ ┊       ┋ ┋ ┋       │ │ │       ╎ ╎ ╎       ┆ ┆ ┆       ┊ ┊ ┊</span>
+<span class="sd">        ┕┉┷┉┙       ┖┈┸┈┚       ╰─┴─╯       ╰╌┴╌╯       ╰┄┴┄╯       ╰┈┴┈╯</span>
+
+<span class="sd">                    DOUBLE      SINGLE      LIGHT       HEAVY</span>
+<span class="sd">        DOUBLE      SINGLE      DOUBLE      HEAVY       LIGHT</span>
+<span class="sd">        ╔═╦═╗       ╓─╥─╖       ╒═╤═╕       ┎─┰─┒       ┍━┯━┑</span>
+<span class="sd">        ║ ║ ║       ║ ║ ║       │ │ │       ┃ ┃ ┃       │ │ │</span>
+<span class="sd">        ╠═╬═╣       ╟─╫─╢       ╞═╪═╡       ┠─╂─┨       ┝━┿━┥</span>
+<span class="sd">        ║ ║ ║       ║ ║ ║       │ │ │       ┃ ┃ ┃       │ │ │</span>
+<span class="sd">        ╚═╩═╝       ╙─╨─╜       ╘═╧═╛       ┖─┸─┚       ┕━┷━┙</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">SINGLE</span> <span class="o">=</span> <span class="n">BoxParts</span><span class="p">(</span><span class="o">*</span><span class="s2">&quot;│─┌┐┘└├┤┬┴┼&quot;</span><span class="p">)</span>
+    <span class="n">SINGLE_HEAVY</span> <span class="o">=</span> <span class="n">BoxParts</span><span class="p">(</span><span class="o">*</span><span class="s2">&quot;┃━┏┓┛┗┣┫┳┻╋&quot;</span><span class="p">)</span>
+    <span class="n">DASHED_DOUBLE</span> <span class="o">=</span> <span class="n">BoxParts</span><span class="p">(</span><span class="o">*</span><span class="s2">&quot;╎╌┌┐┘└├┤┬┴┼&quot;</span><span class="p">)</span>
+    <span class="n">DASHED_DOUBLE_HEAVY</span> <span class="o">=</span> <span class="n">BoxParts</span><span class="p">(</span><span class="o">*</span><span class="s2">&quot;╏╍┏┓┛┗┣┫┳┻╋&quot;</span><span class="p">)</span>
+    <span class="n">DASHED_DOUBLE_LIGHT_HEAVY</span> <span class="o">=</span> <span class="n">BoxParts</span><span class="p">(</span><span class="o">*</span><span class="s2">&quot;╎╍┍┑┙┕┝┥┯┷┿&quot;</span><span class="p">)</span>
+    <span class="n">DASHED_DOUBLE_HEAVY_LIGHT</span> <span class="o">=</span> <span class="n">BoxParts</span><span class="p">(</span><span class="o">*</span><span class="s2">&quot;╏╌┎┒┚┖┠┨┰┸╂&quot;</span><span class="p">)</span>
+    <span class="n">DASHED_TRIPLE</span> <span class="o">=</span> <span class="n">BoxParts</span><span class="p">(</span><span class="o">*</span><span class="s2">&quot;┆┄┌┐┘└├┤┬┴┼&quot;</span><span class="p">)</span>
+    <span class="n">DASHED_TRIPLE_HEAVY</span> <span class="o">=</span> <span class="n">BoxParts</span><span class="p">(</span><span class="o">*</span><span class="s2">&quot;┇┅┏┓┛┗┣┫┳┻╋&quot;</span><span class="p">)</span>
+    <span class="n">DASHED_TRIPLE_LIGHT_HEAVY</span> <span class="o">=</span> <span class="n">BoxParts</span><span class="p">(</span><span class="o">*</span><span class="s2">&quot;┆┅┍┑┙┕┝┥┯┷┿&quot;</span><span class="p">)</span>
+    <span class="n">DASHED_TRIPLE_HEAVY_LIGHT</span> <span class="o">=</span> <span class="n">BoxParts</span><span class="p">(</span><span class="o">*</span><span class="s2">&quot;┇┄┎┒┚┖┠┨┰┸╂&quot;</span><span class="p">)</span>
+    <span class="n">DASHED_QUADRUPLE</span> <span class="o">=</span> <span class="n">BoxParts</span><span class="p">(</span><span class="o">*</span><span class="s2">&quot;┊┈┌┐┘└├┤┬┴┼&quot;</span><span class="p">)</span>
+    <span class="n">DASHED_QUADRUPLE_HEAVY</span> <span class="o">=</span> <span class="n">BoxParts</span><span class="p">(</span><span class="o">*</span><span class="s2">&quot;┋┉┏┓┛┗┣┫┳┻╋&quot;</span><span class="p">)</span>
+    <span class="n">DASHED_QUADRUPLE_LIGHT_HEAVY</span> <span class="o">=</span> <span class="n">BoxParts</span><span class="p">(</span><span class="o">*</span><span class="s2">&quot;┊┉┍┑┙┕┝┥┯┷┿&quot;</span><span class="p">)</span>
+    <span class="n">DASHED_QUADRUPLE_HEAVY_LIGHT</span> <span class="o">=</span> <span class="n">BoxParts</span><span class="p">(</span><span class="o">*</span><span class="s2">&quot;┋┈┎┒┚┖┠┨┰┸╂&quot;</span><span class="p">)</span>
+    <span class="n">SINGLE_ROUND</span> <span class="o">=</span> <span class="n">BoxParts</span><span class="p">(</span><span class="o">*</span><span class="s2">&quot;│─╭╮╯╰├┤┬┴┼&quot;</span><span class="p">)</span>
+    <span class="n">DASHED_DOUBLE_ROUND</span> <span class="o">=</span> <span class="n">BoxParts</span><span class="p">(</span><span class="o">*</span><span class="s2">&quot;╎╌╭╮╯╰├┤┬┴┼&quot;</span><span class="p">)</span>
+    <span class="n">DASHED_TRIPLE_ROUND</span> <span class="o">=</span> <span class="n">BoxParts</span><span class="p">(</span><span class="o">*</span><span class="s2">&quot;┆┄╭╮╯╰├┤┬┴┼&quot;</span><span class="p">)</span>
+    <span class="n">DASHED_QUADRUPLE_ROUND</span> <span class="o">=</span> <span class="n">BoxParts</span><span class="p">(</span><span class="o">*</span><span class="s2">&quot;┊┈╭╮╯╰├┤┬┴┼&quot;</span><span class="p">)</span>
+    <span class="n">DOUBLE</span> <span class="o">=</span> <span class="n">BoxParts</span><span class="p">(</span><span class="o">*</span><span class="s2">&quot;║═╔╗╝╚╠╣╦╩╬&quot;</span><span class="p">)</span>
+    <span class="n">DOUBLE_SINGLE</span> <span class="o">=</span> <span class="n">BoxParts</span><span class="p">(</span><span class="o">*</span><span class="s2">&quot;║─╓╖╜╙╟╢╥╨╫&quot;</span><span class="p">)</span>
+    <span class="n">SINGLE_DOUBLE</span> <span class="o">=</span> <span class="n">BoxParts</span><span class="p">(</span><span class="o">*</span><span class="s2">&quot;│═╒╕╛╘╞╡╤╧╪&quot;</span><span class="p">)</span>
+    <span class="n">LIGHT_HEAVY</span> <span class="o">=</span> <span class="n">BoxParts</span><span class="p">(</span><span class="o">*</span><span class="s2">&quot;┃─┎┒┚┖┠┨┰┸╂&quot;</span><span class="p">)</span>
+    <span class="n">HEAVY_LIGHT</span> <span class="o">=</span> <span class="n">BoxParts</span><span class="p">(</span><span class="o">*</span><span class="s2">&quot;│━┍┑┙┕┝┥┯┷┿&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="BoxStyle.to_str2d">
+<a class="viewcode-back" href="../str2d.html#str2d.BoxStyle.to_str2d">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_str2d</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert the box style to a Str2D object.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">))</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">to_str2d</span><span class="p">()</span></div>
 
 
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the box style as a string to illustrate what the box looks like.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_str2d</span><span class="p">())</span>
 
-<span class="n">_BOX_CHARS</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">BoxStyle</span><span class="o">.</span><span class="n">SINGLE</span><span class="p">:</span> <span class="n">BoxParts</span><span class="p">(</span><span class="o">*</span><span class="s2">&quot;│─┌┐┘└├┤┬┴┼&quot;</span><span class="p">),</span>
-    <span class="n">BoxStyle</span><span class="o">.</span><span class="n">DOUBLE</span><span class="p">:</span> <span class="n">BoxParts</span><span class="p">(</span><span class="o">*</span><span class="s2">&quot;║═╔╗╝╚╠╣╦╩╬&quot;</span><span class="p">),</span>
-    <span class="n">BoxStyle</span><span class="o">.</span><span class="n">BOLD</span><span class="p">:</span> <span class="n">BoxParts</span><span class="p">(</span><span class="o">*</span><span class="s2">&quot;┃━┏┓┛┗┣┫┳┻╋&quot;</span><span class="p">),</span>
-    <span class="n">BoxStyle</span><span class="o">.</span><span class="n">DASHED</span><span class="p">:</span> <span class="n">BoxParts</span><span class="p">(</span><span class="o">*</span><span class="s2">&quot;╎╍┌┐┘└├┤┬┴┼&quot;</span><span class="p">),</span>
-    <span class="n">BoxStyle</span><span class="o">.</span><span class="n">LIGHT_DASHED</span><span class="p">:</span> <span class="n">BoxParts</span><span class="p">(</span><span class="o">*</span><span class="s2">&quot;┆┄┌┐┘└├┤┬┴┼&quot;</span><span class="p">),</span>
-<span class="p">}</span>
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the box style as a string to illustrate what the box looks like.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
+<div class="viewcode-block" id="BoxStyle.swatches">
+<a class="viewcode-back" href="../str2d.html#str2d.BoxStyle.swatches">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">swatches</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a Str2D object with the box style swatches.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="box_style">
-<a class="viewcode-back" href="../str2d.html#str2d.box_style">[docs]</a>
-<span class="k">def</span> <span class="nf">box_style</span><span class="p">(</span><span class="n">style</span><span class="p">:</span> <span class="n">BoxStyle</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BoxParts</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the box style.&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">style</span> <span class="ow">in</span> <span class="n">BoxStyle</span><span class="o">.</span><span class="n">__members__</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-        <span class="k">return</span> <span class="n">_BOX_CHARS</span><span class="p">[</span><span class="n">BoxStyle</span><span class="p">[</span><span class="n">style</span><span class="p">]]</span>
-    <span class="k">return</span> <span class="n">_BOX_CHARS</span><span class="p">[</span><span class="n">style</span><span class="p">]</span></div>
+        <span class="n">master_box_list</span> <span class="o">=</span> <span class="n">Str2D</span><span class="o">.</span><span class="n">equal_width</span><span class="p">(</span>
+            <span class="o">*</span><span class="p">[</span><span class="n">value</span><span class="o">.</span><span class="n">to_str2d</span><span class="p">()</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">__members__</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+        <span class="p">)</span>
 
+        <span class="n">master_matrix</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">master_box_list</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">6</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">row</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">master_matrix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+            <span class="n">row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 
+        <span class="n">result</span> <span class="o">=</span> <span class="n">Str2D</span><span class="o">.</span><span class="n">join_v</span><span class="p">(</span>
+            <span class="o">*</span><span class="p">[</span><span class="n">Str2D</span><span class="o">.</span><span class="n">join_h</span><span class="p">(</span><span class="o">*</span><span class="n">row</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;   &quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">master_matrix</span><span class="p">],</span> <span class="n">sep</span><span class="o">=</span><span class="n">Str2D</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+        <span class="p">)</span>
 
-<div class="viewcode-block" id="spec_to_positions">
-<a class="viewcode-back" href="../str2d.html#str2d.spec_to_positions">[docs]</a>
-<span class="k">def</span> <span class="nf">spec_to_positions</span><span class="p">(</span><span class="n">spec</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a specification to positions.&quot;&quot;&quot;</span>
-    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
-    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="o">.</span><span class="n">accumulate</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(([</span><span class="mi">0</span><span class="p">],</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">))</span></div>
-
-
-
-<div class="viewcode-block" id="spec_to_len">
-<a class="viewcode-back" href="../str2d.html#str2d.spec_to_len">[docs]</a>
-<span class="k">def</span> <span class="nf">spec_to_len</span><span class="p">(</span><span class="n">spec</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a specification to length.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span></div>
+        <span class="k">return</span> <span class="n">result</span></div>
+</div>
 
 
 
 <div class="viewcode-block" id="Str2D">
 <a class="viewcode-back" href="../str2d.html#str2d.Str2D">[docs]</a>
 <span class="k">class</span> <span class="nc">Str2D</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Manipulate 2D strings in Python.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Str2D is a class that allows you to manipulate 2D strings in Python.  I had found</span>
+<span class="sd">    myself wanting to paste blocks of text inline with other blocks of text.  If you&#39;ve</span>
+<span class="sd">    ever tried to do this in a text editor, you&#39;ll know that it can be a bit of a pain.</span>
+<span class="sd">    vi and vim have a feature called visual block mode that makes this easier.  But I</span>
+<span class="sd">    wanted more flexibility and control.  So I created Str2D.</span>
+<span class="sd">    </span>
+<span class="sd">    Given a multi-line string, Str2D will convert it into something functionally</span>
+<span class="sd">    equivalent where each line separated by a newline character will have the same</span>
+<span class="sd">    number of characters.  These are filled in with whatever character is specified but</span>
+<span class="sd">    by default it is a space.  This takes care of making sure that each row is the same</span>
+<span class="sd">    width and is primed for manipulation.</span>
+
+<span class="sd">    The simplest example is to show how to create a Str2D object from a multi-line</span>
+<span class="sd">    string and add it to another Str2D object.</span>
+
+<span class="sd">    Let&#39;s start by constructing a new instance of Str2D and assinging it to the variable</span>
+<span class="sd">    `a`.</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        from str2d import Str2D</span>
+
+<span class="sd">        a = Str2D(&#39;a b c d\\ne f g\\nh i\\nj&#39;)</span>
+<span class="sd">        a</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">        a b c d</span>
+<span class="sd">        e f g  </span>
+<span class="sd">        h i    </span>
+<span class="sd">        j      </span>
+
+<span class="sd">    It might not be clear but the 2nd, 3rd, and 4th lines are padded with spaces to make</span>
+<span class="sd">    each line the same width.  We can see this more clearly surrounding the object with</span>
+<span class="sd">    a box.</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        a.box()</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">        ╭───────╮</span>
+<span class="sd">        │a b c d│</span>
+<span class="sd">        │e f g  │</span>
+<span class="sd">        │h i    │</span>
+<span class="sd">        │j      │</span>
+<span class="sd">        ╰───────╯</span>
+
+<span class="sd">    The padded characters are not just spaces.  The Str2D object is a structured array</span>
+<span class="sd">    with two fields: &#39;char&#39; and &#39;alpha&#39;.  The &#39;char&#39; field is the character array and</span>
+<span class="sd">    the &#39;alpha&#39; field is a boolean array with a of 1 or 0 for every character in the</span>
+<span class="sd">    character array.  The &#39;alpha&#39; field is used to determine if a character will mask a</span>
+<span class="sd">    second Str2D object when layered on top of it.  It is analogous to the alpha channel</span>
+<span class="sd">    in an image where when layered on top of another image, the alpha channel will</span>
+<span class="sd">    indicate which pixels will be visible and which will be transparent.  The &#39;alpha&#39;</span>
+<span class="sd">    field is used in the same way.  A value of 1 means the character will be visible and</span>
+<span class="sd">    a value of 0 means the character will be transparent.  The padded characters are all</span>
+<span class="sd">    given an &#39;alpha&#39; value of 0.</span>
+
+<span class="sd">    If we use the Str3D object to layer another Str2D object below it, we&#39;ll see that</span>
+<span class="sd">    the padded characters will be transparent and the characters from the second Str2D</span>
+<span class="sd">    object will be visible.</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        from str2d import Str3D</span>
+
+<span class="sd">        b = Str2D(&#39;&#39;&#39;\\</span>
+<span class="sd">        .......</span>
+<span class="sd">        .......</span>
+<span class="sd">        .......</span>
+<span class="sd">        .......</span>
+<span class="sd">        &#39;&#39;&#39;)</span>
+
+<span class="sd">        Str3D([a, b])</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">        a b c d</span>
+<span class="sd">        e f g..</span>
+<span class="sd">        h i....</span>
+<span class="sd">        j......</span>
+
+<span class="sd">    We can accomplish the same thing by using the `fill_with` method. This method will</span>
+<span class="sd">    fill the padded characters with the specified character.  More accurately, it will</span>
+<span class="sd">    replace the characters in the &#39;char&#39; field where the &#39;alpha&#39; field is 0 with the</span>
+<span class="sd">    specified character.</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        a.fill_with(&#39;.&#39;)</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">        a b c d</span>
+<span class="sd">        e f g..</span>
+<span class="sd">        h i....</span>
+<span class="sd">        j......</span>
+
+<span class="sd">    If we wanted to make all spaces transparent, we could use the `hide` method.  This</span>
+<span class="sd">    will set the &#39;alpha&#39; field to 0 for all locations where the `char` field matches the</span>
+<span class="sd">    specified character, which defaults to a space.</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        a.hide().fill_with(&#39;.&#39;)</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">        a.b.c.d</span>
+<span class="sd">        e.f.g..</span>
+<span class="sd">        h.i....</span>
+<span class="sd">        j......</span>
+
+<span class="sd">    Let&#39;s create a new Str2D object and assign it to the variable `c`.  This time we&#39;ll</span>
+<span class="sd">    set the `halign` parameter to &#39;right&#39; which controls how lines with fewer characters</span>
+<span class="sd">    than the maximum width are aligned.  By default, it is set to &#39;left&#39; which will</span>
+<span class="sd">    align the lines to the left as we&#39;ve seen in the previous example with the variable</span>
+<span class="sd">    `a`.</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        c = Str2D(&#39;0\\n1 2\\n3 4 5\\n6 7 8 9&#39;, halign=&#39;right&#39;)</span>
+<span class="sd">        c</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">              0</span>
+<span class="sd">            1 2</span>
+<span class="sd">          3 4 5</span>
+<span class="sd">        6 7 8 9</span>
+
+<span class="sd">    We can now see our simple example of adding two Str2D objects together.</span>
+
+<span class="sd">    .. testcode::</span>
+<span class="sd">    </span>
+<span class="sd">            a + c</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">        a b c d      0</span>
+<span class="sd">        e f g      1 2</span>
+<span class="sd">        h i      3 4 5</span>
+<span class="sd">        j      6 7 8 9</span>
+
+<span class="sd">    All of the transparent characters are preserved and we can fill the result as you&#39;d</span>
+<span class="sd">    expect.</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        (a + c).fill_with(&#39;.&#39;)</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">        a b c d......0</span>
+<span class="sd">        e f g......1 2</span>
+<span class="sd">        h i......3 4 5</span>
+<span class="sd">        j......6 7 8 9</span>
+
+<span class="sd">    We&#39;ll save the rest for the documentation of the individual methods.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">_dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">([(</span><span class="s2">&quot;char&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;U1&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;alpha&quot;</span><span class="p">,</span> <span class="s2">&quot;int8&quot;</span><span class="p">)])</span>
     <span class="n">_align_transpose</span> <span class="o">=</span> <span class="p">{</span>
@@ -939,7 +1267,7 @@
 
 <div class="viewcode-block" id="Str2D.box">
 <a class="viewcode-back" href="../str2d.html#str2d.Str2D.box">[docs]</a>
-    <span class="k">def</span> <span class="nf">box</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;single&quot;</span><span class="p">,</span> <span class="n">around</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">box</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;single_round&quot;</span><span class="p">,</span> <span class="n">around</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a box around the data.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">around</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_around</span><span class="p">(</span><span class="n">style</span><span class="p">)</span>
@@ -963,9 +1291,10 @@
 <a class="viewcode-back" href="../str2d.html#str2d.Str2D.hide">[docs]</a>
     <span class="k">def</span> <span class="nf">hide</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">char</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Hide the data.&quot;&quot;&quot;</span>
-        <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;char&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">char</span><span class="p">)</span><span class="o">.</span><span class="n">nonzero</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;alpha&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">return</span> <span class="bp">self</span></div>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;char&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">char</span><span class="p">)</span><span class="o">.</span><span class="n">nonzero</span><span class="p">()</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;alpha&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">Str2D</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Str2D.div">
@@ -1085,14 +1414,41 @@
         <span class="n">x0</span><span class="p">,</span> <span class="n">x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">mask</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))[[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
         <span class="n">y0</span><span class="p">,</span> <span class="n">y1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">mask</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))[[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
         <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="n">x0</span> <span class="p">:</span> <span class="n">x1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">y0</span> <span class="p">:</span> <span class="n">y1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="Str2D.fill_with">
+<a class="viewcode-back" href="../str2d.html#str2d.Str2D.fill_with">[docs]</a>
+    <span class="k">def</span> <span class="nf">fill_with</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">char</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Str2D&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fill the data with a character.&quot;&quot;&quot;</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;fill&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">char</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;alpha&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;char&quot;</span><span class="p">],</span> <span class="n">char</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Str2D</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 </div>
 
 
 
-<div class="viewcode-block" id="Box">
-<a class="viewcode-back" href="../str2d.html#str2d.Box">[docs]</a>
 <span class="k">class</span> <span class="nc">Box</span><span class="p">(</span><span class="n">Str2D</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a box around the data.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Box.spec_to_positions">
+<a class="viewcode-back" href="../str2d.html#str2d.Box.spec_to_positions">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">spec_to_positions</span><span class="p">(</span><span class="n">spec</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert a specification to positions.&quot;&quot;&quot;</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="o">.</span><span class="n">accumulate</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(([</span><span class="mi">0</span><span class="p">],</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Box.spec_to_len">
+<a class="viewcode-back" href="../str2d.html#str2d.Box.spec_to_len">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">spec_to_len</span><span class="p">(</span><span class="n">spec</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert a specification to length.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span></div>
+
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -1104,13 +1460,13 @@
 
         <span class="n">spec_v</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">spec_v</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">spec_v</span>
         <span class="n">spec_h</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">spec_h</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">spec_h</span>
-        <span class="n">pos_v</span> <span class="o">=</span> <span class="n">spec_to_positions</span><span class="p">(</span><span class="n">spec_v</span><span class="p">)</span>
-        <span class="n">pos_h</span> <span class="o">=</span> <span class="n">spec_to_positions</span><span class="p">(</span><span class="n">spec_h</span><span class="p">)</span>
-        <span class="n">height</span> <span class="o">=</span> <span class="n">spec_to_len</span><span class="p">(</span><span class="n">spec_v</span><span class="p">)</span>
-        <span class="n">width</span> <span class="o">=</span> <span class="n">spec_to_len</span><span class="p">(</span><span class="n">spec_h</span><span class="p">)</span>
+        <span class="n">pos_v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spec_to_positions</span><span class="p">(</span><span class="n">spec_v</span><span class="p">)</span>
+        <span class="n">pos_h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spec_to_positions</span><span class="p">(</span><span class="n">spec_h</span><span class="p">)</span>
+        <span class="n">height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spec_to_len</span><span class="p">(</span><span class="n">spec_v</span><span class="p">)</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spec_to_len</span><span class="p">(</span><span class="n">spec_h</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">style</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="n">style</span> <span class="o">=</span> <span class="n">BoxStyle</span><span class="p">[</span><span class="n">style</span><span class="o">.</span><span class="n">upper</span><span class="p">()]</span>
-        <span class="n">chars</span> <span class="o">=</span> <span class="n">_BOX_CHARS</span><span class="p">[</span><span class="n">style</span><span class="p">]</span>
+        <span class="n">chars</span> <span class="o">=</span> <span class="n">style</span><span class="o">.</span><span class="n">value</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">spec_v</span> <span class="o">=</span> <span class="n">spec_v</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">spec_h</span> <span class="o">=</span> <span class="n">spec_h</span>
@@ -1173,8 +1529,7 @@
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">r</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the 90 degree rotation of the data.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">h</span></div>
-
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">h</span>
 
 
 <div class="viewcode-block" id="Str3D">
