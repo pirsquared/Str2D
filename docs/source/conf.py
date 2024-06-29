@@ -44,3 +44,7 @@ html_static_path = ["_static"]
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_static_path
 
 html_favicon = "_static/pirr_logo.svg"
+
+
+def setup(app):
+    app.add_css_file("custom.css")

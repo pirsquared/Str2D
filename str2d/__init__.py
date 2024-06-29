@@ -2,6 +2,7 @@
 
 from functools import reduce, cached_property, lru_cache
 from dataclasses import dataclass
+from textwrap import indent
 from enum import Enum
 from typing import List, Tuple, Union, Any, Optional
 from pandas import DataFrame, Series
@@ -11,7 +12,75 @@ import mpmath as mp
 
 @dataclass
 class BoxParts:
-    """Box parts."""
+    """Box parts organizes box drawing characters into attribute names that are short
+    and descriptive. This makes it easier to work with box drawing characters in code.
+
+    The tables below show the attribute names, examples, and descriptions of the parts.
+
+    .. _box-parts-doc-table-1:
+
+    +-------------+-----------+-------------------------------------------+
+    | Attribute   | Example   | Description                               |
+    | Name        | Value     |                                           |
+    +====+===+====+===+===+===+==============+============+===============+
+    | ul | t | ur | ┌ | ┬ | ┐ | | Upper-left | | Top T    | | Upper-right |
+    |    |   |    |   |   |   | | corner     | | cross    | | corner      |
+    +----+---+----+---+---+---+--------------+------------+---------------+
+    | l  | c | r  | ├ | ┼ | ┤ | | Left T     | | Center   | | Right T     |
+    |    |   |    |   |   |   | | cross      | | cross    | | cross       |
+    +----+---+----+---+---+---+--------------+------------+---------------+
+    | ll | b | lr | └ | ┴ | ┘ | | Lower-left | | Bottom T | | Lower-right |
+    |    |   |    |   |   |   | | corner     | | cross    | | corner      |
+    +----+---+----+---+---+---+--------------+------------+---------------+
+
+
+    .. _box-parts-doc-table-2:
+
+    +----------------+----------+------------+
+    | Attribute Name | v        | h          |
+    +----------------+----------+------------+
+    | Example Value  | │        | ─          |
+    +----------------+----------+------------+
+    | Description    | Vertical | Horizontal |
+    +----------------+----------+------------+
+
+    You can pass any unicode characters to the BoxParts class and it will categorize
+    them accordingly. But the expectation would be something like the example above.
+
+    .. testcode::
+
+        from str2d import BoxParts
+
+        BoxParts(
+            v='│', h='─', ul='┌', ur='┐', lr='┘', ll='└',
+            l='├', r='┤', t='┬', b='┴', c='┼'
+        )
+
+    .. testoutput::
+
+        ┌─┬─┐
+        │ │ │
+        ├─┼─┤
+        │ │ │
+        └─┴─┘
+
+    Or you can pass the any characters you want to the BoxParts class and it will
+    categorize them accordingly.  In this example we use the unicode character for
+    a full block to be all the box parts.
+
+    .. testcode::
+
+        BoxParts(*"█"*11)
+
+    .. testoutput::
+
+        █████
+        █ █ █
+        █████
+        █ █ █
+        █████
+
+    """
 
     v: str  # Vertical line
     h: str  # Horizontal line
@@ -25,48 +94,306 @@ class BoxParts:
     b: str  # Bottom T (cross)
     c: str  # Center cross
 
+    def __str__(self):
+        """Return the box parts as a string to illustrate what the box looks like."""
+        return "\n".join(
+            [
+                f"{self.ul}{self.h}{self.t}{self.h}{self.ur}",
+                f"{self.v} {self.v} {self.v}",
+                f"{self.l}{self.h}{self.c}{self.h}{self.r}",
+                f"{self.v} {self.v} {self.v}",
+                f"{self.ll}{self.h}{self.b}{self.h}{self.lr}",
+            ]
+        )
+
+    def __repr__(self):
+        """Return the box parts as a string to illustrate what the box looks like."""
+        return str(self)
+
+    def to_str2d(self):
+        """Convert the box parts to a Str2D object."""
+        return Str2D(data=str(self), halign="left", valign="bottom")
+
 
 class BoxStyle(Enum):
-    """Box styles."""
+    """BoxStyle is an enumeration of different box styles that can be used to draw
+    boxes around text.  The box styles are made up of BoxParts objects that contain
+    the box drawing characters.  The main purpose of this class is to provide a way
+    to apply box drawing over Str2D objects.
 
-    SINGLE = 0
-    DOUBLE = 1
-    BOLD = 2
-    DASHED = 3
-    LIGHT_DASHED = 4
+    You can see all the box styles by calling the swatches method.
 
+    .. testcode::
 
-_BOX_CHARS = {
-    BoxStyle.SINGLE: BoxParts(*"│─┌┐┘└├┤┬┴┼"),
-    BoxStyle.DOUBLE: BoxParts(*"║═╔╗╝╚╠╣╦╩╬"),
-    BoxStyle.BOLD: BoxParts(*"┃━┏┓┛┗┣┫┳┻╋"),
-    BoxStyle.DASHED: BoxParts(*"╎╍┌┐┘└├┤┬┴┼"),
-    BoxStyle.LIGHT_DASHED: BoxParts(*"┆┄┌┐┘└├┤┬┴┼"),
-}
+        from str2d import BoxStyle
 
+        BoxStyle.swatches()
 
-def box_style(style: BoxStyle) -> BoxParts:
-    """Return the box style."""
-    if style in BoxStyle.__members__.values():
-        return _BOX_CHARS[BoxStyle[style]]
-    return _BOX_CHARS[style]
+    .. testoutput::
 
+                                                        DASHED      DASHED
+                                            DASHED      DOUBLE      DOUBLE
+                    SINGLE      DASHED      DOUBLE      LIGHT       HEAVY
+        SINGLE      HEAVY       DOUBLE      HEAVY       HEAVY       LIGHT
+        ┌─┬─┐       ┏━┳━┓       ┌╌┬╌┐       ┏╍┳╍┓       ┍╍┯╍┑       ┎╌┰╌┒
+        │ │ │       ┃ ┃ ┃       ╎ ╎ ╎       ╏ ╏ ╏       ╎ ╎ ╎       ╏ ╏ ╏
+        ├─┼─┤       ┣━╋━┫       ├╌┼╌┤       ┣╍╋╍┫       ┝╍┿╍┥       ┠╌╂╌┨
+        │ │ │       ┃ ┃ ┃       ╎ ╎ ╎       ╏ ╏ ╏       ╎ ╎ ╎       ╏ ╏ ╏
+        └─┴─┘       ┗━┻━┛       └╌┴╌┘       ┗╍┻╍┛       ┕╍┷╍┙       ┖╌┸╌┚
 
-def spec_to_positions(spec):
-    """Convert a specification to positions."""
-    n = len(spec)
-    a = np.arange(n) + 1
-    b = np.add.accumulate(spec)
-    return np.concatenate(([0], a + b))
+                                DASHED      DASHED
+                    DASHED      TRIPLE      TRIPLE                  DASHED
+        DASHED      TRIPLE      LIGHT       HEAVY       DASHED      QUADRUPLE
+        TRIPLE      HEAVY       HEAVY       LIGHT       QUADRUPLE   HEAVY
+        ┌┄┬┄┐       ┏┅┳┅┓       ┍┅┯┅┑       ┎┄┰┄┒       ┌┈┬┈┐       ┏┉┳┉┓
+        ┆ ┆ ┆       ┇ ┇ ┇       ┆ ┆ ┆       ┇ ┇ ┇       ┊ ┊ ┊       ┋ ┋ ┋
+        ├┄┼┄┤       ┣┅╋┅┫       ┝┅┿┅┥       ┠┄╂┄┨       ├┈┼┈┤       ┣┉╋┉┫
+        ┆ ┆ ┆       ┇ ┇ ┇       ┆ ┆ ┆       ┇ ┇ ┇       ┊ ┊ ┊       ┋ ┋ ┋
+        └┄┴┄┘       ┗┅┻┅┛       ┕┅┷┅┙       ┖┄┸┄┚       └┈┴┈┘       ┗┉┻┉┛
 
+        DASHED      DASHED
+        QUADRUPLE   QUADRUPLE               DASHED      DASHED      DASHED
+        LIGHT       HEAVY       SINGLE      DOUBLE      TRIPLE      QUADRUPLE
+        HEAVY       LIGHT       ROUND       ROUND       ROUND       ROUND
+        ┍┉┯┉┑       ┎┈┰┈┒       ╭─┬─╮       ╭╌┬╌╮       ╭┄┬┄╮       ╭┈┬┈╮
+        ┊ ┊ ┊       ┋ ┋ ┋       │ │ │       ╎ ╎ ╎       ┆ ┆ ┆       ┊ ┊ ┊
+        ┝┉┿┉┥       ┠┈╂┈┨       ├─┼─┤       ├╌┼╌┤       ├┄┼┄┤       ├┈┼┈┤
+        ┊ ┊ ┊       ┋ ┋ ┋       │ │ │       ╎ ╎ ╎       ┆ ┆ ┆       ┊ ┊ ┊
+        ┕┉┷┉┙       ┖┈┸┈┚       ╰─┴─╯       ╰╌┴╌╯       ╰┄┴┄╯       ╰┈┴┈╯
 
-def spec_to_len(spec):
-    """Convert a specification to length."""
-    return sum(spec) + len(spec) + 1
+                    DOUBLE      SINGLE      LIGHT       HEAVY
+        DOUBLE      SINGLE      DOUBLE      HEAVY       LIGHT
+        ╔═╦═╗       ╓─╥─╖       ╒═╤═╕       ┎─┰─┒       ┍━┯━┑
+        ║ ║ ║       ║ ║ ║       │ │ │       ┃ ┃ ┃       │ │ │
+        ╠═╬═╣       ╟─╫─╢       ╞═╪═╡       ┠─╂─┨       ┝━┿━┥
+        ║ ║ ║       ║ ║ ║       │ │ │       ┃ ┃ ┃       │ │ │
+        ╚═╩═╝       ╙─╨─╜       ╘═╧═╛       ┖─┸─┚       ┕━┷━┙
+
+    """
+
+    SINGLE = BoxParts(*"│─┌┐┘└├┤┬┴┼")
+    SINGLE_HEAVY = BoxParts(*"┃━┏┓┛┗┣┫┳┻╋")
+    DASHED_DOUBLE = BoxParts(*"╎╌┌┐┘└├┤┬┴┼")
+    DASHED_DOUBLE_HEAVY = BoxParts(*"╏╍┏┓┛┗┣┫┳┻╋")
+    DASHED_DOUBLE_LIGHT_HEAVY = BoxParts(*"╎╍┍┑┙┕┝┥┯┷┿")
+    DASHED_DOUBLE_HEAVY_LIGHT = BoxParts(*"╏╌┎┒┚┖┠┨┰┸╂")
+    DASHED_TRIPLE = BoxParts(*"┆┄┌┐┘└├┤┬┴┼")
+    DASHED_TRIPLE_HEAVY = BoxParts(*"┇┅┏┓┛┗┣┫┳┻╋")
+    DASHED_TRIPLE_LIGHT_HEAVY = BoxParts(*"┆┅┍┑┙┕┝┥┯┷┿")
+    DASHED_TRIPLE_HEAVY_LIGHT = BoxParts(*"┇┄┎┒┚┖┠┨┰┸╂")
+    DASHED_QUADRUPLE = BoxParts(*"┊┈┌┐┘└├┤┬┴┼")
+    DASHED_QUADRUPLE_HEAVY = BoxParts(*"┋┉┏┓┛┗┣┫┳┻╋")
+    DASHED_QUADRUPLE_LIGHT_HEAVY = BoxParts(*"┊┉┍┑┙┕┝┥┯┷┿")
+    DASHED_QUADRUPLE_HEAVY_LIGHT = BoxParts(*"┋┈┎┒┚┖┠┨┰┸╂")
+    SINGLE_ROUND = BoxParts(*"│─╭╮╯╰├┤┬┴┼")
+    DASHED_DOUBLE_ROUND = BoxParts(*"╎╌╭╮╯╰├┤┬┴┼")
+    DASHED_TRIPLE_ROUND = BoxParts(*"┆┄╭╮╯╰├┤┬┴┼")
+    DASHED_QUADRUPLE_ROUND = BoxParts(*"┊┈╭╮╯╰├┤┬┴┼")
+    DOUBLE = BoxParts(*"║═╔╗╝╚╠╣╦╩╬")
+    DOUBLE_SINGLE = BoxParts(*"║─╓╖╜╙╟╢╥╨╫")
+    SINGLE_DOUBLE = BoxParts(*"│═╒╕╛╘╞╡╤╧╪")
+    LIGHT_HEAVY = BoxParts(*"┃─┎┒┚┖┠┨┰┸╂")
+    HEAVY_LIGHT = BoxParts(*"│━┍┑┙┕┝┥┯┷┿")
+
+    def to_str2d(self):
+        """Convert the box style to a Str2D object."""
+        return "\n".join(self.name.split("_")) / self.value.to_str2d()
+
+    def __str__(self):
+        """Return the box style as a string to illustrate what the box looks like."""
+        return str(self.to_str2d())
+
+    def __repr__(self):
+        """Return the box style as a string to illustrate what the box looks like."""
+        return str(self)
+
+    @classmethod
+    def swatches(cls):
+        """Return a Str2D object with the box style swatches."""
+
+        master_box_list = Str2D.equal_width(
+            *[value.to_str2d() for value in cls.__members__.values()]
+        )
+
+        master_matrix = []
+        row = None
+        for i, value in enumerate(master_box_list):
+            if i % 6 == 0:
+                row = []
+                master_matrix.append(row)
+            row.append(value)
+
+        result = Str2D.join_v(
+            *[Str2D.join_h(*row, sep="   ") for row in master_matrix], sep=Str2D(" ")
+        )
+
+        return result
 
 
 class Str2D:
-    """Manipulate 2D strings in Python."""
+    """Str2D is a class that allows you to manipulate 2D strings in Python.  I had found
+    myself wanting to paste blocks of text inline with other blocks of text.  If you've
+    ever tried to do this in a text editor, you'll know that it can be a bit of a pain.
+    vi and vim have a feature called visual block mode that makes this easier.  But I
+    wanted more flexibility and control.  So I created Str2D.
+    
+    Given a multi-line string, Str2D will convert it into something functionally
+    equivalent where each line separated by a newline character will have the same
+    number of characters.  These are filled in with whatever character is specified but
+    by default it is a space.  This takes care of making sure that each row is the same
+    width and is primed for manipulation.
+
+    The simplest example is to show how to create a Str2D object from a multi-line
+    string and add it to another Str2D object.
+
+    Let's start by constructing a new instance of Str2D and assinging it to the variable
+    `a`.
+
+    .. testcode::
+
+        from str2d import Str2D
+
+        a = Str2D('a b c d\\ne f g\\nh i\\nj')
+        a
+
+    .. testoutput::
+
+        a b c d
+        e f g  
+        h i    
+        j      
+
+    It might not be clear but the 2nd, 3rd, and 4th lines are padded with spaces to make
+    each line the same width.  We can see this more clearly surrounding the object with
+    a box.
+
+    .. testcode::
+
+        a.box()
+
+    .. testoutput::
+
+        ╭───────╮
+        │a b c d│
+        │e f g  │
+        │h i    │
+        │j      │
+        ╰───────╯
+
+    The padded characters are not just spaces.  The Str2D object is a structured array
+    with two fields: 'char' and 'alpha'.  The 'char' field is the character array and
+    the 'alpha' field is a boolean array with a of 1 or 0 for every character in the
+    character array.  The 'alpha' field is used to determine if a character will mask a
+    second Str2D object when layered on top of it.  It is analogous to the alpha channel
+    in an image where when layered on top of another image, the alpha channel will
+    indicate which pixels will be visible and which will be transparent.  The 'alpha'
+    field is used in the same way.  A value of 1 means the character will be visible and
+    a value of 0 means the character will be transparent.  The padded characters are all
+    given an 'alpha' value of 0.
+
+    If we use the Str3D object to layer another Str2D object below it, we'll see that
+    the padded characters will be transparent and the characters from the second Str2D
+    object will be visible.
+
+    .. testcode::
+
+        from str2d import Str3D
+
+        b = Str2D('''\\
+        .......
+        .......
+        .......
+        .......
+        ''')
+
+        Str3D([a, b])
+
+    .. testoutput::
+
+        a b c d
+        e f g..
+        h i....
+        j......
+
+    We can accomplish the same thing by using the `fill_with` method. This method will
+    fill the padded characters with the specified character.  More accurately, it will
+    replace the characters in the 'char' field where the 'alpha' field is 0 with the
+    specified character.
+
+    .. testcode::
+
+        a.fill_with('.')
+
+    .. testoutput::
+
+        a b c d
+        e f g..
+        h i....
+        j......
+
+    If we wanted to make all spaces transparent, we could use the `hide` method.  This
+    will set the 'alpha' field to 0 for all locations where the `char` field matches the
+    specified character, which defaults to a space.
+
+    .. testcode::
+
+        a.hide().fill_with('.')
+
+    .. testoutput::
+
+        a.b.c.d
+        e.f.g..
+        h.i....
+        j......
+
+    Let's create a new Str2D object and assign it to the variable `c`.  This time we'll
+    set the `halign` parameter to 'right' which controls how lines with fewer characters
+    than the maximum width are aligned.  By default, it is set to 'left' which will
+    align the lines to the left as we've seen in the previous example with the variable
+    `a`.
+
+    .. testcode::
+
+        c = Str2D('0\\n1 2\\n3 4 5\\n6 7 8 9', halign='right')
+        c
+
+    .. testoutput::
+
+              0
+            1 2
+          3 4 5
+        6 7 8 9
+
+    We can now see our simple example of adding two Str2D objects together.
+
+    .. testcode::
+    
+            a + c
+
+    .. testoutput::
+
+        a b c d      0
+        e f g      1 2
+        h i      3 4 5
+        j      6 7 8 9
+
+    All of the transparent characters are preserved and we can fill the result as you'd
+    expect.
+
+    .. testcode::
+
+        (a + c).fill_with('.')
+
+    .. testoutput::
+
+        a b c d......0
+        e f g......1 2
+        h i......3 4 5
+        j......6 7 8 9
+
+    We'll save the rest for the documentation of the individual methods.
+
+    """
 
     _dtype = np.dtype([("char", "<U1"), ("alpha", "int8")])
     _align_transpose = {
@@ -768,7 +1095,7 @@ class Str2D:
         box = Box([self.height], [self.width], style)
         return Str3D([box, s])
 
-    def box(self, style="single", around=True):
+    def box(self, style="single_round", around=True):
         """Create a box around the data."""
         if around:
             return self.box_around(style)
@@ -786,9 +1113,10 @@ class Str2D:
 
     def hide(self, char=" "):
         """Hide the data."""
-        i, j = (self.data["char"] == char).nonzero()
-        self.data["alpha"][i, j] = 0
-        return self
+        data = self.data.copy()
+        i, j = (data["char"] == char).nonzero()
+        data["alpha"][i, j] = 0
+        return Str2D(data=data, **self.kwargs)
 
     def div(self, *args, **kwargs) -> "Str2D":
         """Divide the data."""
@@ -879,9 +1207,29 @@ class Str2D:
         y0, y1 = np.flatnonzero(mask.any(axis=0))[[0, -1]]
         return self[x0 : x1 + 1, y0 : y1 + 1]
 
+    def fill_with(self, char=" ") -> "Str2D":
+        """Fill the data with a character."""
+        kwargs = self.kwargs
+        kwargs["fill"] = (char, 0)
+        data = np.where(self.data["alpha"], self.data["char"], char)
+        return Str2D(data=data, **kwargs)
+
 
 class Box(Str2D):
     """Create a box around the data."""
+
+    @staticmethod
+    def spec_to_positions(spec):
+        """Convert a specification to positions."""
+        n = len(spec)
+        a = np.arange(n) + 1
+        b = np.add.accumulate(spec)
+        return np.concatenate(([0], a + b))
+
+    @staticmethod
+    def spec_to_len(spec):
+        """Convert a specification to length."""
+        return sum(spec) + len(spec) + 1
 
     def __init__(
         self,
@@ -893,13 +1241,13 @@ class Box(Str2D):
 
         spec_v = [0] if spec_v is None else spec_v
         spec_h = [0] if spec_h is None else spec_h
-        pos_v = spec_to_positions(spec_v)
-        pos_h = spec_to_positions(spec_h)
-        height = spec_to_len(spec_v)
-        width = spec_to_len(spec_h)
+        pos_v = self.spec_to_positions(spec_v)
+        pos_h = self.spec_to_positions(spec_h)
+        height = self.spec_to_len(spec_v)
+        width = self.spec_to_len(spec_h)
         if isinstance(style, str):
             style = BoxStyle[style.upper()]
-        chars = _BOX_CHARS[style]
+        chars = style.value
 
         self.spec_v = spec_v
         self.spec_h = spec_h
