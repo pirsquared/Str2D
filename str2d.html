@@ -87,6 +87,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.height"><code class="docutils literal notranslate"><span class="pre">Str2D.height</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.hide"><code class="docutils literal notranslate"><span class="pre">Str2D.hide()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.hole"><code class="docutils literal notranslate"><span class="pre">Str2D.hole()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.i"><code class="docutils literal notranslate"><span class="pre">Str2D.i</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.isdigit"><code class="docutils literal notranslate"><span class="pre">Str2D.isdigit()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.join_h"><code class="docutils literal notranslate"><span class="pre">Str2D.join_h()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.join_v"><code class="docutils literal notranslate"><span class="pre">Str2D.join_v()</span></code></a></li>
@@ -103,6 +104,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.roll_v"><code class="docutils literal notranslate"><span class="pre">Str2D.roll_v()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.rstrip"><code class="docutils literal notranslate"><span class="pre">Str2D.rstrip()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.shape"><code class="docutils literal notranslate"><span class="pre">Str2D.shape</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.show_with_alignment"><code class="docutils literal notranslate"><span class="pre">Str2D.show_with_alignment()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.split"><code class="docutils literal notranslate"><span class="pre">Str2D.split()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.strip"><code class="docutils literal notranslate"><span class="pre">Str2D.strip()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.strip2d"><code class="docutils literal notranslate"><span class="pre">Str2D.strip2d()</span></code></a></li>
@@ -112,6 +114,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.struct_pad"><code class="docutils literal notranslate"><span class="pre">Str2D.struct_pad()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.t"><code class="docutils literal notranslate"><span class="pre">Str2D.t</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.title"><code class="docutils literal notranslate"><span class="pre">Str2D.title()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.transormation_palette"><code class="docutils literal notranslate"><span class="pre">Str2D.transormation_palette()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.upper"><code class="docutils literal notranslate"><span class="pre">Str2D.upper()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.v"><code class="docutils literal notranslate"><span class="pre">Str2D.v</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D.validate_fill"><code class="docutils literal notranslate"><span class="pre">Str2D.validate_fill()</span></code></a></li>
@@ -579,7 +582,35 @@ j......6 7 8 9
 <dl class="py property">
 <dt class="sig sig-object py" id="str2d.Str2D.alpha">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">alpha</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#str2d.Str2D.alpha" title="Link to this definition"></a></dt>
-<dd><p>Return the alpha data.</p>
+<dd><p>Return the alpha data.  Alternatively, you can access the ‘alpha’ field
+directly by using the ‘data’ attribute and the ‘alpha’ key.</p>
+<p class="rubric">Examples</p>
+<p>Let’s create an instance of Str2D and assign it to the variable <cite>a</cite>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">str2d</span> <span class="kn">import</span> <span class="n">Str2D</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">Str2D</span><span class="p">(</span><span class="s1">&#39;a b c d</span><span class="se">\n</span><span class="s1">e f g</span><span class="se">\n</span><span class="s1">h i</span><span class="se">\n</span><span class="s1">j&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can access the ‘alpha’ field directly by using the ‘data’ attribute and the</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>array([[1, 1, 1, 1, 1, 1, 1],
+       [1, 1, 1, 1, 1, 0, 0],
+       [1, 1, 1, 0, 0, 0, 0],
+       [1, 0, 0, 0, 0, 0, 0]], dtype=int8)
+</pre></div>
+</div>
+<p>This property is a shortcut to the above.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">alpha</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>array([[1, 1, 1, 1, 1, 1, 1],
+       [1, 1, 1, 1, 1, 0, 0],
+       [1, 1, 1, 0, 0, 0, 0],
+       [1, 0, 0, 0, 0, 0, 0]], dtype=int8)
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -603,7 +634,35 @@ j......6 7 8 9
 <dl class="py property">
 <dt class="sig sig-object py" id="str2d.Str2D.char">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">char</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#str2d.Str2D.char" title="Link to this definition"></a></dt>
-<dd><p>Return the character data.</p>
+<dd><p>Return the character data.  Alternatively, you can access the ‘char’ field
+directly by using the ‘data’ attribute and the ‘char’ key.</p>
+<p class="rubric">Examples</p>
+<p>Let’s create an instance of Str2D and assign it to the variable <cite>a</cite>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">str2d</span> <span class="kn">import</span> <span class="n">Str2D</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">Str2D</span><span class="p">(</span><span class="s1">&#39;a b c d</span><span class="se">\n</span><span class="s1">e f g</span><span class="se">\n</span><span class="s1">h i</span><span class="se">\n</span><span class="s1">j&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can access the ‘char’ field directly by using the ‘data’ attribute and the</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;char&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>array([[&#39;a&#39;, &#39; &#39;, &#39;b&#39;, &#39; &#39;, &#39;c&#39;, &#39; &#39;, &#39;d&#39;],
+       [&#39;e&#39;, &#39; &#39;, &#39;f&#39;, &#39; &#39;, &#39;g&#39;, &#39; &#39;, &#39; &#39;],
+       [&#39;h&#39;, &#39; &#39;, &#39;i&#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;],
+       [&#39;j&#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;]], dtype=&#39;&lt;U1&#39;)
+</pre></div>
+</div>
+<p>This property is a shortcut to the above.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">char</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>array([[&#39;a&#39;, &#39; &#39;, &#39;b&#39;, &#39; &#39;, &#39;c&#39;, &#39; &#39;, &#39;d&#39;],
+       [&#39;e&#39;, &#39; &#39;, &#39;f&#39;, &#39; &#39;, &#39;g&#39;, &#39; &#39;, &#39; &#39;],
+       [&#39;h&#39;, &#39; &#39;, &#39;i&#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;],
+       [&#39;j&#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;]], dtype=&#39;&lt;U1&#39;)
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -667,12 +726,59 @@ j......6 7 8 9
 <dt class="sig sig-object py" id="str2d.Str2D.h">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">h</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></em><a class="headerlink" href="#str2d.Str2D.h" title="Link to this definition"></a></dt>
 <dd><p>Return the horizontal flip of the data.</p>
+<p>This is one of 5 transformations that can be done to the Str2D object.</p>
+<ul class="simple">
+<li><p><cite>i</cite> is the identity transformation of the data.</p></li>
+<li><p><cite>t</cite> is the transpose of the data.</p></li>
+<li><p><cite>h</cite> is the horizontal flip of the data.</p></li>
+<li><p><cite>v</cite> is the vertical flip of the data.</p></li>
+<li><p><cite>r</cite> is the 90 degree clockwise rotation of the data.</p></li>
+</ul>
+<p class="rubric">Examples</p>
+<p>Let’s create an instance of Str2D and assign it to the variable <cite>a</cite>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">str2d</span> <span class="kn">import</span> <span class="n">Str2D</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">Str2D</span><span class="p">(</span><span class="s1">&#39;ab</span><span class="se">\n</span><span class="s1">cd&#39;</span><span class="p">)</span>
+<span class="n">a</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ab
+cd
+</pre></div>
+</div>
+<p>Notice that this is a 2x2 array.  We’ll show each of the transformations and
+intentionally expand and box them to show how the transformations affect the
+alignment.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">transormation_palette</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>   i    |    t    |    h     |     v     |    r     |    r2     |    r3
+╭────╮  | ╭────╮  |  ╭────╮  |  ╭────╮   |  ╭────╮  |  ╭────╮   |  ╭────╮
+│ab  │  | │ac  │  |  │  ba│  |  │    │   |  │  ca│  |  │    │   |  │    │
+│cd  │  | │bd  │  |  │  dc│  |  │    │   |  │  db│  |  │    │   |  │    │
+│    │  | │    │  |  │    │  |  │cd  │   |  │    │  |  │  dc│   |  │bd  │
+│    │  | │    │  |  │    │  |  │ab  │   |  │    │  |  │  ba│   |  │ac  │
+╰────╯  | ╰────╯  |  ╰────╯  |  ╰────╯   |  ╰────╯  |  ╰────╯   |  ╰────╯
+------- | ------- | -------- | --------- | -------- | --------- | ---------
+v: top  | v: top  | v: top   | v: bottom | v: top   | v: bottom | v: bottom
+h: left | h: left | h: right | h: left   | h: right | h: right  | h: left
+</pre></div>
+</div>
+<p>Lastly, we can chain the transformations together.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">thirvt</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>bd
+ac
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="str2d.Str2D.height">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">height</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#str2d.Str2D.height" title="Link to this definition"></a></dt>
-<dd><p>Return the height of the data.</p>
+<dd><p>Return the height of the Str2D object.  This is the number of rows in the
+structured array or the number of lines in the string.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -685,6 +791,58 @@ j......6 7 8 9
 <dt class="sig sig-object py" id="str2d.Str2D.hole">
 <span class="sig-name descname"><span class="pre">hole</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">char</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'*'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/str2d.html#Str2D.hole"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.hole" title="Link to this definition"></a></dt>
 <dd><p>Create a hole.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="str2d.Str2D.i">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">i</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></em><a class="headerlink" href="#str2d.Str2D.i" title="Link to this definition"></a></dt>
+<dd><p>This is the identity transformation.  It returns the Str2D object as is.</p>
+<p>This is one of 5 transformations that can be done to the Str2D object.</p>
+<ul class="simple">
+<li><p><cite>i</cite> is the identity transformation of the data.</p></li>
+<li><p><cite>t</cite> is the transpose of the data.</p></li>
+<li><p><cite>h</cite> is the horizontal flip of the data.</p></li>
+<li><p><cite>v</cite> is the vertical flip of the data.</p></li>
+<li><p><cite>r</cite> is the 90 degree clockwise rotation of the data.</p></li>
+</ul>
+<p class="rubric">Examples</p>
+<p>Let’s create an instance of Str2D and assign it to the variable <cite>a</cite>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">str2d</span> <span class="kn">import</span> <span class="n">Str2D</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">Str2D</span><span class="p">(</span><span class="s1">&#39;ab</span><span class="se">\n</span><span class="s1">cd&#39;</span><span class="p">)</span>
+<span class="n">a</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ab
+cd
+</pre></div>
+</div>
+<p>Notice that this is a 2x2 array.  We’ll show each of the transformations and
+intentionally expand and box them to show how the transformations affect the
+alignment.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">transormation_palette</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>   i    |    t    |    h     |     v     |    r     |    r2     |    r3
+╭────╮  | ╭────╮  |  ╭────╮  |  ╭────╮   |  ╭────╮  |  ╭────╮   |  ╭────╮
+│ab  │  | │ac  │  |  │  ba│  |  │    │   |  │  ca│  |  │    │   |  │    │
+│cd  │  | │bd  │  |  │  dc│  |  │    │   |  │  db│  |  │    │   |  │    │
+│    │  | │    │  |  │    │  |  │cd  │   |  │    │  |  │  dc│   |  │bd  │
+│    │  | │    │  |  │    │  |  │ab  │   |  │    │  |  │  ba│   |  │ac  │
+╰────╯  | ╰────╯  |  ╰────╯  |  ╰────╯   |  ╰────╯  |  ╰────╯   |  ╰────╯
+------- | ------- | -------- | --------- | -------- | --------- | ---------
+v: top  | v: top  | v: top   | v: bottom | v: top   | v: bottom | v: bottom
+h: left | h: left | h: right | h: left   | h: right | h: right  | h: left
+</pre></div>
+</div>
+<p>Lastly, we can chain the transformations together.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">thirvt</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>bd
+ac
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -708,7 +866,11 @@ j......6 7 8 9
 <dl class="py property">
 <dt class="sig sig-object py" id="str2d.Str2D.kwargs">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">kwargs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span></em><a class="headerlink" href="#str2d.Str2D.kwargs" title="Link to this definition"></a></dt>
-<dd><p>Return the keyword arguments used to create the object.</p>
+<dd><p>Return the keyword arguments used to create the Str2D object.  This is a
+dictionary containing the ‘halign’, ‘valign’, and ‘fill’ values.</p>
+<p>The purpose of this property is to make it easier to recreate the Str2D object
+with the same settings, helping persist the state of the object as it
+transforms.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -733,6 +895,9 @@ around np.pad.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>fill</strong> (<em>Tuple</em><em>[</em><em>str</em><em>, </em><em>int</em><em>]</em><em>, </em><em>optional</em>) – The fill value for the ‘char’ and ‘alpha’ fields, by default (’ ‘, 0)</p></li>
+<li><p><strong>mode</strong> (<em>str</em><em>, </em><em>optional</em>) – The padding mode, by default ‘constant’.  Other options are documented in
+np.pad but the only other one that makes sense in a character array context
+is ‘edge’.</p></li>
 <li><p><strong>*args</strong> (<em>tuple</em>) – Positional arguments to np.pad.</p></li>
 <li><p><strong>**kwargs</strong> (<em>dict</em>) – Keyword arguments to np.pad.</p></li>
 </ul>
@@ -806,25 +971,43 @@ padding elements to add to the beginning and end of the second axis.</p>
 ..........
 </pre></div>
 </div>
+<p>Another thing we can do is to pass a different type of padding mode.  The
+default is ‘constant’ which will fill the padding elements with the fill value.
+However, we can also use ‘edge’ which will fill the padding elements with the
+nearest edge value.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;edge&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>aa b c dd
+aa b c dd
+ee f g
+hh i
+jj
+jj
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="str2d.Str2D.parse">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.parse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.parse" title="Link to this definition"></a></dt>
-<dd><p>Parse the input data into a structured array.</p>
+<dd><p>Parse the input data into a structured array.  This is the main method that
+will take the input data and convert it into a structured array with fields
+‘char’ and ‘alpha’.  The input data can be a string, a structured array, a
+boolean array, a DataFrame, a Series, or an iterable.  If the input data is a
+structured array, the keyword arguments will be ignored.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data</strong> (<em>Optional</em><em>[</em><em>Any</em><em>]</em><em>, </em><em>optional</em>) – The input data, by default None.</p></li>
-<li><p><strong>**kwargs</strong> (<em>dict</em>) – Additional keyword arguments to pass to the Str2</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Additional keyword arguments to pass to the struct_array_from_string method.
+If the input data is a structured array, these keyword arguments will be
+ignored.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>A structured array with fields ‘char’ and ‘alpha’ created from the input</dt><dd><p>data.</p>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p>A structured array with fields ‘char’ and ‘alpha’ created from the input
+data.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>np.ndarray</p>
@@ -842,6 +1025,52 @@ padding elements to add to the beginning and end of the second axis.</p>
 <dt class="sig sig-object py" id="str2d.Str2D.r">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">r</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></em><a class="headerlink" href="#str2d.Str2D.r" title="Link to this definition"></a></dt>
 <dd><p>Return the 90 degree rotation of the data.</p>
+<p>This is one of 5 transformations that can be done to the Str2D object.</p>
+<ul class="simple">
+<li><p><cite>i</cite> is the identity transformation of the data.</p></li>
+<li><p><cite>t</cite> is the transpose of the data.</p></li>
+<li><p><cite>h</cite> is the horizontal flip of the data.</p></li>
+<li><p><cite>v</cite> is the vertical flip of the data.</p></li>
+<li><p><cite>r</cite> is the 90 degree clockwise rotation of the data.</p></li>
+</ul>
+<p class="rubric">Examples</p>
+<p>Let’s create an instance of Str2D and assign it to the variable <cite>a</cite>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">str2d</span> <span class="kn">import</span> <span class="n">Str2D</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">Str2D</span><span class="p">(</span><span class="s1">&#39;ab</span><span class="se">\n</span><span class="s1">cd&#39;</span><span class="p">)</span>
+<span class="n">a</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ab
+cd
+</pre></div>
+</div>
+<p>Notice that this is a 2x2 array.  We’ll show each of the transformations and
+intentionally expand and box them to show how the transformations affect the
+alignment.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">transormation_palette</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>   i    |    t    |    h     |     v     |    r     |    r2     |    r3
+╭────╮  | ╭────╮  |  ╭────╮  |  ╭────╮   |  ╭────╮  |  ╭────╮   |  ╭────╮
+│ab  │  | │ac  │  |  │  ba│  |  │    │   |  │  ca│  |  │    │   |  │    │
+│cd  │  | │bd  │  |  │  dc│  |  │    │   |  │  db│  |  │    │   |  │    │
+│    │  | │    │  |  │    │  |  │cd  │   |  │    │  |  │  dc│   |  │bd  │
+│    │  | │    │  |  │    │  |  │ab  │   |  │    │  |  │  ba│   |  │ac  │
+╰────╯  | ╰────╯  |  ╰────╯  |  ╰────╯   |  ╰────╯  |  ╰────╯   |  ╰────╯
+------- | ------- | -------- | --------- | -------- | --------- | ---------
+v: top  | v: top  | v: top   | v: bottom | v: top   | v: bottom | v: bottom
+h: left | h: left | h: right | h: left   | h: right | h: right  | h: left
+</pre></div>
+</div>
+<p>Lastly, we can chain the transformations together.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">thirvt</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>bd
+ac
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -853,7 +1082,7 @@ padding elements to add to the beginning and end of the second axis.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="str2d.Str2D.roll">
 <span class="sig-name descname"><span class="pre">roll</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.roll"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.roll" title="Link to this definition"></a></dt>
-<dd><p>Roll the data along an axis.</p>
+<dd><p>Roll the data along an axis.  Analogous and wrapper to np.roll.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -861,13 +1090,39 @@ padding elements to add to the beginning and end of the second axis.</p>
 <li><p><strong>axis</strong> (<em>int</em>) – The axis to roll along.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The rolled data.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>np.ndarray</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D">Str2D</a></p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<p>Let’s create an instance of Str2D and assign it to the variable <cite>a</cite>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">str2d</span> <span class="kn">import</span> <span class="n">Str2D</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">Str2D</span><span class="p">(</span><span class="s1">&#39;a b c d</span><span class="se">\n</span><span class="s1">e f g</span><span class="se">\n</span><span class="s1">h i</span><span class="se">\n</span><span class="s1">j&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can roll the data horizontally by passing the number of positions to roll and
+the axis equal to 1.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>da b c
+ e f g
+ h i
+ j
+</pre></div>
+</div>
+<p>We can roll the data vertically by passing the number of positions to roll and
+the axis equal to 0.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>j
+a b c d
+e f g
+h i
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -878,13 +1133,27 @@ padding elements to add to the beginning and end of the second axis.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>x</strong> (<em>int</em>) – The number of positions to roll.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The rolled data.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>np.ndarray</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D">Str2D</a></p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<p>Let’s create an instance of Str2D and assign it to the variable <cite>a</cite>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">str2d</span> <span class="kn">import</span> <span class="n">Str2D</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">Str2D</span><span class="p">(</span><span class="s1">&#39;a b c d</span><span class="se">\n</span><span class="s1">e f g</span><span class="se">\n</span><span class="s1">h i</span><span class="se">\n</span><span class="s1">j&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can roll the data horizontally by passing the number of positions to roll.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">roll_h</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>da b c
+ e f g
+ h i
+ j
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -895,13 +1164,27 @@ padding elements to add to the beginning and end of the second axis.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>x</strong> (<em>int</em>) – The number of positions to roll.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The rolled data.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>np.ndarray</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D">Str2D</a></p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<p>Let’s create an instance of Str2D and assign it to the variable <cite>a</cite>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">str2d</span> <span class="kn">import</span> <span class="n">Str2D</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">Str2D</span><span class="p">(</span><span class="s1">&#39;a b c d</span><span class="se">\n</span><span class="s1">e f g</span><span class="se">\n</span><span class="s1">h i</span><span class="se">\n</span><span class="s1">j&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can roll the data vertically by passing the number of positions to roll.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">roll_v</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>j
+a b c d
+e f g
+h i
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -913,7 +1196,15 @@ padding elements to add to the beginning and end of the second axis.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="str2d.Str2D.shape">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shape</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#str2d.Str2D.shape" title="Link to this definition"></a></dt>
-<dd><p>Return the shape of the data.</p>
+<dd><p>Return the shape of the Str2D object.  This is a tuple containing the height
+and width of the structured array.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.show_with_alignment">
+<span class="sig-name descname"><span class="pre">show_with_alignment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expand</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.show_with_alignment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.show_with_alignment" title="Link to this definition"></a></dt>
+<dd><p>Show the alignment parameters as part of a new Str2D object.  This is useful
+for debugging and understanding how the alignment parameters affect the output.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -951,7 +1242,12 @@ padding elements to add to the beginning and end of the second axis.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="str2d.Str2D.struct_array_from_bool_array">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">struct_array_from_bool_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">char</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.struct_array_from_bool_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.struct_array_from_bool_array" title="Link to this definition"></a></dt>
-<dd><p>Create a structured array from a boolean array.</p>
+<dd><p>Create a structured array from a boolean array. This is useful when you have
+a boolean array and you want to convert it to a structured array with fields
+‘char’ and ‘alpha’.</p>
+<p>The ‘char’ field will be filled with the specified character where the boolean
+array is True and ‘ ‘ where the boolean array is False.  The ‘alpha’ field will
+be 1 where the boolean array is True and 0 where the boolean array is False.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -960,11 +1256,8 @@ padding elements to add to the beginning and end of the second axis.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>A structured array with fields ‘char’ and ‘alpha’ created from the input</dt><dd><p>boolean array.</p>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p>A structured array with fields ‘char’ and ‘alpha’ created from the input
+boolean array.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>np.ndarray</p>
@@ -975,17 +1268,16 @@ padding elements to add to the beginning and end of the second axis.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="str2d.Str2D.struct_array_from_char_array">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">struct_array_from_char_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.struct_array_from_char_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.struct_array_from_char_array" title="Link to this definition"></a></dt>
-<dd><p>Create a structured array from a character array.</p>
+<dd><p>Create a structured array from a character array.  This is useful when you
+have a 2D array of characters and you want to convert it to a structured array
+with fields ‘char’ and ‘alpha’.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>array</strong> (<em>np.ndarray</em>) – A 2D character array.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>A structured array with fields ‘char’ and ‘alpha’ created from the input</dt><dd><p>character array.</p>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p>A structured array with fields ‘char’ and ‘alpha’ created from the input
+character array.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>np.ndarray</p>
@@ -996,17 +1288,28 @@ padding elements to add to the beginning and end of the second axis.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="str2d.Str2D.struct_array_from_string">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">struct_array_from_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.struct_array_from_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.struct_array_from_string" title="Link to this definition"></a></dt>
-<dd><p>Create a structured array from a string.</p>
+<dd><p>Create a structured array from a string.  This is likely the most common way
+to create an Str2D object.  The string is split into lines and then each line is
+split into characters.  The structured array is created with fields ‘char’ and
+‘alpha’ where the ‘char’ field contains the characters and the ‘alpha’ field
+contains 1 for each character.</p>
+<p>Though we aren’t returning a Str2D object, we are returning a structured array
+that potentially needs to be padded and therefore we take the same keyword
+arguments as the Str2D constructor.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>string</strong> (<em>str</em>) – A string to convert to a structured array.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>string</strong> (<em>str</em>) – A string to convert to a structured array.</p></li>
+<li><p><strong>min_width</strong> (<em>int</em><em>, </em><em>optional</em>) – The minimum width of the output, by default 0.</p></li>
+<li><p><strong>min_height</strong> (<em>int</em><em>, </em><em>optional</em>) – The minimum height of the output, by default 0.</p></li>
+<li><p><strong>halign</strong> (<em>str</em><em>, </em><em>optional</em>) – The horizontal alignment, by default ‘left’.</p></li>
+<li><p><strong>valign</strong> (<em>str</em><em>, </em><em>optional</em>) – The vertical alignment, by default ‘top’.</p></li>
+<li><p><strong>fill</strong> (<em>Tuple</em><em>[</em><em>str</em><em>, </em><em>int</em><em>]</em><em>, </em><em>optional</em>) – The fill value for the ‘char’ and ‘alpha’ fields, by default (’ ‘, 0).</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>A structured array with fields ‘char’ and ‘alpha’ created from the input</dt><dd><p>string.</p>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p>A structured array with fields ‘char’ and ‘alpha’ created from the input
+string.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>np.ndarray</p>
@@ -1024,6 +1327,9 @@ the fill value specified in the ‘fill’ keyword argument.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>array</strong> (<em>np.ndarray</em>) – A structured array with fields ‘char’ and ‘alpha’.</p></li>
+<li><p><strong>mode</strong> (<em>str</em><em>, </em><em>optional</em>) – The padding mode, by default ‘constant’.  Other options are documented in
+np.pad but the only other one that makes sense in a character array context
+is ‘edge’.</p></li>
 <li><p><strong>fill</strong> (<em>Tuple</em><em>[</em><em>str</em><em>, </em><em>int</em><em>]</em><em>, </em><em>optional</em>) – The fill value for the ‘char’ and ‘alpha’ fields, by default (’ ‘, 0)</p></li>
 <li><p><strong>*args</strong> (<em>tuple</em>) – Positional arguments to np.pad.</p></li>
 <li><p><strong>**kwargs</strong> (<em>dict</em>) – Keyword arguments to np.pad.</p></li>
@@ -1058,11 +1364,11 @@ beginning and end of each axis.</p>
 </pre></div>
 </div>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>array([[&#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;],
-        [&#39;.&#39;, &#39;a&#39;, &#39; &#39;, &#39;b&#39;, &#39; &#39;, &#39;c&#39;, &#39;d&#39;],
-        [&#39;.&#39;, &#39;e&#39;, &#39; &#39;, &#39;f&#39;, &#39; &#39;, &#39;g&#39;, &#39; &#39;],
-        [&#39;.&#39;, &#39;h&#39;, &#39; &#39;, &#39;i&#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;],
-        [&#39;.&#39;, &#39;j&#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;],
-        [&#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;]], dtype=&#39;&lt;U1&#39;)
+       [&#39;.&#39;, &#39;a&#39;, &#39; &#39;, &#39;b&#39;, &#39; &#39;, &#39;c&#39;, &#39;d&#39;],
+       [&#39;.&#39;, &#39;e&#39;, &#39; &#39;, &#39;f&#39;, &#39; &#39;, &#39;g&#39;, &#39; &#39;],
+       [&#39;.&#39;, &#39;h&#39;, &#39; &#39;, &#39;i&#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;],
+       [&#39;.&#39;, &#39;j&#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;],
+       [&#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;]], dtype=&#39;&lt;U1&#39;)
 </pre></div>
 </div>
 <p>If we want to control the padding on each side of the array, we can pass a tuple
@@ -1099,18 +1405,91 @@ padding elements to add to the beginning and end of the second axis.</p>
        [&#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;]], dtype=&#39;&lt;U1&#39;)
 </pre></div>
 </div>
+<p>Another thing we can do is to pass a different type of padding mode.  The
+default is ‘constant’ which will fill the padding elements with the fill value.
+However, we can also use ‘edge’ which will fill the padding elements with the
+nearest edge value.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Str2D</span><span class="o">.</span><span class="n">struct_pad</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;edge&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>array([[‘a’, ‘a’, ‘ ‘, ‘b’, ‘ ‘, ‘c’, ‘ ‘, ‘d’, ‘d’],</dt><dd><p>[‘a’, ‘a’, ‘ ‘, ‘b’, ‘ ‘, ‘c’, ‘ ‘, ‘d’, ‘d’],
+[‘e’, ‘e’, ‘ ‘, ‘f’, ‘ ‘, ‘g’, ‘ ‘, ‘ ‘, ‘ ‘],
+[‘h’, ‘h’, ‘ ‘, ‘i’, ‘ ‘, ‘ ‘, ‘ ‘, ‘ ‘, ‘ ‘],
+[‘j’, ‘j’, ‘ ‘, ‘ ‘, ‘ ‘, ‘ ‘, ‘ ‘, ‘ ‘, ‘ ‘],
+[‘j’, ‘j’, ‘ ‘, ‘ ‘, ‘ ‘, ‘ ‘, ‘ ‘, ‘ ‘, ‘ ‘]], dtype=’&lt;U1’)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="str2d.Str2D.t">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">t</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></em><a class="headerlink" href="#str2d.Str2D.t" title="Link to this definition"></a></dt>
-<dd><p>Return the transpose of the data.</p>
+<dd><p>Return the transpose of the Str2D object.</p>
+<p>This is one of 5 transformations that can be done to the Str2D object.</p>
+<ul class="simple">
+<li><p><cite>i</cite> is the identity transformation of the data.</p></li>
+<li><p><cite>t</cite> is the transpose of the data.</p></li>
+<li><p><cite>h</cite> is the horizontal flip of the data.</p></li>
+<li><p><cite>v</cite> is the vertical flip of the data.</p></li>
+<li><p><cite>r</cite> is the 90 degree clockwise rotation of the data.</p></li>
+</ul>
+<p class="rubric">Examples</p>
+<p>Let’s create an instance of Str2D and assign it to the variable <cite>a</cite>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">str2d</span> <span class="kn">import</span> <span class="n">Str2D</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">Str2D</span><span class="p">(</span><span class="s1">&#39;ab</span><span class="se">\n</span><span class="s1">cd&#39;</span><span class="p">)</span>
+<span class="n">a</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ab
+cd
+</pre></div>
+</div>
+<p>Notice that this is a 2x2 array.  We’ll show each of the transformations and
+intentionally expand and box them to show how the transformations affect the
+alignment.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">transormation_palette</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>   i    |    t    |    h     |     v     |    r     |    r2     |    r3
+╭────╮  | ╭────╮  |  ╭────╮  |  ╭────╮   |  ╭────╮  |  ╭────╮   |  ╭────╮
+│ab  │  | │ac  │  |  │  ba│  |  │    │   |  │  ca│  |  │    │   |  │    │
+│cd  │  | │bd  │  |  │  dc│  |  │    │   |  │  db│  |  │    │   |  │    │
+│    │  | │    │  |  │    │  |  │cd  │   |  │    │  |  │  dc│   |  │bd  │
+│    │  | │    │  |  │    │  |  │ab  │   |  │    │  |  │  ba│   |  │ac  │
+╰────╯  | ╰────╯  |  ╰────╯  |  ╰────╯   |  ╰────╯  |  ╰────╯   |  ╰────╯
+------- | ------- | -------- | --------- | -------- | --------- | ---------
+v: top  | v: top  | v: top   | v: bottom | v: top   | v: bottom | v: bottom
+h: left | h: left | h: right | h: left   | h: right | h: right  | h: left
+</pre></div>
+</div>
+<p>Lastly, we can chain the transformations together.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">thirvt</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>bd
+ac
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="str2d.Str2D.title">
 <span class="sig-name descname"><span class="pre">title</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.title"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.title" title="Link to this definition"></a></dt>
 <dd><p>Return the title version of the data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="str2d.Str2D.transormation_palette">
+<span class="sig-name descname"><span class="pre">transormation_palette</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'</span> <span class="pre">|</span> <span class="pre">'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expand</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.transormation_palette"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.transormation_palette" title="Link to this definition"></a></dt>
+<dd><p>Show the transformation palette.  This is a visual representation of the
+identity, transpose, horizontal flip, vertical flip, and 90 degree rotation of
+the data.  The transformations are shown with alignment parameters and can be
+expanded and boxed.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1123,12 +1502,63 @@ padding elements to add to the beginning and end of the second axis.</p>
 <dt class="sig sig-object py" id="str2d.Str2D.v">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">v</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></em><a class="headerlink" href="#str2d.Str2D.v" title="Link to this definition"></a></dt>
 <dd><p>Return the vertical flip of the data.</p>
+<p>This is one of 5 transformations that can be done to the Str2D object.</p>
+<ul class="simple">
+<li><p><cite>i</cite> is the identity transformation of the data.</p></li>
+<li><p><cite>t</cite> is the transpose of the data.</p></li>
+<li><p><cite>h</cite> is the horizontal flip of the data.</p></li>
+<li><p><cite>v</cite> is the vertical flip of the data.</p></li>
+<li><p><cite>r</cite> is the 90 degree clockwise rotation of the data.</p></li>
+</ul>
+<p class="rubric">Examples</p>
+<p>Let’s create an instance of Str2D and assign it to the variable <cite>a</cite>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">str2d</span> <span class="kn">import</span> <span class="n">Str2D</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">Str2D</span><span class="p">(</span><span class="s1">&#39;ab</span><span class="se">\n</span><span class="s1">cd&#39;</span><span class="p">)</span>
+<span class="n">a</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ab
+cd
+</pre></div>
+</div>
+<p>Notice that this is a 2x2 array.  We’ll show each of the transformations and
+intentionally expand and box them to show how the transformations affect the
+alignment.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">transormation_palette</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>   i    |    t    |    h     |     v     |    r     |    r2     |    r3
+╭────╮  | ╭────╮  |  ╭────╮  |  ╭────╮   |  ╭────╮  |  ╭────╮   |  ╭────╮
+│ab  │  | │ac  │  |  │  ba│  |  │    │   |  │  ca│  |  │    │   |  │    │
+│cd  │  | │bd  │  |  │  dc│  |  │    │   |  │  db│  |  │    │   |  │    │
+│    │  | │    │  |  │    │  |  │cd  │   |  │    │  |  │  dc│   |  │bd  │
+│    │  | │    │  |  │    │  |  │ab  │   |  │    │  |  │  ba│   |  │ac  │
+╰────╯  | ╰────╯  |  ╰────╯  |  ╰────╯   |  ╰────╯  |  ╰────╯   |  ╰────╯
+------- | ------- | -------- | --------- | -------- | --------- | ---------
+v: top  | v: top  | v: top   | v: bottom | v: top   | v: bottom | v: bottom
+h: left | h: left | h: right | h: left   | h: right | h: right  | h: left
+</pre></div>
+</div>
+<p>Lastly, we can chain the transformations together.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">thirvt</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>bd
+ac
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="str2d.Str2D.validate_fill">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate_fill</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fill</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.validate_fill"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.validate_fill" title="Link to this definition"></a></dt>
-<dd><p>Validate the fill value.</p>
+<dd><p>Validate the fill value.  The fill value is a tuple containing the fill
+character and fill alpha value.  The fill character is a single character and
+the fill alpha value is 0 or 1.  This validator will accept a single character
+or a tuple containing a single character and an integer.  If a single character
+is passed, the fill alpha value will be 0.  If a tuple is passed, the fill
+character will be the first element and the fill alpha value will be the second.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>fill</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>str</em><em>, </em><em>Tuple</em><em>[</em><em>str</em><em>, </em><em>int</em><em>]</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – The fill value, by default None</p>
@@ -1139,13 +1569,19 @@ padding elements to add to the beginning and end of the second axis.</p>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Tuple[str, int]</p>
 </dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the fill value is not a single character or a tuple containing a single
+    character and an integer or if the fill alpha value is not 0 or 1.</p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="str2d.Str2D.validate_halign">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate_halign</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">halign</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.validate_halign"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.validate_halign" title="Link to this definition"></a></dt>
-<dd><p>Validate the horizontal alignment.</p>
+<dd><p>Validate the horizontal alignment.  The horizontal alignment can be ‘left’,
+‘center’, or ‘right’.  It will lower case the input and raise a ValueError if
+the input is not one of the valid options.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>halign</strong> (<em>str</em>) – The horizontal alignment.</p>
@@ -1156,13 +1592,18 @@ padding elements to add to the beginning and end of the second axis.</p>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the horizontal alignment is not ‘left’, ‘center’, or ‘right’.</p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="str2d.Str2D.validate_valign">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate_valign</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">valign</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.validate_valign"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.validate_valign" title="Link to this definition"></a></dt>
-<dd><p>Validate the vertical alignment.</p>
+<dd><p>Validate the vertical alignment. The vertical alignment can be ‘top’,
+‘middle’, or ‘bottom’.  It will lower case the input and raise a ValueError if
+the input is not one of the valid options.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>valign</strong> (<em>str</em>) – The vertical alignment.</p>
@@ -1173,13 +1614,17 @@ padding elements to add to the beginning and end of the second axis.</p>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the vertical alignment is not ‘top’, ‘middle’, or ‘bottom’.</p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="str2d.Str2D.width">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">width</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#str2d.Str2D.width" title="Link to this definition"></a></dt>
-<dd><p>Return the width of the data.</p>
+<dd><p>Return the width of the Str2D object.  This is the number of columns in the
+structured array or the maximum number of characters in a line in the string.</p>
 </dd></dl>
 
 </dd></dl>

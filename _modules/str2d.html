@@ -524,6 +524,11 @@
 <span class="sd">        array : np.ndarray</span>
 <span class="sd">            A structured array with fields &#39;char&#39; and &#39;alpha&#39;.</span>
 
+<span class="sd">        mode: str, optional</span>
+<span class="sd">            The padding mode, by default &#39;constant&#39;.  Other options are documented in</span>
+<span class="sd">            np.pad but the only other one that makes sense in a character array context</span>
+<span class="sd">            is &#39;edge&#39;.</span>
+
 <span class="sd">        fill : Tuple[str, int], optional</span>
 <span class="sd">            The fill value for the &#39;char&#39; and &#39;alpha&#39; fields, by default (&#39; &#39;, 0)</span>
 
@@ -569,11 +574,11 @@
 <span class="sd">        .. testoutput::</span>
 
 <span class="sd">            array([[&#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;],</span>
-<span class="sd">                    [&#39;.&#39;, &#39;a&#39;, &#39; &#39;, &#39;b&#39;, &#39; &#39;, &#39;c&#39;, &#39;d&#39;],</span>
-<span class="sd">                    [&#39;.&#39;, &#39;e&#39;, &#39; &#39;, &#39;f&#39;, &#39; &#39;, &#39;g&#39;, &#39; &#39;],</span>
-<span class="sd">                    [&#39;.&#39;, &#39;h&#39;, &#39; &#39;, &#39;i&#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;],</span>
-<span class="sd">                    [&#39;.&#39;, &#39;j&#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;],</span>
-<span class="sd">                    [&#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;]], dtype=&#39;&lt;U1&#39;)</span>
+<span class="sd">                   [&#39;.&#39;, &#39;a&#39;, &#39; &#39;, &#39;b&#39;, &#39; &#39;, &#39;c&#39;, &#39;d&#39;],</span>
+<span class="sd">                   [&#39;.&#39;, &#39;e&#39;, &#39; &#39;, &#39;f&#39;, &#39; &#39;, &#39;g&#39;, &#39; &#39;],</span>
+<span class="sd">                   [&#39;.&#39;, &#39;h&#39;, &#39; &#39;, &#39;i&#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;],</span>
+<span class="sd">                   [&#39;.&#39;, &#39;j&#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;],</span>
+<span class="sd">                   [&#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;]], dtype=&#39;&lt;U1&#39;)</span>
 
 <span class="sd">        If we want to control the padding on each side of the array, we can pass a tuple</span>
 <span class="sd">        of integers to the second argument.  The first integer is the number of padding</span>
@@ -615,7 +620,29 @@
 <span class="sd">                   [&#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;],</span>
 <span class="sd">                   [&#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;]], dtype=&#39;&lt;U1&#39;)</span>
 
+<span class="sd">        Another thing we can do is to pass a different type of padding mode.  The</span>
+<span class="sd">        default is &#39;constant&#39; which will fill the padding elements with the fill value.</span>
+<span class="sd">        However, we can also use &#39;edge&#39; which will fill the padding elements with the</span>
+<span class="sd">        nearest edge value.</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            Str2D.struct_pad(a.data, 1, mode=&#39;edge&#39;)</span>
+
+<span class="sd">        .. testoutput::</span>
+
+<span class="sd">        array([[&#39;a&#39;, &#39;a&#39;, &#39; &#39;, &#39;b&#39;, &#39; &#39;, &#39;c&#39;, &#39; &#39;, &#39;d&#39;, &#39;d&#39;],</span>
+<span class="sd">               [&#39;a&#39;, &#39;a&#39;, &#39; &#39;, &#39;b&#39;, &#39; &#39;, &#39;c&#39;, &#39; &#39;, &#39;d&#39;, &#39;d&#39;],</span>
+<span class="sd">               [&#39;e&#39;, &#39;e&#39;, &#39; &#39;, &#39;f&#39;, &#39; &#39;, &#39;g&#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;],</span>
+<span class="sd">               [&#39;h&#39;, &#39;h&#39;, &#39; &#39;, &#39;i&#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;],</span>
+<span class="sd">               [&#39;j&#39;, &#39;j&#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;],</span>
+<span class="sd">               [&#39;j&#39;, &#39;j&#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;]], dtype=&#39;&lt;U1&#39;)</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Using `np.pad` on structured arrays is a bit tricky because it doesn&#39;t</span>
+        <span class="c1"># handle the structured array fields very well.  We need to pad the &#39;char&#39;</span>
+        <span class="c1"># and &#39;alpha&#39; fields separately and then recombine them into a structured</span>
+        <span class="c1"># array.</span>
         <span class="n">fill</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;fill&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
         <span class="n">char_fill</span><span class="p">,</span> <span class="n">alpha_fill</span> <span class="o">=</span> <span class="n">fill</span>
 
@@ -644,7 +671,12 @@
     <span class="k">def</span> <span class="nf">validate_fill</span><span class="p">(</span>
         <span class="bp">cls</span><span class="p">,</span> <span class="n">fill</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Validate the fill value.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Validate the fill value.  The fill value is a tuple containing the fill</span>
+<span class="sd">        character and fill alpha value.  The fill character is a single character and</span>
+<span class="sd">        the fill alpha value is 0 or 1.  This validator will accept a single character</span>
+<span class="sd">        or a tuple containing a single character and an integer.  If a single character</span>
+<span class="sd">        is passed, the fill alpha value will be 0.  If a tuple is passed, the fill</span>
+<span class="sd">        character will be the first element and the fill alpha value will be the second.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -655,6 +687,12 @@
 <span class="sd">        -------</span>
 <span class="sd">        Tuple[str, int]</span>
 <span class="sd">            A tuple containing the fill character and fill alpha value.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the fill value is not a single character or a tuple containing a single</span>
+<span class="sd">            character and an integer or if the fill alpha value is not 0 or 1.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">fill</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="mi">0</span>
@@ -680,7 +718,9 @@
 <a class="viewcode-back" href="../str2d.html#str2d.Str2D.validate_halign">[docs]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">validate_halign</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">halign</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Validate the horizontal alignment.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Validate the horizontal alignment.  The horizontal alignment can be &#39;left&#39;,</span>
+<span class="sd">        &#39;center&#39;, or &#39;right&#39;.  It will lower case the input and raise a ValueError if</span>
+<span class="sd">        the input is not one of the valid options.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -691,6 +731,11 @@
 <span class="sd">        -------</span>
 <span class="sd">        str</span>
 <span class="sd">            The validated horizontal alignment.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the horizontal alignment is not &#39;left&#39;, &#39;center&#39;, or &#39;right&#39;.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">halign</span> <span class="o">=</span> <span class="n">halign</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">halign</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">}:</span>
@@ -702,7 +747,9 @@
 <a class="viewcode-back" href="../str2d.html#str2d.Str2D.validate_valign">[docs]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">validate_valign</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">valign</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Validate the vertical alignment.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Validate the vertical alignment. The vertical alignment can be &#39;top&#39;,</span>
+<span class="sd">        &#39;middle&#39;, or &#39;bottom&#39;.  It will lower case the input and raise a ValueError if</span>
+<span class="sd">        the input is not one of the valid options.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -713,6 +760,11 @@
 <span class="sd">        -------</span>
 <span class="sd">        str</span>
 <span class="sd">            The validated vertical alignment.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the vertical alignment is not &#39;top&#39;, &#39;middle&#39;, or &#39;bottom&#39;.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">valign</span> <span class="o">=</span> <span class="n">valign</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">valign</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;top&quot;</span><span class="p">,</span> <span class="s2">&quot;middle&quot;</span><span class="p">,</span> <span class="s2">&quot;bottom&quot;</span><span class="p">}:</span>
@@ -724,18 +776,41 @@
 <a class="viewcode-back" href="../str2d.html#str2d.Str2D.struct_array_from_string">[docs]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">struct_array_from_string</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">string</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Str2D&quot;</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a structured array from a string.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a structured array from a string.  This is likely the most common way</span>
+<span class="sd">        to create an Str2D object.  The string is split into lines and then each line is</span>
+<span class="sd">        split into characters.  The structured array is created with fields &#39;char&#39; and</span>
+<span class="sd">        &#39;alpha&#39; where the &#39;char&#39; field contains the characters and the &#39;alpha&#39; field</span>
+<span class="sd">        contains 1 for each character.</span>
+
+<span class="sd">        Though we aren&#39;t returning a Str2D object, we are returning a structured array</span>
+<span class="sd">        that potentially needs to be padded and therefore we take the same keyword</span>
+<span class="sd">        arguments as the Str2D constructor.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        string : str</span>
 <span class="sd">            A string to convert to a structured array.</span>
 
+<span class="sd">        min_width : int, optional</span>
+<span class="sd">            The minimum width of the output, by default 0.</span>
+
+<span class="sd">        min_height : int, optional</span>
+<span class="sd">            The minimum height of the output, by default 0.</span>
+
+<span class="sd">        halign : str, optional</span>
+<span class="sd">            The horizontal alignment, by default &#39;left&#39;.</span>
+
+<span class="sd">        valign : str, optional</span>
+<span class="sd">            The vertical alignment, by default &#39;top&#39;.</span>
+
+<span class="sd">        fill : Tuple[str, int], optional</span>
+<span class="sd">            The fill value for the &#39;char&#39; and &#39;alpha&#39; fields, by default (&#39; &#39;, 0).</span>
+
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        np.ndarray</span>
 <span class="sd">            A structured array with fields &#39;char&#39; and &#39;alpha&#39; created from the input</span>
-<span class="sd">              string.</span>
+<span class="sd">            string.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">pre_data</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()]</span>
         <span class="c1"># needed to use `pop or 0` as opposed to `pop(key, 0)`</span>
@@ -777,7 +852,9 @@
 <a class="viewcode-back" href="../str2d.html#str2d.Str2D.struct_array_from_char_array">[docs]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">struct_array_from_char_array</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">array</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Str2D&quot;</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a structured array from a character array.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a structured array from a character array.  This is useful when you</span>
+<span class="sd">        have a 2D array of characters and you want to convert it to a structured array</span>
+<span class="sd">        with fields &#39;char&#39; and &#39;alpha&#39;.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -788,7 +865,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        np.ndarray</span>
 <span class="sd">            A structured array with fields &#39;char&#39; and &#39;alpha&#39; created from the input</span>
-<span class="sd">              character array.</span>
+<span class="sd">            character array.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">array</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">cls</span><span class="o">.</span><span class="n">_dtype</span><span class="p">)</span>
         <span class="n">data</span><span class="p">[</span><span class="s2">&quot;char&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">array</span>
@@ -800,12 +877,19 @@
 <a class="viewcode-back" href="../str2d.html#str2d.Str2D.struct_array_from_bool_array">[docs]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">struct_array_from_bool_array</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">array</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">char</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Str2D&quot;</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a structured array from a boolean array.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a structured array from a boolean array. This is useful when you have</span>
+<span class="sd">        a boolean array and you want to convert it to a structured array with fields</span>
+<span class="sd">        &#39;char&#39; and &#39;alpha&#39;.</span>
+
+<span class="sd">        The &#39;char&#39; field will be filled with the specified character where the boolean</span>
+<span class="sd">        array is True and &#39; &#39; where the boolean array is False.  The &#39;alpha&#39; field will</span>
+<span class="sd">        be 1 where the boolean array is True and 0 where the boolean array is False.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        array : np.ndarray</span>
 <span class="sd">            A 2D boolean array.</span>
+
 <span class="sd">        char : str</span>
 <span class="sd">            The character to use when the boolean array is True.</span>
 
@@ -813,7 +897,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        np.ndarray</span>
 <span class="sd">            A structured array with fields &#39;char&#39; and &#39;alpha&#39; created from the input</span>
-<span class="sd">              boolean array.</span>
+<span class="sd">            boolean array.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">array</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">cls</span><span class="o">.</span><span class="n">_dtype</span><span class="p">)</span>
         <span class="n">data</span><span class="p">[</span><span class="s2">&quot;char&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">char</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
@@ -825,20 +909,27 @@
 <a class="viewcode-back" href="../str2d.html#str2d.Str2D.parse">[docs]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Str2D&quot;</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parse the input data into a structured array.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parse the input data into a structured array.  This is the main method that</span>
+<span class="sd">        will take the input data and convert it into a structured array with fields</span>
+<span class="sd">        &#39;char&#39; and &#39;alpha&#39;.  The input data can be a string, a structured array, a</span>
+<span class="sd">        boolean array, a DataFrame, a Series, or an iterable.  If the input data is a</span>
+<span class="sd">        structured array, the keyword arguments will be ignored.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        data : Optional[Any], optional</span>
 <span class="sd">            The input data, by default None.</span>
+
 <span class="sd">        **kwargs : dict</span>
-<span class="sd">            Additional keyword arguments to pass to the Str2</span>
+<span class="sd">            Additional keyword arguments to pass to the struct_array_from_string method.</span>
+<span class="sd">            If the input data is a structured array, these keyword arguments will be</span>
+<span class="sd">            ignored.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        np.ndarray</span>
 <span class="sd">            A structured array with fields &#39;char&#39; and &#39;alpha&#39; created from the input</span>
-<span class="sd">              data.</span>
+<span class="sd">            data.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">Str2D</span><span class="p">):</span>
@@ -881,33 +972,37 @@
         <span class="n">fill</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a Str2D object.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a new Str2D object.  The input data can be a string, a structured</span>
+<span class="sd">        array, a boolean array, a DataFrame, a Series, or an iterable.  If the input</span>
+<span class="sd">        data is a structured array, the keyword arguments will be ignored.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        data : Optional[Any], optional</span>
 <span class="sd">            The input data, by default None.</span>
+
 <span class="sd">        min_width : Optional[int], optional</span>
 <span class="sd">            The minimum width of the output, by default None.</span>
+
 <span class="sd">        min_height : Optional[int], optional</span>
 <span class="sd">            The minimum height of the output, by default None.</span>
+
 <span class="sd">        halign : Optional[str], optional</span>
 <span class="sd">            The horizontal alignment, by default &#39;left&#39;.</span>
+
 <span class="sd">        valign : Optional[str], optional</span>
 <span class="sd">            The vertical alignment, by default &#39;top&#39;.</span>
+
 <span class="sd">        fill : Optional[Union[str, Tuple[str, int]]], optional</span>
 <span class="sd">            The fill value, by default None.</span>
+
 <span class="sd">        **kwargs : dict</span>
 <span class="sd">            Additional keyword arguments to pass to the parse method.</span>
 
 <span class="sd">        Raises</span>
 <span class="sd">        ------</span>
 <span class="sd">        ValueError</span>
-<span class="sd">            If the fill value is invalid.</span>
-<span class="sd">        ValueError</span>
-<span class="sd">            If the horizontal alignment is invalid.</span>
-<span class="sd">        ValueError</span>
-<span class="sd">            If the vertical alignment is invalid.</span>
+<span class="sd">            If the fill, horizontal alignment, or vertical alignment value is invalid.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -956,47 +1051,226 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">height</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the height of the data.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the height of the Str2D object.  This is the number of rows in the</span>
+<span class="sd">        structured array or the number of lines in the string.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">width</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the width of the data.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the width of the Str2D object.  This is the number of columns in the</span>
+<span class="sd">        structured array or the maximum number of characters in a line in the string.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the shape of the data.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the shape of the Str2D object.  This is a tuple containing the height</span>
+<span class="sd">        and width of the structured array.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">char</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the character data.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the character data.  Alternatively, you can access the &#39;char&#39; field</span>
+<span class="sd">        directly by using the &#39;data&#39; attribute and the &#39;char&#39; key.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+
+<span class="sd">        Let&#39;s create an instance of Str2D and assign it to the variable `a`.</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from str2d import Str2D</span>
+
+<span class="sd">            a = Str2D(&#39;a b c d\\ne f g\\nh i\\nj&#39;)</span>
+
+<span class="sd">        We can access the &#39;char&#39; field directly by using the &#39;data&#39; attribute and the</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            a.data[&#39;char&#39;]</span>
+
+<span class="sd">        .. testoutput::</span>
+
+<span class="sd">            array([[&#39;a&#39;, &#39; &#39;, &#39;b&#39;, &#39; &#39;, &#39;c&#39;, &#39; &#39;, &#39;d&#39;],</span>
+<span class="sd">                   [&#39;e&#39;, &#39; &#39;, &#39;f&#39;, &#39; &#39;, &#39;g&#39;, &#39; &#39;, &#39; &#39;],</span>
+<span class="sd">                   [&#39;h&#39;, &#39; &#39;, &#39;i&#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;],</span>
+<span class="sd">                   [&#39;j&#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;]], dtype=&#39;&lt;U1&#39;)</span>
+
+<span class="sd">        This property is a shortcut to the above.</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            a.char</span>
+
+<span class="sd">        .. testoutput::</span>
+
+<span class="sd">            array([[&#39;a&#39;, &#39; &#39;, &#39;b&#39;, &#39; &#39;, &#39;c&#39;, &#39; &#39;, &#39;d&#39;],</span>
+<span class="sd">                   [&#39;e&#39;, &#39; &#39;, &#39;f&#39;, &#39; &#39;, &#39;g&#39;, &#39; &#39;, &#39; &#39;],</span>
+<span class="sd">                   [&#39;h&#39;, &#39; &#39;, &#39;i&#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;],</span>
+<span class="sd">                   [&#39;j&#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;]], dtype=&#39;&lt;U1&#39;)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;char&quot;</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">alpha</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the alpha data.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the alpha data.  Alternatively, you can access the &#39;alpha&#39; field</span>
+<span class="sd">        directly by using the &#39;data&#39; attribute and the &#39;alpha&#39; key.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+
+<span class="sd">        Let&#39;s create an instance of Str2D and assign it to the variable `a`.</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from str2d import Str2D</span>
+
+<span class="sd">            a = Str2D(&#39;a b c d\\ne f g\\nh i\\nj&#39;)</span>
+
+<span class="sd">        We can access the &#39;alpha&#39; field directly by using the &#39;data&#39; attribute and the</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            a.data[&#39;alpha&#39;]</span>
+
+<span class="sd">        .. testoutput::</span>
+
+<span class="sd">            array([[1, 1, 1, 1, 1, 1, 1],</span>
+<span class="sd">                   [1, 1, 1, 1, 1, 0, 0],</span>
+<span class="sd">                   [1, 1, 1, 0, 0, 0, 0],</span>
+<span class="sd">                   [1, 0, 0, 0, 0, 0, 0]], dtype=int8)</span>
+
+<span class="sd">        This property is a shortcut to the above.</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            a.alpha</span>
+
+<span class="sd">        .. testoutput::</span>
+
+<span class="sd">            array([[1, 1, 1, 1, 1, 1, 1],</span>
+<span class="sd">                   [1, 1, 1, 1, 1, 0, 0],</span>
+<span class="sd">                   [1, 1, 1, 0, 0, 0, 0],</span>
+<span class="sd">                   [1, 0, 0, 0, 0, 0, 0]], dtype=int8)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;alpha&quot;</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the keyword arguments used to create the object.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the keyword arguments used to create the Str2D object.  This is a</span>
+<span class="sd">        dictionary containing the &#39;halign&#39;, &#39;valign&#39;, and &#39;fill&#39; values.</span>
+
+<span class="sd">        The purpose of this property is to make it easier to recreate the Str2D object</span>
+<span class="sd">        with the same settings, helping persist the state of the object as it</span>
+<span class="sd">        transforms.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">{</span>
             <span class="s2">&quot;halign&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">halign</span><span class="p">,</span>
             <span class="s2">&quot;valign&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">valign</span><span class="p">,</span>
             <span class="s2">&quot;fill&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">fill</span><span class="p">,</span>
         <span class="p">}</span>
 
+<div class="viewcode-block" id="Str2D.show_with_alignment">
+<a class="viewcode-back" href="../str2d.html#str2d.Str2D.show_with_alignment">[docs]</a>
+    <span class="k">def</span> <span class="nf">show_with_alignment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">box</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Str2D&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Show the alignment parameters as part of a new Str2D object.  This is useful</span>
+<span class="sd">        for debugging and understanding how the alignment parameters affect the output.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">footer</span> <span class="o">=</span> <span class="n">Str2D</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;v: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">valign</span><span class="si">}</span><span class="se">\n</span><span class="s2">h: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">halign</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">body</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="k">if</span> <span class="n">expand</span><span class="p">:</span>
+            <span class="n">body</span> <span class="o">=</span> <span class="n">body</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">expand</span><span class="p">,</span> <span class="n">expand</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">box</span><span class="p">:</span>
+            <span class="n">body</span> <span class="o">=</span> <span class="n">body</span><span class="o">.</span><span class="n">box</span><span class="p">()</span><span class="o">.</span><span class="n">view</span>
+
+        <span class="n">body</span> <span class="o">=</span> <span class="n">Str2D</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="n">valign</span><span class="o">=</span><span class="s2">&quot;middle&quot;</span><span class="p">,</span> <span class="n">halign</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>
+
+        <span class="n">sep</span> <span class="o">=</span> <span class="n">Str2D</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="n">body</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">footer</span><span class="o">.</span><span class="n">width</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">body</span> <span class="o">/</span> <span class="n">sep</span> <span class="o">/</span> <span class="n">footer</span></div>
+
+
+    <span class="n">TRANSFORMATIONS_DOCSTRING</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+
+<span class="s2">        This is one of 5 transformations that can be done to the Str2D object.</span>
+
+<span class="s2">        - `i` is the identity transformation of the data.</span>
+<span class="s2">        - `t` is the transpose of the data.</span>
+<span class="s2">        - `h` is the horizontal flip of the data.</span>
+<span class="s2">        - `v` is the vertical flip of the data.</span>
+<span class="s2">        - `r` is the 90 degree clockwise rotation of the data.</span>
+
+<span class="s2">        Examples</span>
+<span class="s2">        --------</span>
+
+<span class="s2">        Let&#39;s create an instance of Str2D and assign it to the variable `a`.</span>
+
+<span class="s2">        .. testcode::</span>
+
+<span class="s2">            from str2d import Str2D</span>
+
+<span class="s2">            a = Str2D(&#39;ab</span><span class="se">\\</span><span class="s2">ncd&#39;)</span>
+<span class="s2">            a</span>
+
+<span class="s2">        .. testoutput::</span>
+
+<span class="s2">            ab</span>
+<span class="s2">            cd</span>
+
+<span class="s2">        Notice that this is a 2x2 array.  We&#39;ll show each of the transformations and </span>
+<span class="s2">        intentionally expand and box them to show how the transformations affect the</span>
+<span class="s2">        alignment.</span>
+<span class="s2">    </span>
+<span class="s2">        .. testcode::</span>
+
+<span class="s2">            a.transormation_palette()</span>
+
+<span class="s2">        .. testoutput::</span>
+
+<span class="s2">               i    |    t    |    h     |     v     |    r     |    r2     |    r3    </span>
+<span class="s2">            ╭────╮  | ╭────╮  |  ╭────╮  |  ╭────╮   |  ╭────╮  |  ╭────╮   |  ╭────╮  </span>
+<span class="s2">            │ab  │  | │ac  │  |  │  ba│  |  │    │   |  │  ca│  |  │    │   |  │    │  </span>
+<span class="s2">            │cd  │  | │bd  │  |  │  dc│  |  │    │   |  │  db│  |  │    │   |  │    │  </span>
+<span class="s2">            │    │  | │    │  |  │    │  |  │cd  │   |  │    │  |  │  dc│   |  │bd  │  </span>
+<span class="s2">            │    │  | │    │  |  │    │  |  │ab  │   |  │    │  |  │  ba│   |  │ac  │  </span>
+<span class="s2">            ╰────╯  | ╰────╯  |  ╰────╯  |  ╰────╯   |  ╰────╯  |  ╰────╯   |  ╰────╯  </span>
+<span class="s2">            ------- | ------- | -------- | --------- | -------- | --------- | ---------</span>
+<span class="s2">            v: top  | v: top  | v: top   | v: bottom | v: top   | v: bottom | v: bottom</span>
+<span class="s2">            h: left | h: left | h: right | h: left   | h: right | h: right  | h: left  </span>
+
+<span class="s2">        Lastly, we can chain the transformations together.</span>
+
+<span class="s2">        .. testcode::</span>
+
+<span class="s2">            a.thirvt</span>
+
+<span class="s2">        .. testoutput::</span>
+
+<span class="s2">            bd</span>
+<span class="s2">            ac        </span>
+
+<span class="s2">    &quot;&quot;&quot;</span>
+
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">t</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Str2D&quot;</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the transpose of the data.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the transpose of the Str2D object.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">Str2D</span><span class="p">(</span>
             <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
             <span class="n">halign</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_align_transpose</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">valign</span><span class="p">],</span>
             <span class="n">valign</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_align_transpose</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">halign</span><span class="p">],</span>
             <span class="n">fill</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fill</span><span class="p">,</span>
         <span class="p">)</span>
+
+    <span class="n">t</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">+=</span> <span class="n">TRANSFORMATIONS_DOCSTRING</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">i</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Str2D&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;This is the identity transformation.  It returns the Str2D object as is.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="n">i</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">+=</span> <span class="n">TRANSFORMATIONS_DOCSTRING</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">h</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Str2D&quot;</span><span class="p">:</span>
@@ -1008,6 +1282,8 @@
             <span class="n">fill</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fill</span><span class="p">,</span>
         <span class="p">)</span>
 
+    <span class="n">h</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">+=</span> <span class="n">TRANSFORMATIONS_DOCSTRING</span>
+
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">v</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Str2D&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the vertical flip of the data.&quot;&quot;&quot;</span>
@@ -1018,16 +1294,47 @@
             <span class="n">fill</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fill</span><span class="p">,</span>
         <span class="p">)</span>
 
+    <span class="n">v</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">+=</span> <span class="n">TRANSFORMATIONS_DOCSTRING</span>
+
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">r</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Str2D&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the 90 degree rotation of the data.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">h</span>
 
+    <span class="n">r</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">+=</span> <span class="n">TRANSFORMATIONS_DOCSTRING</span>
+
+<div class="viewcode-block" id="Str2D.transormation_palette">
+<a class="viewcode-back" href="../str2d.html#str2d.Str2D.transormation_palette">[docs]</a>
+    <span class="k">def</span> <span class="nf">transormation_palette</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot; | &quot;</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">box</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Str2D&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Show the transformation palette.  This is a visual representation of the</span>
+<span class="sd">        identity, transpose, horizontal flip, vertical flip, and 90 degree rotation of</span>
+<span class="sd">        the data.  The transformations are shown with alignment parameters and can be</span>
+<span class="sd">        expanded and boxed.&quot;&quot;&quot;</span>
+
+        <span class="n">i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">i</span><span class="o">.</span><span class="n">show_with_alignment</span><span class="p">(</span><span class="n">expand</span><span class="o">=</span><span class="n">expand</span><span class="p">,</span> <span class="n">box</span><span class="o">=</span><span class="n">box</span><span class="p">)</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">show_with_alignment</span><span class="p">(</span><span class="n">expand</span><span class="o">=</span><span class="n">expand</span><span class="p">,</span> <span class="n">box</span><span class="o">=</span><span class="n">box</span><span class="p">)</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="o">.</span><span class="n">show_with_alignment</span><span class="p">(</span><span class="n">expand</span><span class="o">=</span><span class="n">expand</span><span class="p">,</span> <span class="n">box</span><span class="o">=</span><span class="n">box</span><span class="p">)</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="o">.</span><span class="n">show_with_alignment</span><span class="p">(</span><span class="n">expand</span><span class="o">=</span><span class="n">expand</span><span class="p">,</span> <span class="n">box</span><span class="o">=</span><span class="n">box</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">show_with_alignment</span><span class="p">(</span><span class="n">expand</span><span class="o">=</span><span class="n">expand</span><span class="p">,</span> <span class="n">box</span><span class="o">=</span><span class="n">box</span><span class="p">)</span>
+        <span class="n">rr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rr</span><span class="o">.</span><span class="n">show_with_alignment</span><span class="p">(</span><span class="n">expand</span><span class="o">=</span><span class="n">expand</span><span class="p">,</span> <span class="n">box</span><span class="o">=</span><span class="n">box</span><span class="p">)</span>
+        <span class="n">rrr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rrr</span><span class="o">.</span><span class="n">show_with_alignment</span><span class="p">(</span><span class="n">expand</span><span class="o">=</span><span class="n">expand</span><span class="p">,</span> <span class="n">box</span><span class="o">=</span><span class="n">box</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">join_h</span><span class="p">(</span>
+            <span class="n">Str2D</span><span class="p">(</span><span class="s2">&quot;i&quot;</span><span class="p">,</span> <span class="n">halign</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="n">i</span><span class="p">,</span>
+            <span class="n">Str2D</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="n">halign</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="n">t</span><span class="p">,</span>
+            <span class="n">Str2D</span><span class="p">(</span><span class="s2">&quot;h&quot;</span><span class="p">,</span> <span class="n">halign</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="n">h</span><span class="p">,</span>
+            <span class="n">Str2D</span><span class="p">(</span><span class="s2">&quot;v&quot;</span><span class="p">,</span> <span class="n">halign</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="n">v</span><span class="p">,</span>
+            <span class="n">Str2D</span><span class="p">(</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">halign</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="n">r</span><span class="p">,</span>
+            <span class="n">Str2D</span><span class="p">(</span><span class="s2">&quot;r2&quot;</span><span class="p">,</span> <span class="n">halign</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="n">rr</span><span class="p">,</span>
+            <span class="n">Str2D</span><span class="p">(</span><span class="s2">&quot;r3&quot;</span><span class="p">,</span> <span class="n">halign</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="n">rrr</span><span class="p">,</span>
+            <span class="n">sep</span><span class="o">=</span><span class="n">sep</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="Str2D.roll">
 <a class="viewcode-back" href="../str2d.html#str2d.Str2D.roll">[docs]</a>
-    <span class="nd">@lru_cache</span>
     <span class="k">def</span> <span class="nf">roll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">axis</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Str2D&quot;</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Roll the data along an axis.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Roll the data along an axis.  Analogous and wrapper to np.roll.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1038,9 +1345,50 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        np.ndarray</span>
-<span class="sd">            The rolled data.</span>
+
+<span class="sd">        Str2D</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+
+<span class="sd">        Let&#39;s create an instance of Str2D and assign it to the variable `a`.</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from str2d import Str2D</span>
+
+<span class="sd">            a = Str2D(&#39;a b c d\\ne f g\\nh i\\nj&#39;)</span>
+
+<span class="sd">        We can roll the data horizontally by passing the number of positions to roll and</span>
+<span class="sd">        the axis equal to 1.</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            a.roll(1, axis=1)</span>
+
+<span class="sd">        .. testoutput::</span>
+
+<span class="sd">            da b c</span>
+<span class="sd">             e f g</span>
+<span class="sd">             h i</span>
+<span class="sd">             j</span>
+
+<span class="sd">        We can roll the data vertically by passing the number of positions to roll and</span>
+<span class="sd">        the axis equal to 0.</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            a.roll(1, axis=0)</span>
+
+<span class="sd">        .. testoutput::</span>
+
+<span class="sd">            j</span>
+<span class="sd">            a b c d</span>
+<span class="sd">            e f g</span>
+<span class="sd">            h i</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="k">return</span> <span class="n">Str2D</span><span class="p">(</span>
             <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">),</span>
             <span class="n">halign</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">halign</span><span class="p">,</span>
@@ -1062,8 +1410,32 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        np.ndarray</span>
-<span class="sd">            The rolled data.</span>
+<span class="sd">        Str2D</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+
+<span class="sd">        Let&#39;s create an instance of Str2D and assign it to the variable `a`.</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from str2d import Str2D</span>
+
+<span class="sd">            a = Str2D(&#39;a b c d\\ne f g\\nh i\\nj&#39;)</span>
+
+<span class="sd">        We can roll the data horizontally by passing the number of positions to roll.</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            a.roll_h(1)</span>
+
+<span class="sd">        .. testoutput::</span>
+
+<span class="sd">            da b c</span>
+<span class="sd">             e f g</span>
+<span class="sd">             h i</span>
+<span class="sd">             j</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
 
@@ -1081,8 +1453,32 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        np.ndarray</span>
-<span class="sd">            The rolled data.</span>
+<span class="sd">        Str2D</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+
+<span class="sd">        Let&#39;s create an instance of Str2D and assign it to the variable `a`.</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from str2d import Str2D</span>
+
+<span class="sd">            a = Str2D(&#39;a b c d\\ne f g\\nh i\\nj&#39;)</span>
+
+<span class="sd">        We can roll the data vertically by passing the number of positions to roll.</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            a.roll_v(1)</span>
+
+<span class="sd">        .. testoutput::</span>
+
+<span class="sd">            j</span>
+<span class="sd">            a b c d</span>
+<span class="sd">            e f g</span>
+<span class="sd">            h i</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
 
@@ -1090,19 +1486,15 @@
     <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Enables convenient access to the transpose, horizontal flip, vertical flip,</span>
 <span class="sd">        and rotation methods in a concatenated manner.</span>
-
-<span class="sd">        Examples</span>
-<span class="sd">        --------</span>
-<span class="sd">        &gt;&gt;&gt; s = Str2D(data=&#39;abc\ndef\nghi&#39;)</span>
-<span class="sd">        &gt;&gt;&gt; s.thrvt</span>
-
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">p</span> <span class="o">:=</span> <span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;h&quot;</span><span class="p">,</span> <span class="s2">&quot;v&quot;</span><span class="p">,</span> <span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">p</span> <span class="o">:=</span> <span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;h&quot;</span><span class="p">,</span> <span class="s2">&quot;v&quot;</span><span class="p">,</span> <span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="s2">&quot;i&quot;</span><span class="p">]:</span>
             <span class="n">this</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">this</span>
             <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">),</span> <span class="n">name</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
         <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">Str2D</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&#39; object has no attribute &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+
+    <span class="fm">__getattr__</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">+=</span> <span class="n">TRANSFORMATIONS_DOCSTRING</span>
 
 <div class="viewcode-block" id="Str2D.pad">
 <a class="viewcode-back" href="../str2d.html#str2d.Str2D.pad">[docs]</a>
@@ -1115,6 +1507,11 @@
 <span class="sd">        ----------</span>
 <span class="sd">        fill : Tuple[str, int], optional</span>
 <span class="sd">            The fill value for the &#39;char&#39; and &#39;alpha&#39; fields, by default (&#39; &#39;, 0)</span>
+
+<span class="sd">        mode: str, optional</span>
+<span class="sd">            The padding mode, by default &#39;constant&#39;.  Other options are documented in</span>
+<span class="sd">            np.pad but the only other one that makes sense in a character array context</span>
+<span class="sd">            is &#39;edge&#39;.</span>
 
 <span class="sd">        *args : tuple</span>
 <span class="sd">            Positional arguments to np.pad.</span>
@@ -1202,6 +1599,24 @@
 <span class="sd">            ..........</span>
 <span class="sd">            ..........</span>
 <span class="sd">            ..........</span>
+
+<span class="sd">        Another thing we can do is to pass a different type of padding mode.  The</span>
+<span class="sd">        default is &#39;constant&#39; which will fill the padding elements with the fill value.</span>
+<span class="sd">        However, we can also use &#39;edge&#39; which will fill the padding elements with the</span>
+<span class="sd">        nearest edge value.</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            a.pad(1, mode=&#39;edge&#39;)</span>
+
+<span class="sd">        .. testoutput::</span>
+
+<span class="sd">            aa b c dd</span>
+<span class="sd">            aa b c dd</span>
+<span class="sd">            ee f g</span>
+<span class="sd">            hh i</span>
+<span class="sd">            jj</span>
+<span class="sd">            jj</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;fill&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fill</span><span class="p">)</span>
