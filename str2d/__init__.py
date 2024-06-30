@@ -36,13 +36,13 @@ class BoxParts:
 
     .. _box-parts-doc-table-2:
 
-    +----------------+----------+------------+
-    | Attribute Name | v        | h          |
-    +----------------+----------+------------+
-    | Example Value  | │        | ─          |
-    +----------------+----------+------------+
-    | Description    | Vertical | Horizontal |
-    +----------------+----------+------------+
+    +--------------------+----------+------------+
+    | **Attribute Name** | v        | h          |
+    +--------------------+----------+------------+
+    | **Example Value**  | │        | ─          |
+    +--------------------+----------+------------+
+    | **Description**    | Vertical | Horizontal |
+    +--------------------+----------+------------+
 
     You can pass any unicode characters to the BoxParts class and it will categorize
     them accordingly. But the expectation would be something like the example above.
@@ -395,7 +395,13 @@ class Str2D:
 
     """
 
+    # Structured array data type for Str2D objects
+    # the 'char' field is the little-endian unicode single character
+    # the 'alpha' field is an int8 that is trying its best to be a boolean
     _dtype = np.dtype([("char", "<U1"), ("alpha", "int8")])
+
+    # when doing a transpose, horizontal, or vertical transformations
+    # shift the alignments to something that makes sense
     _align_transpose = {
         "top": "left",
         "middle": "center",
@@ -409,15 +415,21 @@ class Str2D:
 
     @classmethod
     def struct_pad(cls, array, *args, **kwargs) -> "Str2D":
-        """Pad a structured array with a fill value.
+        """`struct_pad` pads a structured array with fields 'char' and 'alpha'.  The
+        method is a wrapper around np.pad that pads the 'char' and 'alpha' fields with
+        the fill value specified in the 'fill' keyword argument.
 
         Parameters
         ----------
         array : np.ndarray
             A structured array with fields 'char' and 'alpha'.
 
+        fill : Tuple[str, int], optional
+            The fill value for the 'char' and 'alpha' fields, by default (' ', 0)
+
         *args : tuple
             Positional arguments to np.pad.
+
         **kwargs : dict
             Keyword arguments to np.pad.
 
@@ -426,6 +438,83 @@ class Str2D:
         np.ndarray
             A structured array with fields 'char' and 'alpha' padded with the fill value
             specified in the 'fill' keyword argument.
+
+        Examples
+        --------
+
+        Let's use `Str2D` to create a structured array from a string and then pad it.
+
+        .. testcode::
+
+            from str2d import Str2D
+
+            a = Str2D('a b c d\\ne f g\\nh i\\nj')
+            a.char
+
+        .. testoutput::
+
+            array([['a', ' ', 'b', ' ', 'c', ' ', 'd'],
+                   ['e', ' ', 'f', ' ', 'g', ' ', ' '],
+                   ['h', ' ', 'i', ' ', ' ', ' ', ' '],
+                   ['j', ' ', ' ', ' ', ' ', ' ', ' ']], dtype='<U1')
+
+        Now let's pad the structured array with the fill value '.'.  The first argument
+        is the data.  The next argument is the number of padding elements to add to the
+        beginning and end of each axis.
+
+        .. testcode::
+
+            Str2D.struct_pad(a.data, 1, fill=('.', 0))
+
+        .. testoutput::
+
+            array([['.', '.', '.', '.', '.', '.', '.'],
+                    ['.', 'a', ' ', 'b', ' ', 'c', 'd'],
+                    ['.', 'e', ' ', 'f', ' ', 'g', ' '],
+                    ['.', 'h', ' ', 'i', ' ', ' ', ' '],
+                    ['.', 'j', ' ', ' ', ' ', ' ', ' '],
+                    ['.', '.', '.', '.', '.', '.', '.']], dtype='<U1')
+
+        If we want to control the padding on each side of the array, we can pass a tuple
+        of integers to the second argument.  The first integer is the number of padding
+        elements to add to the beginning of each axis and the second integer is the
+        number of padding elements to add to the end of each axis.
+
+        .. testcode::
+
+            Str2D.struct_pad(a.data, (1, 2), fill=('.', 0))
+
+        .. testoutput::
+
+            array([['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+                   ['.', 'a', ' ', 'b', ' ', 'c', ' ', 'd', '.', '.'],
+                   ['.', 'e', ' ', 'f', ' ', 'g', ' ', ' ', '.', '.'],
+                   ['.', 'h', ' ', 'i', ' ', ' ', ' ', ' ', '.', '.'],
+                   ['.', 'j', ' ', ' ', ' ', ' ', ' ', ' ', '.', '.'],
+                   ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+                   ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.']], dtype='<U1')
+
+        However, you can also control the padding on each side of the array by passing
+        the number of padding elements to add to the beginning and end of each axis as
+        as tuple of tuples. The first tuple is the number of padding elements to add to
+        the beginning and end of the first axis and the second tuple is the number of
+        padding elements to add to the beginning and end of the second axis.
+
+        .. testcode::
+
+            Str2D.struct_pad(a.data, ((1, 3), (2, 1)), fill=('.', 0))
+
+        .. testoutput::
+
+            array([['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+                   ['.', '.', 'a', ' ', 'b', ' ', 'c', ' ', 'd', '.'],
+                   ['.', '.', 'e', ' ', 'f', ' ', 'g', ' ', ' ', '.'],
+                   ['.', '.', 'h', ' ', 'i', ' ', ' ', ' ', ' ', '.'],
+                   ['.', '.', 'j', ' ', ' ', ' ', ' ', ' ', ' ', '.'],
+                   ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+                   ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+                   ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.']], dtype='<U1')
+
         """
         fill = kwargs.pop("fill", (" ", 0))
         char_fill, alpha_fill = fill
@@ -885,36 +974,105 @@ class Str2D:
         raise AttributeError(f"'{Str2D.__name__}' object has no attribute '{name}'")
 
     def pad(self, *args, **kwargs) -> "Str2D":
-        """Pad the data.
+        """`pad` pads the data with the fill value specified in the 'fill' keyword and
+        is a wrapper around the class method `struct_pad` which in turn is a wrapper
+        around np.pad.
 
         Parameters
         ----------
+        fill : Tuple[str, int], optional
+            The fill value for the 'char' and 'alpha' fields, by default (' ', 0)
+
         *args : tuple
             Positional arguments to np.pad.
+
         **kwargs : dict
             Keyword arguments to np.pad.
 
         Returns
         -------
-        np.ndarray
-            The padded data.
+        Str2D
+            A new Str2D object with the padded data.
+
+        Examples
+        --------
+
+        Let's create an instance of Str2D and assign it to the variable `a` and then pad
+        it.
+
+        .. testcode::
+
+            from str2d import Str2D
+
+            a = Str2D('a b c d\\ne f g\\nh i\\nj')
+            a
+
+        .. testoutput::
+
+            a b c d
+            e f g
+            h i
+            j
+
+        Now let's pad the structured array with the fill value '.'.  The first argument
+        is the number of padding elements to add to the beginning and end of each axis.
+
+        .. testcode::
+
+            a.pad(1, fill=('.', 0))
+
+        .. testoutput::
+
+            .........
+            .a b c d.
+            .e f g  .
+            .h i    .
+            .j      .
+            .........
+
+        If we want to control the padding on each side, we can pass a tuple of integers
+        to the first argument.  The first integer is the number of padding elements to
+        add to the beginning of each axis and the second integer is the number of
+        padding elements to add to the end of each axis.
+
+        .. testcode::
+
+            a.pad((1, 2), fill=('.', 0))
+
+        .. testoutput::
+
+            ..........
+            .a b c d..
+            .e f g  ..
+            .h i    ..
+            .j      ..
+            ..........
+            ..........
+
+        However, you can also control the padding on each side of the array by passing
+        the number of padding elements to add to the beginning and end of each axis as
+        as tuple of tuples. The first tuple is the number of padding elements to add to
+        the beginning and end of the first axis and the second tuple is the number of
+        padding elements to add to the beginning and end of the second axis.
+
+        .. testcode::
+
+            a.pad(((1, 3), (2, 1)), fill=('.', 0))
+
+        .. testoutput::
+
+            ..........
+            ..a b c d.
+            ..e f g  .
+            ..h i    .
+            ..j      .
+            ..........
+            ..........
+            ..........
+
         """
-        char_fill, alpha_fill = self.fill
-        kwargs.setdefault("mode", "constant")
-
-        char_kwargs = kwargs.copy()
-        if char_kwargs["mode"] == "constant":
-            char_kwargs["constant_values"] = char_fill
-
-        alpha_kwargs = kwargs.copy()
-        if alpha_kwargs["mode"] == "constant":
-            alpha_kwargs["constant_values"] = alpha_fill
-
-        char_pad = np.pad(self.data["char"], *args, **char_kwargs)
-        alpha_pad = np.pad(self.data["alpha"], *args, **alpha_kwargs)
-        padded_data = np.empty(char_pad.shape, dtype=self._dtype)
-        padded_data["char"] = char_pad
-        padded_data["alpha"] = alpha_pad
+        kwargs.setdefault("fill", self.fill)
+        padded_data = self.struct_pad(self.data, *args, **kwargs)
 
         return Str2D(data=padded_data, **self.kwargs)
 

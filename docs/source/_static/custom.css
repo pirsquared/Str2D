@@ -32,11 +32,28 @@
             solid
             var(--py-input-border-color)
             !important;
+    position: relative;
 }
-
-.highlight-none > * {
+.highlight-python::after {
+    content: 'INPUT';
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.5); /* Adjust opacity for watermark effect */
+}
+.highlight-none {
     border: var(--py-output-border-width)
             solid
             var(--py-output-border-color)
             !important;
+    position: relative;
+}
+.highlight-none::after {
+    content: 'OUTPUT';
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.5); /* Adjust opacity for watermark effect */
 }
