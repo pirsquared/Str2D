@@ -424,6 +424,11 @@ class Str2D:
         array : np.ndarray
             A structured array with fields 'char' and 'alpha'.
 
+        mode: str, optional
+            The padding mode, by default 'constant'.  Other options are documented in
+            np.pad but the only other one that makes sense in a character array context
+            is 'edge'.
+
         fill : Tuple[str, int], optional
             The fill value for the 'char' and 'alpha' fields, by default (' ', 0)
 
@@ -469,11 +474,11 @@ class Str2D:
         .. testoutput::
 
             array([['.', '.', '.', '.', '.', '.', '.'],
-                    ['.', 'a', ' ', 'b', ' ', 'c', 'd'],
-                    ['.', 'e', ' ', 'f', ' ', 'g', ' '],
-                    ['.', 'h', ' ', 'i', ' ', ' ', ' '],
-                    ['.', 'j', ' ', ' ', ' ', ' ', ' '],
-                    ['.', '.', '.', '.', '.', '.', '.']], dtype='<U1')
+                   ['.', 'a', ' ', 'b', ' ', 'c', 'd'],
+                   ['.', 'e', ' ', 'f', ' ', 'g', ' '],
+                   ['.', 'h', ' ', 'i', ' ', ' ', ' '],
+                   ['.', 'j', ' ', ' ', ' ', ' ', ' '],
+                   ['.', '.', '.', '.', '.', '.', '.']], dtype='<U1')
 
         If we want to control the padding on each side of the array, we can pass a tuple
         of integers to the second argument.  The first integer is the number of padding
@@ -515,7 +520,29 @@ class Str2D:
                    ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
                    ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.']], dtype='<U1')
 
+        Another thing we can do is to pass a different type of padding mode.  The
+        default is 'constant' which will fill the padding elements with the fill value.
+        However, we can also use 'edge' which will fill the padding elements with the
+        nearest edge value.
+
+        .. testcode::
+
+            Str2D.struct_pad(a.data, 1, mode='edge')
+
+        .. testoutput::
+
+        array([['a', 'a', ' ', 'b', ' ', 'c', ' ', 'd', 'd'],
+               ['a', 'a', ' ', 'b', ' ', 'c', ' ', 'd', 'd'],
+               ['e', 'e', ' ', 'f', ' ', 'g', ' ', ' ', ' '],
+               ['h', 'h', ' ', 'i', ' ', ' ', ' ', ' ', ' '],
+               ['j', 'j', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+               ['j', 'j', ' ', ' ', ' ', ' ', ' ', ' ', ' ']], dtype='<U1')
+
         """
+        # Using `np.pad` on structured arrays is a bit tricky because it doesn't
+        # handle the structured array fields very well.  We need to pad the 'char'
+        # and 'alpha' fields separately and then recombine them into a structured
+        # array.
         fill = kwargs.pop("fill", (" ", 0))
         char_fill, alpha_fill = fill
 
@@ -541,7 +568,12 @@ class Str2D:
     def validate_fill(
         cls, fill: Optional[Union[str, Tuple[str, int]]] = None
     ) -> Tuple[str, int]:
-        """Validate the fill value.
+        """Validate the fill value.  The fill value is a tuple containing the fill
+        character and fill alpha value.  The fill character is a single character and
+        the fill alpha value is 0 or 1.  This validator will accept a single character
+        or a tuple containing a single character and an integer.  If a single character
+        is passed, the fill alpha value will be 0.  If a tuple is passed, the fill
+        character will be the first element and the fill alpha value will be the second.
 
         Parameters
         ----------
@@ -552,6 +584,12 @@ class Str2D:
         -------
         Tuple[str, int]
             A tuple containing the fill character and fill alpha value.
+
+        Raises
+        ------
+        ValueError
+            If the fill value is not a single character or a tuple containing a single
+            character and an integer or if the fill alpha value is not 0 or 1.
         """
         if fill is None:
             return " ", 0
@@ -574,7 +612,9 @@ class Str2D:
 
     @classmethod
     def validate_halign(cls, halign: str) -> str:
-        """Validate the horizontal alignment.
+        """Validate the horizontal alignment.  The horizontal alignment can be 'left',
+        'center', or 'right'.  It will lower case the input and raise a ValueError if
+        the input is not one of the valid options.
 
         Parameters
         ----------
@@ -585,6 +625,11 @@ class Str2D:
         -------
         str
             The validated horizontal alignment.
+
+        Raises
+        ------
+        ValueError
+            If the horizontal alignment is not 'left', 'center', or 'right'.
         """
         halign = halign.lower()
         if halign not in {"left", "center", "right"}:
@@ -593,7 +638,9 @@ class Str2D:
 
     @classmethod
     def validate_valign(cls, valign: str) -> str:
-        """Validate the vertical alignment.
+        """Validate the vertical alignment. The vertical alignment can be 'top',
+        'middle', or 'bottom'.  It will lower case the input and raise a ValueError if
+        the input is not one of the valid options.
 
         Parameters
         ----------
@@ -604,6 +651,11 @@ class Str2D:
         -------
         str
             The validated vertical alignment.
+
+        Raises
+        ------
+        ValueError
+            If the vertical alignment is not 'top', 'middle', or 'bottom'.
         """
         valign = valign.lower()
         if valign not in {"top", "middle", "bottom"}:
@@ -612,18 +664,41 @@ class Str2D:
 
     @classmethod
     def struct_array_from_string(cls, string: str, **kwargs) -> "Str2D":
-        """Create a structured array from a string.
+        """Create a structured array from a string.  This is likely the most common way
+        to create an Str2D object.  The string is split into lines and then each line is
+        split into characters.  The structured array is created with fields 'char' and
+        'alpha' where the 'char' field contains the characters and the 'alpha' field
+        contains 1 for each character.
+
+        Though we aren't returning a Str2D object, we are returning a structured array
+        that potentially needs to be padded and therefore we take the same keyword
+        arguments as the Str2D constructor.
 
         Parameters
         ----------
         string : str
             A string to convert to a structured array.
 
+        min_width : int, optional
+            The minimum width of the output, by default 0.
+
+        min_height : int, optional
+            The minimum height of the output, by default 0.
+
+        halign : str, optional
+            The horizontal alignment, by default 'left'.
+
+        valign : str, optional
+            The vertical alignment, by default 'top'.
+
+        fill : Tuple[str, int], optional
+            The fill value for the 'char' and 'alpha' fields, by default (' ', 0).
+
         Returns
         -------
         np.ndarray
             A structured array with fields 'char' and 'alpha' created from the input
-              string.
+            string.
         """
         pre_data = [list(row) for row in string.splitlines()]
         # needed to use `pop or 0` as opposed to `pop(key, 0)`
@@ -662,7 +737,9 @@ class Str2D:
 
     @classmethod
     def struct_array_from_char_array(cls, array: np.ndarray) -> "Str2D":
-        """Create a structured array from a character array.
+        """Create a structured array from a character array.  This is useful when you
+        have a 2D array of characters and you want to convert it to a structured array
+        with fields 'char' and 'alpha'.
 
         Parameters
         ----------
@@ -673,7 +750,7 @@ class Str2D:
         -------
         np.ndarray
             A structured array with fields 'char' and 'alpha' created from the input
-              character array.
+            character array.
         """
         data = np.empty(array.shape, dtype=cls._dtype)
         data["char"] = array
@@ -682,12 +759,19 @@ class Str2D:
 
     @classmethod
     def struct_array_from_bool_array(cls, array: np.ndarray, char: str) -> "Str2D":
-        """Create a structured array from a boolean array.
+        """Create a structured array from a boolean array. This is useful when you have
+        a boolean array and you want to convert it to a structured array with fields
+        'char' and 'alpha'.
+
+        The 'char' field will be filled with the specified character where the boolean
+        array is True and ' ' where the boolean array is False.  The 'alpha' field will
+        be 1 where the boolean array is True and 0 where the boolean array is False.
 
         Parameters
         ----------
         array : np.ndarray
             A 2D boolean array.
+
         char : str
             The character to use when the boolean array is True.
 
@@ -695,7 +779,7 @@ class Str2D:
         -------
         np.ndarray
             A structured array with fields 'char' and 'alpha' created from the input
-              boolean array.
+            boolean array.
         """
         data = np.empty(array.shape, dtype=cls._dtype)
         data["char"] = np.where(array, char, " ")
@@ -704,20 +788,27 @@ class Str2D:
 
     @classmethod
     def parse(cls, data: Optional[Any] = None, **kwargs) -> "Str2D":
-        """Parse the input data into a structured array.
+        """Parse the input data into a structured array.  This is the main method that
+        will take the input data and convert it into a structured array with fields
+        'char' and 'alpha'.  The input data can be a string, a structured array, a
+        boolean array, a DataFrame, a Series, or an iterable.  If the input data is a
+        structured array, the keyword arguments will be ignored.
 
         Parameters
         ----------
         data : Optional[Any], optional
             The input data, by default None.
+
         **kwargs : dict
-            Additional keyword arguments to pass to the Str2
+            Additional keyword arguments to pass to the struct_array_from_string method.
+            If the input data is a structured array, these keyword arguments will be
+            ignored.
 
         Returns
         -------
         np.ndarray
             A structured array with fields 'char' and 'alpha' created from the input
-              data.
+            data.
 
         """
         if isinstance(data, Str2D):
@@ -759,33 +850,37 @@ class Str2D:
         fill: Optional[Union[str, Tuple[str, int]]] = None,
         **kwargs,
     ) -> None:
-        """Create a Str2D object.
+        """Create a new Str2D object.  The input data can be a string, a structured
+        array, a boolean array, a DataFrame, a Series, or an iterable.  If the input
+        data is a structured array, the keyword arguments will be ignored.
 
         Parameters
         ----------
         data : Optional[Any], optional
             The input data, by default None.
+
         min_width : Optional[int], optional
             The minimum width of the output, by default None.
+
         min_height : Optional[int], optional
             The minimum height of the output, by default None.
+
         halign : Optional[str], optional
             The horizontal alignment, by default 'left'.
+
         valign : Optional[str], optional
             The vertical alignment, by default 'top'.
+
         fill : Optional[Union[str, Tuple[str, int]]], optional
             The fill value, by default None.
+
         **kwargs : dict
             Additional keyword arguments to pass to the parse method.
 
         Raises
         ------
         ValueError
-            If the fill value is invalid.
-        ValueError
-            If the horizontal alignment is invalid.
-        ValueError
-            If the vertical alignment is invalid.
+            If the fill, horizontal alignment, or vertical alignment value is invalid.
 
         """
 
@@ -834,47 +929,223 @@ class Str2D:
 
     @property
     def height(self) -> int:
-        """Return the height of the data."""
+        """Return the height of the Str2D object.  This is the number of rows in the
+        structured array or the number of lines in the string."""
         return self.data.shape[0]
 
     @property
     def width(self) -> int:
-        """Return the width of the data."""
+        """Return the width of the Str2D object.  This is the number of columns in the
+        structured array or the maximum number of characters in a line in the string."""
         return self.data.shape[1]
 
     @property
     def shape(self) -> Tuple[int, int]:
-        """Return the shape of the data."""
+        """Return the shape of the Str2D object.  This is a tuple containing the height
+        and width of the structured array."""
         return self.data.shape
 
     @property
     def char(self) -> np.ndarray:
-        """Return the character data."""
+        """Return the character data.  Alternatively, you can access the 'char' field
+        directly by using the 'data' attribute and the 'char' key.
+
+        Examples
+        --------
+
+        Let's create an instance of Str2D and assign it to the variable `a`.
+
+        .. testcode::
+
+            from str2d import Str2D
+
+            a = Str2D('a b c d\\ne f g\\nh i\\nj')
+
+        We can access the 'char' field directly by using the 'data' attribute and the
+
+        .. testcode::
+
+            a.data['char']
+
+        .. testoutput::
+
+            array([['a', ' ', 'b', ' ', 'c', ' ', 'd'],
+                   ['e', ' ', 'f', ' ', 'g', ' ', ' '],
+                   ['h', ' ', 'i', ' ', ' ', ' ', ' '],
+                   ['j', ' ', ' ', ' ', ' ', ' ', ' ']], dtype='<U1')
+
+        This property is a shortcut to the above.
+
+        .. testcode::
+
+            a.char
+
+        .. testoutput::
+
+            array([['a', ' ', 'b', ' ', 'c', ' ', 'd'],
+                   ['e', ' ', 'f', ' ', 'g', ' ', ' '],
+                   ['h', ' ', 'i', ' ', ' ', ' ', ' '],
+                   ['j', ' ', ' ', ' ', ' ', ' ', ' ']], dtype='<U1')
+
+        """
         return self.data["char"]
 
     @property
     def alpha(self) -> np.ndarray:
-        """Return the alpha data."""
+        """Return the alpha data.  Alternatively, you can access the 'alpha' field
+        directly by using the 'data' attribute and the 'alpha' key.
+
+        Examples
+        --------
+
+        Let's create an instance of Str2D and assign it to the variable `a`.
+
+        .. testcode::
+
+            from str2d import Str2D
+
+            a = Str2D('a b c d\\ne f g\\nh i\\nj')
+
+        We can access the 'alpha' field directly by using the 'data' attribute and the
+
+        .. testcode::
+
+            a.data['alpha']
+
+        .. testoutput::
+
+            array([[1, 1, 1, 1, 1, 1, 1],
+                   [1, 1, 1, 1, 1, 0, 0],
+                   [1, 1, 1, 0, 0, 0, 0],
+                   [1, 0, 0, 0, 0, 0, 0]], dtype=int8)
+
+        This property is a shortcut to the above.
+
+        .. testcode::
+
+            a.alpha
+
+        .. testoutput::
+
+            array([[1, 1, 1, 1, 1, 1, 1],
+                   [1, 1, 1, 1, 1, 0, 0],
+                   [1, 1, 1, 0, 0, 0, 0],
+                   [1, 0, 0, 0, 0, 0, 0]], dtype=int8)
+
+        """
         return self.data["alpha"]
 
     @property
     def kwargs(self) -> dict:
-        """Return the keyword arguments used to create the object."""
+        """Return the keyword arguments used to create the Str2D object.  This is a
+        dictionary containing the 'halign', 'valign', and 'fill' values.
+
+        The purpose of this property is to make it easier to recreate the Str2D object
+        with the same settings, helping persist the state of the object as it
+        transforms.
+        """
         return {
             "halign": self.halign,
             "valign": self.valign,
             "fill": self.fill,
         }
 
+    def show_with_alignment(self, expand=2, box=True) -> "Str2D":
+        """Show the alignment parameters as part of a new Str2D object.  This is useful
+        for debugging and understanding how the alignment parameters affect the output.
+
+        """
+        footer = Str2D(f"v: {self.valign}\nh: {self.halign}")
+        body = self
+        if expand:
+            body = body.expand(expand, expand)
+        if box:
+            body = body.box().view
+
+        body = Str2D(body, valign="middle", halign="center")
+
+        sep = Str2D("-" * max(body.width, footer.width))
+        return body / sep / footer
+
+    TRANSFORMATIONS_DOCSTRING = """
+
+        This is one of 5 transformations that can be done to the Str2D object.
+
+        - `i` is the identity transformation of the data.
+        - `t` is the transpose of the data.
+        - `h` is the horizontal flip of the data.
+        - `v` is the vertical flip of the data.
+        - `r` is the 90 degree clockwise rotation of the data.
+
+        Examples
+        --------
+
+        Let's create an instance of Str2D and assign it to the variable `a`.
+
+        .. testcode::
+
+            from str2d import Str2D
+
+            a = Str2D('ab\\ncd')
+            a
+
+        .. testoutput::
+
+            ab
+            cd
+
+        Notice that this is a 2x2 array.  We'll show each of the transformations and 
+        intentionally expand and box them to show how the transformations affect the
+        alignment.
+    
+        .. testcode::
+
+            a.transormation_palette()
+
+        .. testoutput::
+
+               i    |    t    |    h     |     v     |    r     |    r2     |    r3    
+            ╭────╮  | ╭────╮  |  ╭────╮  |  ╭────╮   |  ╭────╮  |  ╭────╮   |  ╭────╮  
+            │ab  │  | │ac  │  |  │  ba│  |  │    │   |  │  ca│  |  │    │   |  │    │  
+            │cd  │  | │bd  │  |  │  dc│  |  │    │   |  │  db│  |  │    │   |  │    │  
+            │    │  | │    │  |  │    │  |  │cd  │   |  │    │  |  │  dc│   |  │bd  │  
+            │    │  | │    │  |  │    │  |  │ab  │   |  │    │  |  │  ba│   |  │ac  │  
+            ╰────╯  | ╰────╯  |  ╰────╯  |  ╰────╯   |  ╰────╯  |  ╰────╯   |  ╰────╯  
+            ------- | ------- | -------- | --------- | -------- | --------- | ---------
+            v: top  | v: top  | v: top   | v: bottom | v: top   | v: bottom | v: bottom
+            h: left | h: left | h: right | h: left   | h: right | h: right  | h: left  
+
+        Lastly, we can chain the transformations together.
+
+        .. testcode::
+
+            a.thirvt
+
+        .. testoutput::
+
+            bd
+            ac        
+
+    """
+
     @cached_property
     def t(self) -> "Str2D":
-        """Return the transpose of the data."""
+        """Return the transpose of the Str2D object."""
         return Str2D(
             data=self.data.T,
             halign=self._align_transpose[self.valign],
             valign=self._align_transpose[self.halign],
             fill=self.fill,
         )
+
+    t.__doc__ += TRANSFORMATIONS_DOCSTRING
+
+    @cached_property
+    def i(self) -> "Str2D":
+        """This is the identity transformation.  It returns the Str2D object as is."""
+        return self
+
+    i.__doc__ += TRANSFORMATIONS_DOCSTRING
 
     @cached_property
     def h(self) -> "Str2D":
@@ -886,6 +1157,8 @@ class Str2D:
             fill=self.fill,
         )
 
+    h.__doc__ += TRANSFORMATIONS_DOCSTRING
+
     @cached_property
     def v(self) -> "Str2D":
         """Return the vertical flip of the data."""
@@ -896,14 +1169,42 @@ class Str2D:
             fill=self.fill,
         )
 
+    v.__doc__ += TRANSFORMATIONS_DOCSTRING
+
     @cached_property
     def r(self) -> "Str2D":
         """Return the 90 degree rotation of the data."""
         return self.t.h
 
-    @lru_cache
+    r.__doc__ += TRANSFORMATIONS_DOCSTRING
+
+    def transormation_palette(self, sep=" | ", expand=2, box=True) -> "Str2D":
+        """Show the transformation palette.  This is a visual representation of the
+        identity, transpose, horizontal flip, vertical flip, and 90 degree rotation of
+        the data.  The transformations are shown with alignment parameters and can be
+        expanded and boxed."""
+
+        i = self.i.show_with_alignment(expand=expand, box=box)
+        t = self.t.show_with_alignment(expand=expand, box=box)
+        h = self.h.show_with_alignment(expand=expand, box=box)
+        v = self.v.show_with_alignment(expand=expand, box=box)
+        r = self.r.show_with_alignment(expand=expand, box=box)
+        rr = self.rr.show_with_alignment(expand=expand, box=box)
+        rrr = self.rrr.show_with_alignment(expand=expand, box=box)
+
+        return self.join_h(
+            Str2D("i", halign="center") / i,
+            Str2D("t", halign="center") / t,
+            Str2D("h", halign="center") / h,
+            Str2D("v", halign="center") / v,
+            Str2D("r", halign="center") / r,
+            Str2D("r2", halign="center") / rr,
+            Str2D("r3", halign="center") / rrr,
+            sep=sep,
+        )
+
     def roll(self, x: int, axis: int) -> "Str2D":
-        """Roll the data along an axis.
+        """Roll the data along an axis.  Analogous and wrapper to np.roll.
 
         Parameters
         ----------
@@ -914,9 +1215,50 @@ class Str2D:
 
         Returns
         -------
-        np.ndarray
-            The rolled data.
+
+        Str2D
+
+        Examples
+        --------
+
+        Let's create an instance of Str2D and assign it to the variable `a`.
+
+        .. testcode::
+
+            from str2d import Str2D
+
+            a = Str2D('a b c d\\ne f g\\nh i\\nj')
+
+        We can roll the data horizontally by passing the number of positions to roll and
+        the axis equal to 1.
+
+        .. testcode::
+
+            a.roll(1, axis=1)
+
+        .. testoutput::
+
+            da b c
+             e f g
+             h i
+             j
+
+        We can roll the data vertically by passing the number of positions to roll and
+        the axis equal to 0.
+
+        .. testcode::
+
+            a.roll(1, axis=0)
+
+        .. testoutput::
+
+            j
+            a b c d
+            e f g
+            h i
+
         """
+
         return Str2D(
             data=np.roll(self.data, x, axis=axis),
             halign=self.halign,
@@ -935,8 +1277,32 @@ class Str2D:
 
         Returns
         -------
-        np.ndarray
-            The rolled data.
+        Str2D
+
+        Examples
+        --------
+
+        Let's create an instance of Str2D and assign it to the variable `a`.
+
+        .. testcode::
+
+            from str2d import Str2D
+
+            a = Str2D('a b c d\\ne f g\\nh i\\nj')
+
+        We can roll the data horizontally by passing the number of positions to roll.
+
+        .. testcode::
+
+            a.roll_h(1)
+
+        .. testoutput::
+
+            da b c
+             e f g
+             h i
+             j
+
         """
         return self.roll(x, axis=1)
 
@@ -951,27 +1317,47 @@ class Str2D:
 
         Returns
         -------
-        np.ndarray
-            The rolled data.
+        Str2D
+
+        Examples
+        --------
+
+        Let's create an instance of Str2D and assign it to the variable `a`.
+
+        .. testcode::
+
+            from str2d import Str2D
+
+            a = Str2D('a b c d\\ne f g\\nh i\\nj')
+
+        We can roll the data vertically by passing the number of positions to roll.
+
+        .. testcode::
+
+            a.roll_v(1)
+
+        .. testoutput::
+
+            j
+            a b c d
+            e f g
+            h i
+
         """
         return self.roll(x, axis=0)
 
     def __getattr__(self, name: str) -> Any:
         """Enables convenient access to the transpose, horizontal flip, vertical flip,
         and rotation methods in a concatenated manner.
-
-        Examples
-        --------
-        >>> s = Str2D(data='abc\ndef\nghi')
-        >>> s.thrvt
-
         """
-        if (p := name[0].lower()) in ["h", "v", "t", "r"]:
+        if (p := name[0].lower()) in ["h", "v", "t", "r", "i"]:
             this = getattr(self, p)
             if len(name) == 1:
                 return this
             return getattr(getattr(self, p), name[1:])
         raise AttributeError(f"'{Str2D.__name__}' object has no attribute '{name}'")
+
+    __getattr__.__doc__ += TRANSFORMATIONS_DOCSTRING
 
     def pad(self, *args, **kwargs) -> "Str2D":
         """`pad` pads the data with the fill value specified in the 'fill' keyword and
@@ -982,6 +1368,11 @@ class Str2D:
         ----------
         fill : Tuple[str, int], optional
             The fill value for the 'char' and 'alpha' fields, by default (' ', 0)
+
+        mode: str, optional
+            The padding mode, by default 'constant'.  Other options are documented in
+            np.pad but the only other one that makes sense in a character array context
+            is 'edge'.
 
         *args : tuple
             Positional arguments to np.pad.
@@ -1069,6 +1460,24 @@ class Str2D:
             ..........
             ..........
             ..........
+
+        Another thing we can do is to pass a different type of padding mode.  The
+        default is 'constant' which will fill the padding elements with the fill value.
+        However, we can also use 'edge' which will fill the padding elements with the
+        nearest edge value.
+
+        .. testcode::
+
+            a.pad(1, mode='edge')
+
+        .. testoutput::
+
+            aa b c dd
+            aa b c dd
+            ee f g
+            hh i
+            jj
+            jj
 
         """
         kwargs.setdefault("fill", self.fill)
