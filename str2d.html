@@ -8,7 +8,7 @@
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=8236e275" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=e07f7fc8" />
 
   
     <link rel="shortcut icon" href="_static/pirr_logo.svg"/>
@@ -314,15 +314,15 @@ Value</p></th>
 </table>
 <table class="docutils align-default" id="box-parts-doc-table-2">
 <tbody>
-<tr class="row-odd"><td><p>Attribute Name</p></td>
+<tr class="row-odd"><td><p><strong>Attribute Name</strong></p></td>
 <td><p>v</p></td>
 <td><p>h</p></td>
 </tr>
-<tr class="row-even"><td><p>Example Value</p></td>
+<tr class="row-even"><td><p><strong>Example Value</strong></p></td>
 <td><p>│</p></td>
 <td><p>─</p></td>
 </tr>
-<tr class="row-odd"><td><p>Description</p></td>
+<tr class="row-odd"><td><p><strong>Description</strong></p></td>
 <td><p>Vertical</p></td>
 <td><p>Horizontal</p></td>
 </tr>
@@ -726,21 +726,86 @@ j......6 7 8 9
 <dl class="py method">
 <dt class="sig sig-object py" id="str2d.Str2D.pad">
 <span class="sig-name descname"><span class="pre">pad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.pad"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.pad" title="Link to this definition"></a></dt>
-<dd><p>Pad the data.</p>
+<dd><p><cite>pad</cite> pads the data with the fill value specified in the ‘fill’ keyword and
+is a wrapper around the class method <cite>struct_pad</cite> which in turn is a wrapper
+around np.pad.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
+<li><p><strong>fill</strong> (<em>Tuple</em><em>[</em><em>str</em><em>, </em><em>int</em><em>]</em><em>, </em><em>optional</em>) – The fill value for the ‘char’ and ‘alpha’ fields, by default (’ ‘, 0)</p></li>
 <li><p><strong>*args</strong> (<em>tuple</em>) – Positional arguments to np.pad.</p></li>
 <li><p><strong>**kwargs</strong> (<em>dict</em>) – Keyword arguments to np.pad.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The padded data.</p>
+<dd class="field-even"><p>A new Str2D object with the padded data.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>np.ndarray</p>
+<dd class="field-odd"><p><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D">Str2D</a></p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<p>Let’s create an instance of Str2D and assign it to the variable <cite>a</cite> and then pad
+it.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">str2d</span> <span class="kn">import</span> <span class="n">Str2D</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">Str2D</span><span class="p">(</span><span class="s1">&#39;a b c d</span><span class="se">\n</span><span class="s1">e f g</span><span class="se">\n</span><span class="s1">h i</span><span class="se">\n</span><span class="s1">j&#39;</span><span class="p">)</span>
+<span class="n">a</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>a b c d
+e f g
+h i
+j
+</pre></div>
+</div>
+<p>Now let’s pad the structured array with the fill value ‘.’.  The first argument
+is the number of padding elements to add to the beginning and end of each axis.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>.........
+.a b c d.
+.e f g  .
+.h i    .
+.j      .
+.........
+</pre></div>
+</div>
+<p>If we want to control the padding on each side, we can pass a tuple of integers
+to the first argument.  The first integer is the number of padding elements to
+add to the beginning of each axis and the second integer is the number of
+padding elements to add to the end of each axis.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">pad</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">fill</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>..........
+.a b c d..
+.e f g  ..
+.h i    ..
+.j      ..
+..........
+..........
+</pre></div>
+</div>
+<p>However, you can also control the padding on each side of the array by passing
+the number of padding elements to add to the beginning and end of each axis as
+as tuple of tuples. The first tuple is the number of padding elements to add to
+the beginning and end of the first axis and the second tuple is the number of
+padding elements to add to the beginning and end of the second axis.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">pad</span><span class="p">(((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">fill</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>..........
+..a b c d.
+..e f g  .
+..h i    .
+..j      .
+..........
+..........
+..........
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -952,11 +1017,14 @@ j......6 7 8 9
 <dl class="py method">
 <dt class="sig sig-object py" id="str2d.Str2D.struct_pad">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">struct_pad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="_modules/str2d.html#Str2D.struct_pad"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.struct_pad" title="Link to this definition"></a></dt>
-<dd><p>Pad a structured array with a fill value.</p>
+<dd><p><cite>struct_pad</cite> pads a structured array with fields ‘char’ and ‘alpha’.  The
+method is a wrapper around np.pad that pads the ‘char’ and ‘alpha’ fields with
+the fill value specified in the ‘fill’ keyword argument.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>array</strong> (<em>np.ndarray</em>) – A structured array with fields ‘char’ and ‘alpha’.</p></li>
+<li><p><strong>fill</strong> (<em>Tuple</em><em>[</em><em>str</em><em>, </em><em>int</em><em>]</em><em>, </em><em>optional</em>) – The fill value for the ‘char’ and ‘alpha’ fields, by default (’ ‘, 0)</p></li>
 <li><p><strong>*args</strong> (<em>tuple</em>) – Positional arguments to np.pad.</p></li>
 <li><p><strong>**kwargs</strong> (<em>dict</em>) – Keyword arguments to np.pad.</p></li>
 </ul>
@@ -969,6 +1037,68 @@ specified in the ‘fill’ keyword argument.</p>
 <dd class="field-odd"><p>np.ndarray</p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<p>Let’s use <cite>Str2D</cite> to create a structured array from a string and then pad it.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">str2d</span> <span class="kn">import</span> <span class="n">Str2D</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">Str2D</span><span class="p">(</span><span class="s1">&#39;a b c d</span><span class="se">\n</span><span class="s1">e f g</span><span class="se">\n</span><span class="s1">h i</span><span class="se">\n</span><span class="s1">j&#39;</span><span class="p">)</span>
+<span class="n">a</span><span class="o">.</span><span class="n">char</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>array([[&#39;a&#39;, &#39; &#39;, &#39;b&#39;, &#39; &#39;, &#39;c&#39;, &#39; &#39;, &#39;d&#39;],
+       [&#39;e&#39;, &#39; &#39;, &#39;f&#39;, &#39; &#39;, &#39;g&#39;, &#39; &#39;, &#39; &#39;],
+       [&#39;h&#39;, &#39; &#39;, &#39;i&#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;],
+       [&#39;j&#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;]], dtype=&#39;&lt;U1&#39;)
+</pre></div>
+</div>
+<p>Now let’s pad the structured array with the fill value ‘.’.  The first argument
+is the data.  The next argument is the number of padding elements to add to the
+beginning and end of each axis.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Str2D</span><span class="o">.</span><span class="n">struct_pad</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>array([[&#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;],
+        [&#39;.&#39;, &#39;a&#39;, &#39; &#39;, &#39;b&#39;, &#39; &#39;, &#39;c&#39;, &#39;d&#39;],
+        [&#39;.&#39;, &#39;e&#39;, &#39; &#39;, &#39;f&#39;, &#39; &#39;, &#39;g&#39;, &#39; &#39;],
+        [&#39;.&#39;, &#39;h&#39;, &#39; &#39;, &#39;i&#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;],
+        [&#39;.&#39;, &#39;j&#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;],
+        [&#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;]], dtype=&#39;&lt;U1&#39;)
+</pre></div>
+</div>
+<p>If we want to control the padding on each side of the array, we can pass a tuple
+of integers to the second argument.  The first integer is the number of padding
+elements to add to the beginning of each axis and the second integer is the
+number of padding elements to add to the end of each axis.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Str2D</span><span class="o">.</span><span class="n">struct_pad</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">fill</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>array([[&#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;],
+       [&#39;.&#39;, &#39;a&#39;, &#39; &#39;, &#39;b&#39;, &#39; &#39;, &#39;c&#39;, &#39; &#39;, &#39;d&#39;, &#39;.&#39;, &#39;.&#39;],
+       [&#39;.&#39;, &#39;e&#39;, &#39; &#39;, &#39;f&#39;, &#39; &#39;, &#39;g&#39;, &#39; &#39;, &#39; &#39;, &#39;.&#39;, &#39;.&#39;],
+       [&#39;.&#39;, &#39;h&#39;, &#39; &#39;, &#39;i&#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39;.&#39;, &#39;.&#39;],
+       [&#39;.&#39;, &#39;j&#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39;.&#39;, &#39;.&#39;],
+       [&#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;],
+       [&#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;]], dtype=&#39;&lt;U1&#39;)
+</pre></div>
+</div>
+<p>However, you can also control the padding on each side of the array by passing
+the number of padding elements to add to the beginning and end of each axis as
+as tuple of tuples. The first tuple is the number of padding elements to add to
+the beginning and end of the first axis and the second tuple is the number of
+padding elements to add to the beginning and end of the second axis.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Str2D</span><span class="o">.</span><span class="n">struct_pad</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">fill</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>array([[&#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;],
+       [&#39;.&#39;, &#39;.&#39;, &#39;a&#39;, &#39; &#39;, &#39;b&#39;, &#39; &#39;, &#39;c&#39;, &#39; &#39;, &#39;d&#39;, &#39;.&#39;],
+       [&#39;.&#39;, &#39;.&#39;, &#39;e&#39;, &#39; &#39;, &#39;f&#39;, &#39; &#39;, &#39;g&#39;, &#39; &#39;, &#39; &#39;, &#39;.&#39;],
+       [&#39;.&#39;, &#39;.&#39;, &#39;h&#39;, &#39; &#39;, &#39;i&#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39;.&#39;],
+       [&#39;.&#39;, &#39;.&#39;, &#39;j&#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39;.&#39;],
+       [&#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;],
+       [&#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;],
+       [&#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;]], dtype=&#39;&lt;U1&#39;)
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py property">
