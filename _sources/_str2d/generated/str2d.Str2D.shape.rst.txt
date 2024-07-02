@@ -1,0 +1,6 @@
+﻿str2d.Str2D.shape
+=================
+
+.. currentmodule:: str2d
+
+.. autoproperty:: Str2D.shape

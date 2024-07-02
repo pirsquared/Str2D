@@ -1,0 +1,6 @@
+﻿str2d.Str2D.struct\_array\_from\_string
+=======================================
+
+.. currentmodule:: str2d
+
+.. automethod:: Str2D.struct_array_from_string

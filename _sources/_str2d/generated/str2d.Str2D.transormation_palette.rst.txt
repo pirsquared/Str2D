@@ -1,0 +1,6 @@
+﻿str2d.Str2D.transormation\_palette
+==================================
+
+.. currentmodule:: str2d
+
+.. automethod:: Str2D.transormation_palette

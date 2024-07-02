@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>str2d.Str2D &mdash; Str2D 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=31c25e22" />
+
+  
+    <link rel="shortcut icon" href="../_static/pirr_logo.svg"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=938c9ccc"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="str2d.Str2D.add" href="generated/str2d.Str2D.add.html" />
+    <link rel="prev" title="str2d module" href="str2d.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Str2D
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="str2d.html">str2d module</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Str2D</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#str2d.Str2D"><code class="docutils literal notranslate"><span class="pre">Str2D</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.add.html">str2d.Str2D.add</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.__add__.html">str2d.Str2D.__add__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.__radd__.html">str2d.Str2D.__radd__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.div.html">str2d.Str2D.div</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.__truediv__.html">str2d.Str2D.__truediv__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.__rtruediv__.html">str2d.Str2D.__rtruediv__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.__mul__.html">str2d.Str2D.__mul__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.__rmul__.html">str2d.Str2D.__rmul__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.__init__.html">str2d.Str2D.__init__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.validate_fill.html">str2d.Str2D.validate_fill</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.validate_halign.html">str2d.Str2D.validate_halign</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.validate_valign.html">str2d.Str2D.validate_valign</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.struct_array_from_bool_array.html">str2d.Str2D.struct_array_from_bool_array</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.struct_array_from_char_array.html">str2d.Str2D.struct_array_from_char_array</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.struct_array_from_string.html">str2d.Str2D.struct_array_from_string</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.parse.html">str2d.Str2D.parse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.struct_pad.html">str2d.Str2D.struct_pad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.join_h.html">str2d.Str2D.join_h</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.join_v.html">str2d.Str2D.join_v</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.equal_height.html">str2d.Str2D.equal_height</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.equal_width.html">str2d.Str2D.equal_width</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.equal_shape.html">str2d.Str2D.equal_shape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.show_with_alignment.html">str2d.Str2D.show_with_alignment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.transormation_palette.html">str2d.Str2D.transormation_palette</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.__getattr__.html">str2d.Str2D.__getattr__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.__getitem__.html">str2d.Str2D.__getitem__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.box.html">str2d.Str2D.box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.box_around.html">str2d.Str2D.box_around</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.box_over.html">str2d.Str2D.box_over</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.circle.html">str2d.Str2D.circle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.hole.html">str2d.Str2D.hole</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.expand.html">str2d.Str2D.expand</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.pad.html">str2d.Str2D.pad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.split.html">str2d.Str2D.split</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.insert.html">str2d.Str2D.insert</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.roll.html">str2d.Str2D.roll</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.roll_h.html">str2d.Str2D.roll_h</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.roll_v.html">str2d.Str2D.roll_v</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.hide.html">str2d.Str2D.hide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.fill_with.html">str2d.Str2D.fill_with</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.lower.html">str2d.Str2D.lower</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.lstrip.html">str2d.Str2D.lstrip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.replace.html">str2d.Str2D.replace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.rstrip.html">str2d.Str2D.rstrip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.strip.html">str2d.Str2D.strip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.strip2d.html">str2d.Str2D.strip2d</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.title.html">str2d.Str2D.title</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.upper.html">str2d.Str2D.upper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.isdigit.html">str2d.Str2D.isdigit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.i.html">str2d.Str2D.i</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.t.html">str2d.Str2D.t</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.h.html">str2d.Str2D.h</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.v.html">str2d.Str2D.v</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.r.html">str2d.Str2D.r</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.alpha.html">str2d.Str2D.alpha</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.char.html">str2d.Str2D.char</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.height.html">str2d.Str2D.height</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.width.html">str2d.Str2D.width</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.shape.html">str2d.Str2D.shape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.kwargs.html">str2d.Str2D.kwargs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/str2d.Str2D.pi.html">str2d.Str2D.pi</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="str2d.BoxParts.html">BoxParts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="str2d.BoxStyle.html">BoxStyle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="str2d.Box.html">Box</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../motivation.html">Motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Str2D</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="str2d.html">str2d module</a></li>
+      <li class="breadcrumb-item active">str2d.Str2D</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/_str2d/str2d.Str2D.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="str2d-str2d">
+<h1>str2d.Str2D<a class="headerlink" href="#str2d-str2d" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="str2d.Str2D">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">str2d.</span></span><span class="sig-name descname"><span class="pre">Str2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">halign</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'left'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">valign</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'top'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fill</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/str2d.html#Str2D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D" title="Link to this definition"></a></dt>
+<dd><p>Str2D is a class that allows you to manipulate 2D strings in Python.  I had found
+myself wanting to paste blocks of text inline with other blocks of text.  If you’ve
+ever tried to do this in a text editor, you’ll know that it can be a bit of a pain.
+vi and vim have a feature called visual block mode that makes this easier.  But I
+wanted more flexibility and control.  So I created Str2D.</p>
+<p>Given a multi-line string, Str2D will convert it into something functionally
+equivalent where each line separated by a newline character will have the same
+number of characters.  These are filled in with whatever character is specified but
+by default it is a space.  This takes care of making sure that each row is the same
+width and is primed for manipulation.</p>
+<p>The simplest example is to show how to create a Str2D object from a multi-line
+string and add it to another Str2D object.</p>
+<p>Let’s start by constructing a new instance of Str2D and assinging it to the variable
+<cite>a</cite>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">str2d</span> <span class="kn">import</span> <span class="n">Str2D</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">Str2D</span><span class="p">(</span><span class="s1">&#39;a b c d</span><span class="se">\n</span><span class="s1">e f g</span><span class="se">\n</span><span class="s1">h i</span><span class="se">\n</span><span class="s1">j&#39;</span><span class="p">)</span>
+<span class="n">a</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>a b c d
+e f g
+h i
+j
+</pre></div>
+</div>
+<p>It might not be clear but the 2nd, 3rd, and 4th lines are padded with spaces to make
+each line the same width.  We can see this more clearly surrounding the object with
+a box.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">box</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>╭───────╮
+│a b c d│
+│e f g  │
+│h i    │
+│j      │
+╰───────╯
+</pre></div>
+</div>
+<p>The padded characters are not just spaces.  The Str2D object is a structured array
+with two fields: ‘char’ and ‘alpha’.  The ‘char’ field is the character array and
+the ‘alpha’ field is a boolean array with a of 1 or 0 for every character in the
+character array.  The ‘alpha’ field is used to determine if a character will mask a
+second Str2D object when layered on top of it.  It is analogous to the alpha channel
+in an image where when layered on top of another image, the alpha channel will
+indicate which pixels will be visible and which will be transparent.  The ‘alpha’
+field is used in the same way.  A value of 1 means the character will be visible and
+a value of 0 means the character will be transparent.  The padded characters are all
+given an ‘alpha’ value of 0.</p>
+<p>If we use the Str3D object to layer another Str2D object below it, we’ll see that
+the padded characters will be transparent and the characters from the second Str2D
+object will be visible.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">str2d</span> <span class="kn">import</span> <span class="n">Str3D</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="n">Str2D</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span><span class="se">\</span>
+<span class="s1">.......</span>
+<span class="s1">.......</span>
+<span class="s1">.......</span>
+<span class="s1">.......</span>
+<span class="s1">&#39;&#39;&#39;</span><span class="p">)</span>
+
+<span class="n">Str3D</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>a b c d
+e f g..
+h i....
+j......
+</pre></div>
+</div>
+<p>We can accomplish the same thing by using the <cite>fill_with</cite> method. This method will
+fill the padded characters with the specified character.  More accurately, it will
+replace the characters in the ‘char’ field where the ‘alpha’ field is 0 with the
+specified character.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">fill_with</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>a b c d
+e f g..
+h i....
+j......
+</pre></div>
+</div>
+<p>If we wanted to make all spaces transparent, we could use the <cite>hide</cite> method.  This
+will set the ‘alpha’ field to 0 for all locations where the <cite>char</cite> field matches the
+specified character, which defaults to a space.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span><span class="o">.</span><span class="n">fill_with</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>a.b.c.d
+e.f.g..
+h.i....
+j......
+</pre></div>
+</div>
+<p>Let’s create a new Str2D object and assign it to the variable <cite>c</cite>.  This time we’ll
+set the <cite>halign</cite> parameter to ‘right’ which controls how lines with fewer characters
+than the maximum width are aligned.  By default, it is set to ‘left’ which will
+align the lines to the left as we’ve seen in the previous example with the variable
+<cite>a</cite>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="n">Str2D</span><span class="p">(</span><span class="s1">&#39;0</span><span class="se">\n</span><span class="s1">1 2</span><span class="se">\n</span><span class="s1">3 4 5</span><span class="se">\n</span><span class="s1">6 7 8 9&#39;</span><span class="p">,</span> <span class="n">halign</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+<span class="n">c</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>      0
+    1 2
+  3 4 5
+6 7 8 9
+</pre></div>
+</div>
+<p>We can now see our simple example of adding two Str2D objects together.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">+</span> <span class="n">c</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>a b c d      0
+e f g      1 2
+h i      3 4 5
+j      6 7 8 9
+</pre></div>
+</div>
+<p>All of the transparent characters are preserved and we can fill the result as you’d
+expect.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">c</span><span class="p">)</span><span class="o">.</span><span class="n">fill_with</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>a b c d......0
+e f g......1 2
+h i......3 4 5
+j......6 7 8 9
+</pre></div>
+</div>
+<p>We’ll save the rest for the documentation of the individual methods.</p>
+<p class="rubric">operations</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/str2d.Str2D.add.html#str2d.Str2D.add" title="str2d.Str2D.add"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Public method for adding the data without the need to use the <cite>+</cite> operator.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/str2d.Str2D.__add__.html#str2d.Str2D.__add__" title="str2d.Str2D.__add__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__add__</span></code></a>(other[, right_side])</p></td>
+<td><p>Adding one Str2D object to another or a string to a Str2D object is the main point of this class.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/str2d.Str2D.__radd__.html#str2d.Str2D.__radd__" title="str2d.Str2D.__radd__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__radd__</span></code></a>(other)</p></td>
+<td><p>Dunder method handling the right side of the addition operation.Adding one Str2D object to another or a string to a Str2D object is the main point of this class.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/str2d.Str2D.div.html#str2d.Str2D.div" title="str2d.Str2D.div"><code class="xref py py-obj docutils literal notranslate"><span class="pre">div</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Public method for dividing the data without the need to use the <cite>/</cite> operator.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/str2d.Str2D.__truediv__.html#str2d.Str2D.__truediv__" title="str2d.Str2D.__truediv__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__truediv__</span></code></a>(other[, right_side])</p></td>
+<td><p>Division is the vertical analog of the addition operation.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/str2d.Str2D.__rtruediv__.html#str2d.Str2D.__rtruediv__" title="str2d.Str2D.__rtruediv__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__rtruediv__</span></code></a>(other)</p></td>
+<td><p>Division is the vertical analog of the addition operation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/str2d.Str2D.__mul__.html#str2d.Str2D.__mul__" title="str2d.Str2D.__mul__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__mul__</span></code></a>(other)</p></td>
+<td><p>It doesn't make sense to multiply a Str2D object by another Str2D object.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/str2d.Str2D.__rmul__.html#str2d.Str2D.__rmul__" title="str2d.Str2D.__rmul__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__rmul__</span></code></a>(other)</p></td>
+<td><p>It doesn't make sense to multiply a Str2D object by another Str2D object.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Construction</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/str2d.Str2D.__init__.html#str2d.Str2D.__init__" title="str2d.Str2D.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>([data, min_width, min_height, ...])</p></td>
+<td><p>Create a new Str2D object.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/str2d.Str2D.validate_fill.html#str2d.Str2D.validate_fill" title="str2d.Str2D.validate_fill"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_fill</span></code></a>([fill])</p></td>
+<td><p>Validate the fill value.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/str2d.Str2D.validate_halign.html#str2d.Str2D.validate_halign" title="str2d.Str2D.validate_halign"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_halign</span></code></a>(halign)</p></td>
+<td><p>Validate the horizontal alignment.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/str2d.Str2D.validate_valign.html#str2d.Str2D.validate_valign" title="str2d.Str2D.validate_valign"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_valign</span></code></a>(valign)</p></td>
+<td><p>Validate the vertical alignment.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/str2d.Str2D.struct_array_from_bool_array.html#str2d.Str2D.struct_array_from_bool_array" title="str2d.Str2D.struct_array_from_bool_array"><code class="xref py py-obj docutils literal notranslate"><span class="pre">struct_array_from_bool_array</span></code></a>(array, char)</p></td>
+<td><p>Create a structured array from a boolean array.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/str2d.Str2D.struct_array_from_char_array.html#str2d.Str2D.struct_array_from_char_array" title="str2d.Str2D.struct_array_from_char_array"><code class="xref py py-obj docutils literal notranslate"><span class="pre">struct_array_from_char_array</span></code></a>(array)</p></td>
+<td><p>Create a structured array from a character array.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/str2d.Str2D.struct_array_from_string.html#str2d.Str2D.struct_array_from_string" title="str2d.Str2D.struct_array_from_string"><code class="xref py py-obj docutils literal notranslate"><span class="pre">struct_array_from_string</span></code></a>(string, **kwargs)</p></td>
+<td><p>Create a structured array from a string.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/str2d.Str2D.parse.html#str2d.Str2D.parse" title="str2d.Str2D.parse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code></a>([data])</p></td>
+<td><p>Parse the input data into a structured array.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Class Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/str2d.Str2D.struct_pad.html#str2d.Str2D.struct_pad" title="str2d.Str2D.struct_pad"><code class="xref py py-obj docutils literal notranslate"><span class="pre">struct_pad</span></code></a>(array, *args, **kwargs)</p></td>
+<td><p>Pads a structured array with fields 'char' and 'alpha'.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/str2d.Str2D.join_h.html#str2d.Str2D.join_h" title="str2d.Str2D.join_h"><code class="xref py py-obj docutils literal notranslate"><span class="pre">join_h</span></code></a>(*args[, sep])</p></td>
+<td><p><cite>join_h</cite> joins any number of Str2D objects horizontally.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/str2d.Str2D.join_v.html#str2d.Str2D.join_v" title="str2d.Str2D.join_v"><code class="xref py py-obj docutils literal notranslate"><span class="pre">join_v</span></code></a>(*args[, sep])</p></td>
+<td><p><cite>join_v</cite> joins any number of Str2D objects vertically.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/str2d.Str2D.equal_height.html#str2d.Str2D.equal_height" title="str2d.Str2D.equal_height"><code class="xref py py-obj docutils literal notranslate"><span class="pre">equal_height</span></code></a>(*args)</p></td>
+<td><p>Expand each Str2D object to have the same height.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/str2d.Str2D.equal_width.html#str2d.Str2D.equal_width" title="str2d.Str2D.equal_width"><code class="xref py py-obj docutils literal notranslate"><span class="pre">equal_width</span></code></a>(*args)</p></td>
+<td><p>Expand each Str2D object to have the same width.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/str2d.Str2D.equal_shape.html#str2d.Str2D.equal_shape" title="str2d.Str2D.equal_shape"><code class="xref py py-obj docutils literal notranslate"><span class="pre">equal_shape</span></code></a>(*args)</p></td>
+<td><p>Expand each Str2D object to have the same shape.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Information/Documentation</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/str2d.Str2D.show_with_alignment.html#str2d.Str2D.show_with_alignment" title="str2d.Str2D.show_with_alignment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">show_with_alignment</span></code></a>([expand, box])</p></td>
+<td><p>Show the alignment parameters with object.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/str2d.Str2D.transormation_palette.html#str2d.Str2D.transormation_palette" title="str2d.Str2D.transormation_palette"><code class="xref py py-obj docutils literal notranslate"><span class="pre">transormation_palette</span></code></a>([sep, expand, box])</p></td>
+<td><p>Show the transformation palette.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Special Dunder Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/str2d.Str2D.__getattr__.html#str2d.Str2D.__getattr__" title="str2d.Str2D.__getattr__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__getattr__</span></code></a>(name)</p></td>
+<td><p>Enables convenient access to the transpose, horizontal flip, vertical flip, and rotation methods in a concatenated manner.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/str2d.Str2D.__getitem__.html#str2d.Str2D.__getitem__" title="str2d.Str2D.__getitem__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__getitem__</span></code></a>(key)</p></td>
+<td><p>Passing on the indexing to the structured array data.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">box</span></code>()</p></td>
+<td><p>Wrapper around <cite>box_over</cite> and <cite>box_around</cite> methods.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">box_around</span></code>()</p></td>
+<td><p>Create a box around the data.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">box_over</span></code>()</p></td>
+<td><p>Create a box over the data.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/str2d.Str2D.circle.html#str2d.Str2D.circle" title="str2d.Str2D.circle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">circle</span></code></a>(radius[, char])</p></td>
+<td><p>Create a circle over object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/str2d.Str2D.hole.html#str2d.Str2D.hole" title="str2d.Str2D.hole"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hole</span></code></a>(radius[, char])</p></td>
+<td><p>Create a hole over the object.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/str2d.Str2D.expand.html#str2d.Str2D.expand" title="str2d.Str2D.expand"><code class="xref py py-obj docutils literal notranslate"><span class="pre">expand</span></code></a>([x, y])</p></td>
+<td><p>The <cite>expand</cite> method expands the data by adding padding to the top, bottom, left, and right of the data.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/str2d.Str2D.pad.html#str2d.Str2D.pad" title="str2d.Str2D.pad"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pad</span></code></a>(*args, **kwargs)</p></td>
+<td><p><cite>pad</cite> pads the data with the fill value specified in the 'fill' keyword and is a wrapper around the class method <cite>struct_pad</cite> which in turn is a wrapper around np.pad.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/str2d.Str2D.split.html#str2d.Str2D.split" title="str2d.Str2D.split"><code class="xref py py-obj docutils literal notranslate"><span class="pre">split</span></code></a>(indices_or_sections[, axis])</p></td>
+<td><p><cite>split</cite> is analogous to np.split and splits the data along an axis.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/str2d.Str2D.insert.html#str2d.Str2D.insert" title="str2d.Str2D.insert"><code class="xref py py-obj docutils literal notranslate"><span class="pre">insert</span></code></a>(indices_or_sections[, axis, sep])</p></td>
+<td><p><cite>insert</cite> is a wrapper around the <cite>split</cite> method and is used to visually insert a separator between the split data.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/str2d.Str2D.roll.html#str2d.Str2D.roll" title="str2d.Str2D.roll"><code class="xref py py-obj docutils literal notranslate"><span class="pre">roll</span></code></a>(x, axis)</p></td>
+<td><p>Roll the data along an axis.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/str2d.Str2D.roll_h.html#str2d.Str2D.roll_h" title="str2d.Str2D.roll_h"><code class="xref py py-obj docutils literal notranslate"><span class="pre">roll_h</span></code></a>(x)</p></td>
+<td><p>Roll the data horizontally.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/str2d.Str2D.roll_v.html#str2d.Str2D.roll_v" title="str2d.Str2D.roll_v"><code class="xref py py-obj docutils literal notranslate"><span class="pre">roll_v</span></code></a>(x)</p></td>
+<td><p>Roll the data vertically.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/str2d.Str2D.hide.html#str2d.Str2D.hide" title="str2d.Str2D.hide"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hide</span></code></a>([char])</p></td>
+<td><p>Hide where character array is char.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/str2d.Str2D.fill_with.html#str2d.Str2D.fill_with" title="str2d.Str2D.fill_with"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fill_with</span></code></a>([char])</p></td>
+<td><p>Fill the data with the character.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">String Methods that return a new Str2D object</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/str2d.Str2D.lower.html#str2d.Str2D.lower" title="str2d.Str2D.lower"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lower</span></code></a>()</p></td>
+<td><p>Return the lowercase version of the data.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/str2d.Str2D.lstrip.html#str2d.Str2D.lstrip" title="str2d.Str2D.lstrip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lstrip</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Left strip line by line.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/str2d.Str2D.replace.html#str2d.Str2D.replace" title="str2d.Str2D.replace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">replace</span></code></a>(old, new)</p></td>
+<td><p>Replace the data.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/str2d.Str2D.rstrip.html#str2d.Str2D.rstrip" title="str2d.Str2D.rstrip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rstrip</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Right strip line by line.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/str2d.Str2D.strip.html#str2d.Str2D.strip" title="str2d.Str2D.strip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">strip</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Strip line by line.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/str2d.Str2D.strip2d.html#str2d.Str2D.strip2d" title="str2d.Str2D.strip2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">strip2d</span></code></a>([char])</p></td>
+<td><p>Strip the data 2-dimensionally.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/str2d.Str2D.title.html#str2d.Str2D.title" title="str2d.Str2D.title"><code class="xref py py-obj docutils literal notranslate"><span class="pre">title</span></code></a>()</p></td>
+<td><p>Return the title version of the data.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/str2d.Str2D.upper.html#str2d.Str2D.upper" title="str2d.Str2D.upper"><code class="xref py py-obj docutils literal notranslate"><span class="pre">upper</span></code></a>()</p></td>
+<td><p>Return the uppercase version of the data.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">String Methods that return a boolean array</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/str2d.Str2D.isdigit.html#str2d.Str2D.isdigit" title="str2d.Str2D.isdigit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isdigit</span></code></a>()</p></td>
+<td><p>Return whether the data is a digit.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Transformations</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/str2d.Str2D.i.html#str2d.Str2D.i" title="str2d.Str2D.i"><code class="xref py py-obj docutils literal notranslate"><span class="pre">i</span></code></a></p></td>
+<td><p>This is the identity transformation.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/str2d.Str2D.t.html#str2d.Str2D.t" title="str2d.Str2D.t"><code class="xref py py-obj docutils literal notranslate"><span class="pre">t</span></code></a></p></td>
+<td><p>Return the transpose of the Str2D object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/str2d.Str2D.h.html#str2d.Str2D.h" title="str2d.Str2D.h"><code class="xref py py-obj docutils literal notranslate"><span class="pre">h</span></code></a></p></td>
+<td><p>Return the horizontal flip of the data.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/str2d.Str2D.v.html#str2d.Str2D.v" title="str2d.Str2D.v"><code class="xref py py-obj docutils literal notranslate"><span class="pre">v</span></code></a></p></td>
+<td><p>Return the vertical flip of the data.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/str2d.Str2D.r.html#str2d.Str2D.r" title="str2d.Str2D.r"><code class="xref py py-obj docutils literal notranslate"><span class="pre">r</span></code></a></p></td>
+<td><p>Return the 90 degree rotation of the data.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/str2d.Str2D.alpha.html#str2d.Str2D.alpha" title="str2d.Str2D.alpha"><code class="xref py py-obj docutils literal notranslate"><span class="pre">alpha</span></code></a></p></td>
+<td><p>Return the alpha data.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/str2d.Str2D.char.html#str2d.Str2D.char" title="str2d.Str2D.char"><code class="xref py py-obj docutils literal notranslate"><span class="pre">char</span></code></a></p></td>
+<td><p>Return the character data.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/str2d.Str2D.height.html#str2d.Str2D.height" title="str2d.Str2D.height"><code class="xref py py-obj docutils literal notranslate"><span class="pre">height</span></code></a></p></td>
+<td><p>Return the height of the Str2D object.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/str2d.Str2D.width.html#str2d.Str2D.width" title="str2d.Str2D.width"><code class="xref py py-obj docutils literal notranslate"><span class="pre">width</span></code></a></p></td>
+<td><p>Return the width of the Str2D object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/str2d.Str2D.shape.html#str2d.Str2D.shape" title="str2d.Str2D.shape"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shape</span></code></a></p></td>
+<td><p>Return the shape of the Str2D object.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/str2d.Str2D.kwargs.html#str2d.Str2D.kwargs" title="str2d.Str2D.kwargs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kwargs</span></code></a></p></td>
+<td><p>Return the keyword arguments used to create the Str2D object.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Fun Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/str2d.Str2D.pi.html#str2d.Str2D.pi" title="str2d.Str2D.pi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pi</span></code></a>()</p></td>
+<td><p>Replace the data with digits of pi.</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="str2d.html" class="btn btn-neutral float-left" title="str2d module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="generated/str2d.Str2D.add.html" class="btn btn-neutral float-right" title="str2d.Str2D.add" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Sean Smith.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

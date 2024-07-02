@@ -1,0 +1,6 @@
+﻿str2d.Str2D.h
+=============
+
+.. currentmodule:: str2d
+
+.. autoproperty:: Str2D.h

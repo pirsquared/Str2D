@@ -1,0 +1,6 @@
+﻿str2d.Str2D.title
+=================
+
+.. currentmodule:: str2d
+
+.. automethod:: Str2D.title

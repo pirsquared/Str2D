@@ -1,0 +1,6 @@
+﻿str2d.Str2D.strip2d
+===================
+
+.. currentmodule:: str2d
+
+.. automethod:: Str2D.strip2d

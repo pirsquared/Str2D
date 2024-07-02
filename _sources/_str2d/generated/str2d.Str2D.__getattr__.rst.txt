@@ -1,0 +1,6 @@
+﻿str2d.Str2D.\_\_getattr\_\_
+===========================
+
+.. currentmodule:: str2d
+
+.. automethod:: Str2D.__getattr__

@@ -1,0 +1,6 @@
+﻿str2d.Str2D.roll\_h
+===================
+
+.. currentmodule:: str2d
+
+.. automethod:: Str2D.roll_h

@@ -1,0 +1,6 @@
+﻿str2d.Str2D.box\_over
+=====================
+
+.. currentmodule:: str2d
+
+.. automethod:: Str2D.box_over

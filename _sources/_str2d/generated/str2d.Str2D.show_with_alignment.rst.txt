@@ -1,0 +1,6 @@
+﻿str2d.Str2D.show\_with\_alignment
+=================================
+
+.. currentmodule:: str2d
+
+.. automethod:: Str2D.show_with_alignment

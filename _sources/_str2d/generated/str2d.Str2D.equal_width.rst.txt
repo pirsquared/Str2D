@@ -1,0 +1,6 @@
+﻿str2d.Str2D.equal\_width
+========================
+
+.. currentmodule:: str2d
+
+.. automethod:: Str2D.equal_width
