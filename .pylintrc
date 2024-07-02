@@ -9,7 +9,8 @@ disable=
     too-many-instance-attributes,
     too-many-locals,
     too-many-arguments,
-    too-many-public-methods
+    too-many-public-methods,
+    E1101,  # Module has no member
 
 [FORMAT]
 max-line-length=88
