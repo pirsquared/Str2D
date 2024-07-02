@@ -8,12 +8,16 @@ Install
 
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :caption: Contents:
 
-   Module Documentation <str2d>
-   Motivation <motivation>
-   About <about>
+   _str2d/str2d
+
+.. toctree::
+   :maxdepth: 1
+
+   motivation
+   about
 
 
 Usage

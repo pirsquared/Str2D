@@ -134,7 +134,7 @@ def test_str_in_minwidth_minheight_07():
 
 def test_str_box_00():
     s = Str2D("a\nbc").box().view
-    assert s == "┌──┐\n│a │\n│bc│\n└──┘"
+    assert s == "╭──╮\n│a │\n│bc│\n╰──╯"
 
 
 def test_str_box_01():
@@ -160,7 +160,7 @@ def test_add_01():
 def test_h_00():
     a = Str2D("a")
     s = a.box().view.h
-    assert s == "┐─┌\n│a│\n┘─└"
+    assert s == "╮─╭\n│a│\n╯─╰"
 
 
 def test_h_01():
@@ -172,7 +172,7 @@ def test_h_01():
 def test_v_00():
     a = Str2D("a").box().view
     s = a.v
-    assert s == "└─┘\n│a│\n┌─┐"
+    assert s == "╰─╯\n│a│\n╭─╮"
 
 
 def test_v_01():

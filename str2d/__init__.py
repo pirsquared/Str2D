@@ -12,8 +12,8 @@ import mpmath as mp
 
 @dataclass
 class BoxParts:
-    """Box parts organizes box drawing characters into attribute names that are short
-    and descriptive. This makes it easier to work with box drawing characters in code.
+    """Organizes box drawing characters.  Provides attribute names that are short and
+    descriptive. This makes it easier to work with box drawing characters in code.
 
     The tables below show the attribute names, examples, and descriptions of the parts.
 
@@ -116,10 +116,10 @@ class BoxParts:
 
 
 class BoxStyle(Enum):
-    """BoxStyle is an enumeration of different box styles that can be used to draw
-    boxes around text.  The box styles are made up of BoxParts objects that contain
-    the box drawing characters.  The main purpose of this class is to provide a way
-    to apply box drawing over Str2D objects.
+    """Enumerate different box styles. They can be used to draw boxes around text.  The
+    box styles are made up of BoxParts objects that contain the box drawing characters.
+    The main purpose of this class is to provide a way to apply box drawing over Str2D
+    objects.
 
     You can see all the box styles by calling the swatches method.
 
@@ -413,156 +413,9 @@ class Str2D:
     _align_horizontal = {"left": "right", "center": "center", "right": "left"}
     _align_vertical = {"top": "bottom", "middle": "middle", "bottom": "top"}
 
-    @classmethod
-    def struct_pad(cls, array, *args, **kwargs) -> "Str2D":
-        """`struct_pad` pads a structured array with fields 'char' and 'alpha'.  The
-        method is a wrapper around np.pad that pads the 'char' and 'alpha' fields with
-        the fill value specified in the 'fill' keyword argument.
-
-        Parameters
-        ----------
-        array : np.ndarray
-            A structured array with fields 'char' and 'alpha'.
-
-        mode: str, optional
-            The padding mode, by default 'constant'.  Other options are documented in
-            np.pad but the only other one that makes sense in a character array context
-            is 'edge'.
-
-        fill : Tuple[str, int], optional
-            The fill value for the 'char' and 'alpha' fields, by default (' ', 0)
-
-        *args : tuple
-            Positional arguments to np.pad.
-
-        **kwargs : dict
-            Keyword arguments to np.pad.
-
-        Returns
-        -------
-        np.ndarray
-            A structured array with fields 'char' and 'alpha' padded with the fill value
-            specified in the 'fill' keyword argument.
-
-        Examples
-        --------
-
-        Let's use `Str2D` to create a structured array from a string and then pad it.
-
-        .. testcode::
-
-            from str2d import Str2D
-
-            a = Str2D('a b c d\\ne f g\\nh i\\nj')
-            a.char
-
-        .. testoutput::
-
-            array([['a', ' ', 'b', ' ', 'c', ' ', 'd'],
-                   ['e', ' ', 'f', ' ', 'g', ' ', ' '],
-                   ['h', ' ', 'i', ' ', ' ', ' ', ' '],
-                   ['j', ' ', ' ', ' ', ' ', ' ', ' ']], dtype='<U1')
-
-        Now let's pad the structured array with the fill value '.'.  The first argument
-        is the data.  The next argument is the number of padding elements to add to the
-        beginning and end of each axis.
-
-        .. testcode::
-
-            Str2D.struct_pad(a.data, 1, fill=('.', 0))
-
-        .. testoutput::
-
-            array([['.', '.', '.', '.', '.', '.', '.'],
-                   ['.', 'a', ' ', 'b', ' ', 'c', 'd'],
-                   ['.', 'e', ' ', 'f', ' ', 'g', ' '],
-                   ['.', 'h', ' ', 'i', ' ', ' ', ' '],
-                   ['.', 'j', ' ', ' ', ' ', ' ', ' '],
-                   ['.', '.', '.', '.', '.', '.', '.']], dtype='<U1')
-
-        If we want to control the padding on each side of the array, we can pass a tuple
-        of integers to the second argument.  The first integer is the number of padding
-        elements to add to the beginning of each axis and the second integer is the
-        number of padding elements to add to the end of each axis.
-
-        .. testcode::
-
-            Str2D.struct_pad(a.data, (1, 2), fill=('.', 0))
-
-        .. testoutput::
-
-            array([['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
-                   ['.', 'a', ' ', 'b', ' ', 'c', ' ', 'd', '.', '.'],
-                   ['.', 'e', ' ', 'f', ' ', 'g', ' ', ' ', '.', '.'],
-                   ['.', 'h', ' ', 'i', ' ', ' ', ' ', ' ', '.', '.'],
-                   ['.', 'j', ' ', ' ', ' ', ' ', ' ', ' ', '.', '.'],
-                   ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
-                   ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.']], dtype='<U1')
-
-        However, you can also control the padding on each side of the array by passing
-        the number of padding elements to add to the beginning and end of each axis as
-        as tuple of tuples. The first tuple is the number of padding elements to add to
-        the beginning and end of the first axis and the second tuple is the number of
-        padding elements to add to the beginning and end of the second axis.
-
-        .. testcode::
-
-            Str2D.struct_pad(a.data, ((1, 3), (2, 1)), fill=('.', 0))
-
-        .. testoutput::
-
-            array([['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
-                   ['.', '.', 'a', ' ', 'b', ' ', 'c', ' ', 'd', '.'],
-                   ['.', '.', 'e', ' ', 'f', ' ', 'g', ' ', ' ', '.'],
-                   ['.', '.', 'h', ' ', 'i', ' ', ' ', ' ', ' ', '.'],
-                   ['.', '.', 'j', ' ', ' ', ' ', ' ', ' ', ' ', '.'],
-                   ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
-                   ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
-                   ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.']], dtype='<U1')
-
-        Another thing we can do is to pass a different type of padding mode.  The
-        default is 'constant' which will fill the padding elements with the fill value.
-        However, we can also use 'edge' which will fill the padding elements with the
-        nearest edge value.
-
-        .. testcode::
-
-            Str2D.struct_pad(a.data, 1, mode='edge')
-
-        .. testoutput::
-
-        array([['a', 'a', ' ', 'b', ' ', 'c', ' ', 'd', 'd'],
-               ['a', 'a', ' ', 'b', ' ', 'c', ' ', 'd', 'd'],
-               ['e', 'e', ' ', 'f', ' ', 'g', ' ', ' ', ' '],
-               ['h', 'h', ' ', 'i', ' ', ' ', ' ', ' ', ' '],
-               ['j', 'j', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-               ['j', 'j', ' ', ' ', ' ', ' ', ' ', ' ', ' ']], dtype='<U1')
-
-        """
-        # Using `np.pad` on structured arrays is a bit tricky because it doesn't
-        # handle the structured array fields very well.  We need to pad the 'char'
-        # and 'alpha' fields separately and then recombine them into a structured
-        # array.
-        fill = kwargs.pop("fill", (" ", 0))
-        char_fill, alpha_fill = fill
-
-        char_kwargs = kwargs.copy()
-        char_mode = char_kwargs.setdefault("mode", "constant")
-        if char_mode == "constant":
-            char_kwargs["constant_values"] = char_fill
-
-        alpha_kwargs = kwargs.copy()
-        alpha_mode = alpha_kwargs.setdefault("mode", "constant")
-        if alpha_mode == "constant":
-            alpha_kwargs["constant_values"] = alpha_fill
-
-        char_pad = np.pad(array["char"], *args, **char_kwargs)
-        alpha_pad = np.pad(array["alpha"], *args, **alpha_kwargs)
-        padded_data = np.empty(char_pad.shape, dtype=cls._dtype)
-        padded_data["char"] = char_pad
-        padded_data["alpha"] = alpha_pad
-
-        return padded_data
+    ####################################################################
+    # Construction methods #############################################
+    ####################################################################
 
     @classmethod
     def validate_fill(
@@ -799,7 +652,7 @@ class Str2D:
         data : Optional[Any], optional
             The input data, by default None.
 
-        **kwargs : dict
+        kwargs : dict
             Additional keyword arguments to pass to the struct_array_from_string method.
             If the input data is a structured array, these keyword arguments will be
             ignored.
@@ -927,6 +780,719 @@ class Str2D:
         self.valign = valign
         self.fill = fill
 
+    ####################################################################
+    # Math Operations ##################################################
+    ####################################################################
+
+    def __add__(self, other: Union["Str2D", str], right_side=False) -> "Str2D":
+        """Adding one Str2D object to another or a string to a Str2D object is the main
+        point of this class.  We can add a Str2D object to another Str2D object in order
+        to concatenate them horizontally.  Both objects will be expanded to have the
+        same height while respecting the alignment parameters.  When adding a string to
+        a Str2D object, the string will be wrapped in a Str2D object and treated as
+        described above.  In the case of adding another Str2D object, the expansion will
+        use the expansion argument `'mode'` set to `'edge'`.  This allows the expansion
+        to repeat the string intuitively to the edge of the Str2D object.
+
+        Parameters
+        ----------
+        other : Union[Str2D, str]
+            The Str2D object or string to add.
+
+        right_side : bool, optional
+            If True, the Str2D object will be added to the right side of the
+            other Str2D object, by default False.
+
+        Returns
+        -------
+        Str2D
+            A new Str2D object with the added data.
+
+        See Also
+        --------
+        add : Add the data.
+        __add__ : Add the data.
+        __radd__ : Add the data.
+        add : Add the data.
+
+        Examples
+        --------
+        Let's create several instances of Str2D and assign them to the variables `a`,
+        `b`, and `c`.
+
+        .. testcode::
+
+            from str2d import Str2D
+
+            a = Str2D('a b c d\\ne f g\\nh i\\nj')
+            b = Str2D('1 2 3\\n4 5 6\\n7 8 9')
+            c = Str2D('x y z\\nu v w\\nq r s')
+
+        We can add the data horizontally by using the Str2D objects with the `+`
+        operator.
+
+        .. testcode::
+
+            a + b + c
+
+        .. testoutput::
+
+            a b c d1 2 3x y z
+            e f g  4 5 6u v w
+            h i    7 8 9q r s
+            j
+
+        We can also add a string to the Str2D object.
+
+        .. testcode::
+
+            a + ' hello ' + c
+
+        .. testoutput::
+
+            a b c d hello x y z
+            e f g   hello u v w
+            h i     hello q r s
+            j       hello
+
+        From the right side.
+
+        .. testcode::
+
+            'hello ' + a
+
+        .. testoutput::
+
+            hello a b c d
+            hello e f g
+            hello h i
+            hello j
+
+        """
+        other_expand_kwargs = {}
+        if isinstance(other, str):
+            other_expand_kwargs["mode"] = "edge"
+            if other == "":
+                other_expand_kwargs["mode"] = "constant"
+            other = Str2D(data=other)
+
+        height = max(self.height, other.height)
+        left = self.expand(y=height - self.height)
+        right = other.expand(y=height - other.height, **other_expand_kwargs)
+        if right_side:
+            left, right = right, left
+        return Str2D(data=np.hstack((left.data, right.data)), **self.kwargs)
+
+    def __radd__(self, other: "Str2D") -> "Str2D":
+        """Dunder method handling the right side of the addition operation."""
+        return self.__add__(other, right_side=True)
+
+    __radd__.__doc__ += __add__.__doc__
+
+    def add(self, *args, **kwargs) -> "Str2D":
+        """Public method for adding the data without the need to use the `+` operator.
+        We use the `join_h` method to concatenate the data horizontally with additional
+        arguments.
+
+        Parameters
+        ----------
+        args : Tuple[Str2D]
+            The Str2D objects to add.
+
+        kwargs : dict
+            Additional keyword arguments to pass to the `join_h` method.
+
+        Returns
+        -------
+        Str2D
+            A new Str2D object with the added data.
+
+        See Also
+        --------
+        __add__ : Add the data.
+        __radd__ : Add the data.
+        add : Add the data.
+
+        """
+        return Str2D.join_h(self, *args, **kwargs)
+
+    def __mul__(self, other: int) -> "Str2D":
+        """It doesn't make sense to multiply a Str2D object by another Str2D object.
+        However, we can multiply a Str2D object by an integer.  This will repeat the
+        data equal to the integer value.  The direction of the repetition is determined
+        by the side of the Str2D object that the integer is on.  If the integer is on
+        the left side, the data will be repeated vertically.  If the integer is on the
+        right side, the data will be repeated horizontally.
+
+        Parameters
+        ----------
+        other : int
+            The number of times to repeat the data.
+
+        Returns
+        -------
+        Str2D
+            A new Str2D object with the repeated data.
+
+        See Also
+        --------
+        __rmul__ : Multiply the data.
+        __mul__ : Multiply the data.
+
+        Examples
+        --------
+        Let's create an instance of Str2D and assign it to the variable `a`.
+
+        .. testcode::
+
+            from str2d import Str2D
+
+            a = Str2D('a b c d\\ne f g\\nh i\\nj')
+
+        We can multiply the data by multiplying by an integer on the right side.
+
+        .. testcode::
+
+            a * 2
+
+        .. testoutput::
+
+            a b c da b c d
+            e f g  e f g
+            h i    h i
+            j      j
+
+        We can also multiply the data by multiplying by an integer on the left side.
+
+        .. testcode::
+
+            2 * a
+
+        .. testoutput::
+
+            a b c d
+            e f g
+            h i
+            j
+            a b c d
+            e f g
+            h i
+            j
+
+
+        """
+        return Str2D(data=np.hstack([self.data] * other), **self.kwargs)
+
+    def __rmul__(self, other: int) -> "Str2D":
+        return Str2D(data=np.vstack([self.data] * other), **self.kwargs)
+
+    __rmul__.__doc__ = __mul__.__doc__
+
+    def __truediv__(self, other: Union["Str2D", str], right_side=False) -> "Str2D":
+        """Division is the vertical analog of the addition operation.  We can divide a
+        Str2D object by another Str2D object in order to concatenate them vertically.
+        Both objects will be expanded to have the same width while respecting the
+        alignment parameters.  When dividing by str object, the expansion will use the
+        expansion argument `'mode'` set to `'edge'`.  This allows the expansion to
+        repeat the string intuitively to the edge of the Str2D object.
+
+        Parameters
+        ----------
+        other : Union[Str2D, str]
+            The Str2D object or string to divide.
+
+        right_side : bool, optional
+            If True, the Str2D object will be below the other Str2D object, by default
+            False.
+
+        Returns
+        -------
+        Str2D
+            A new Str2D object with the divided data.
+
+        See Also
+        --------
+        __truediv__ : Divide the data.
+        __rtruediv__ : Divide the data.
+        div : Divide the data.
+
+        Examples
+        --------
+        Let's create several instances of Str2D and assign them to the variables `a`,
+        `b`, and `c`.
+
+        .. testcode::
+
+            from str2d import Str2D
+
+            a = Str2D('a b c d\\ne f g\\nh i\\nj')
+            b = Str2D('1 2 3\\n4 5 6\\n7 8 9')
+            c = Str2D('x y z\\nu v w\\nq r s')
+
+        We can divide the data vertically by using the Str2D objects with the `/`
+
+        .. testcode::
+
+            a / b / c
+
+        .. testoutput::
+
+            a b c d
+            e f g
+            h i
+            j
+            1 2 3
+            4 5 6
+            7 8 9
+            x y z
+            u v w
+            q r s
+
+        We can also divide by a string.
+
+        .. testcode::
+
+            a / '-' / c
+
+        .. testoutput::
+
+            a b c d
+            e f g
+            h i
+            j
+            -------
+            x y z
+            u v w
+            q r s
+
+        From the right side.
+
+        .. testcode::
+
+            '-' / a
+
+        .. testoutput::
+
+            -------
+            a b c d
+            e f g
+            h i
+            j
+
+        """
+        other_expand_kwargs = {}
+        if isinstance(other, str):
+            other_expand_kwargs["mode"] = "edge"
+            if other == "":
+                other_expand_kwargs["mode"] = "constant"
+            other = Str2D(data=other)
+
+        width = max(self.width, other.width)
+        left = self.expand(x=width - self.width)
+        right = other.expand(x=width - other.width, **other_expand_kwargs)
+        if right_side:
+            left, right = right, left
+        return Str2D(data=np.vstack((left.data, right.data)), **self.kwargs)
+
+    def __rtruediv__(self, other: "Str2D") -> "Str2D":
+        return self.__truediv__(other, right_side=True)
+
+    __rtruediv__.__doc__ = __truediv__.__doc__
+
+    def div(self, *args, **kwargs) -> "Str2D":
+        """Public method for dividing the data without the need to use the `/` operator.
+        We use the `join_v` method to concatenate the data vertically with additional
+        arguments.
+
+        Parameters
+        ----------
+        args : Tuple[Str2D]
+            The Str2D objects to divide.
+
+        kwargs : dict
+            Additional keyword arguments to pass to the `join_v` method.
+
+        Returns
+        -------
+        Str2D
+            A new Str2D object with the divided data.
+
+        See Also
+        --------
+        __truediv__ : Divide the data.
+        __rtruediv__ : Divide the data.
+        div : Divide the data.
+
+        """
+        return Str2D.join_v(self, *args, **kwargs)
+
+    ####################################################################
+    # Class methods ####################################################
+    ####################################################################
+
+    @classmethod
+    def struct_pad(cls, array, *args, **kwargs) -> "Str2D":
+        """Pads a structured array with fields 'char' and 'alpha'.  The
+        method is a wrapper around np.pad that pads the 'char' and 'alpha' fields with
+        the fill value specified in the 'fill' keyword argument.
+
+        Parameters
+        ----------
+        array : np.ndarray
+            A structured array with fields 'char' and 'alpha'.
+
+        mode: str, optional
+            The padding mode, by default 'constant'.  Other options are documented in
+            np.pad but the only other one that makes sense in a character array context
+            is 'edge'.
+
+        fill : Tuple[str, int], optional
+            The fill value for the 'char' and 'alpha' fields, by default (' ', 0)
+
+        *args : tuple
+            Positional arguments to np.pad.
+
+        **kwargs : dict
+            Keyword arguments to np.pad.
+
+        Returns
+        -------
+        np.ndarray
+            A structured array with fields 'char' and 'alpha' padded with the fill value
+            specified in the 'fill' keyword argument.
+
+        Examples
+        --------
+
+        Let's use `Str2D` to create a structured array from a string and then pad it.
+
+        .. testcode::
+
+            from str2d import Str2D
+
+            a = Str2D('a b c d\\ne f g\\nh i\\nj')
+            a.char
+
+        .. testoutput::
+
+            array([['a', ' ', 'b', ' ', 'c', ' ', 'd'],
+                   ['e', ' ', 'f', ' ', 'g', ' ', ' '],
+                   ['h', ' ', 'i', ' ', ' ', ' ', ' '],
+                   ['j', ' ', ' ', ' ', ' ', ' ', ' ']], dtype='<U1')
+
+        Now let's pad the structured array with the fill value '.'.  The first argument
+        is the data.  The next argument is the number of padding elements to add to the
+        beginning and end of each axis.
+
+        .. testcode::
+
+            Str2D.struct_pad(a.data, 1, fill=('.', 0))
+
+        .. testoutput::
+
+            array([['.', '.', '.', '.', '.', '.', '.'],
+                   ['.', 'a', ' ', 'b', ' ', 'c', 'd'],
+                   ['.', 'e', ' ', 'f', ' ', 'g', ' '],
+                   ['.', 'h', ' ', 'i', ' ', ' ', ' '],
+                   ['.', 'j', ' ', ' ', ' ', ' ', ' '],
+                   ['.', '.', '.', '.', '.', '.', '.']], dtype='<U1')
+
+        If we want to control the padding on each side of the array, we can pass a tuple
+        of integers to the second argument.  The first integer is the number of padding
+        elements to add to the beginning of each axis and the second integer is the
+        number of padding elements to add to the end of each axis.
+
+        .. testcode::
+
+            Str2D.struct_pad(a.data, (1, 2), fill=('.', 0))
+
+        .. testoutput::
+
+            array([['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+                   ['.', 'a', ' ', 'b', ' ', 'c', ' ', 'd', '.', '.'],
+                   ['.', 'e', ' ', 'f', ' ', 'g', ' ', ' ', '.', '.'],
+                   ['.', 'h', ' ', 'i', ' ', ' ', ' ', ' ', '.', '.'],
+                   ['.', 'j', ' ', ' ', ' ', ' ', ' ', ' ', '.', '.'],
+                   ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+                   ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.']], dtype='<U1')
+
+        However, you can also control the padding on each side of the array by passing
+        the number of padding elements to add to the beginning and end of each axis as
+        as tuple of tuples. The first tuple is the number of padding elements to add to
+        the beginning and end of the first axis and the second tuple is the number of
+        padding elements to add to the beginning and end of the second axis.
+
+        .. testcode::
+
+            Str2D.struct_pad(a.data, ((1, 3), (2, 1)), fill=('.', 0))
+
+        .. testoutput::
+
+            array([['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+                   ['.', '.', 'a', ' ', 'b', ' ', 'c', ' ', 'd', '.'],
+                   ['.', '.', 'e', ' ', 'f', ' ', 'g', ' ', ' ', '.'],
+                   ['.', '.', 'h', ' ', 'i', ' ', ' ', ' ', ' ', '.'],
+                   ['.', '.', 'j', ' ', ' ', ' ', ' ', ' ', ' ', '.'],
+                   ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+                   ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+                   ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.']], dtype='<U1')
+
+        Another thing we can do is to pass a different type of padding mode.  The
+        default is 'constant' which will fill the padding elements with the fill value.
+        However, we can also use 'edge' which will fill the padding elements with the
+        nearest edge value.
+
+        .. testcode::
+
+            Str2D.struct_pad(a.data, 1, mode='edge')
+
+        .. testoutput::
+
+            array([['a', 'a', ' ', 'b', ' ', 'c', ' ', 'd', 'd'],
+                   ['a', 'a', ' ', 'b', ' ', 'c', ' ', 'd', 'd'],
+                   ['e', 'e', ' ', 'f', ' ', 'g', ' ', ' ', ' '],
+                   ['h', 'h', ' ', 'i', ' ', ' ', ' ', ' ', ' '],
+                   ['j', 'j', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                   ['j', 'j', ' ', ' ', ' ', ' ', ' ', ' ', ' ']], dtype='<U1')
+
+        """
+        # Using `np.pad` on structured arrays is a bit tricky because it doesn't
+        # handle the structured array fields very well.  We need to pad the 'char'
+        # and 'alpha' fields separately and then recombine them into a structured
+        # array.
+        fill = kwargs.pop("fill", (" ", 0))
+        char_fill, alpha_fill = fill
+
+        char_kwargs = kwargs.copy()
+        char_mode = char_kwargs.setdefault("mode", "constant")
+        if char_mode == "constant":
+            char_kwargs["constant_values"] = char_fill
+
+        alpha_kwargs = kwargs.copy()
+        alpha_mode = alpha_kwargs.setdefault("mode", "constant")
+        if alpha_mode == "constant":
+            alpha_kwargs["constant_values"] = alpha_fill
+
+        char_pad = np.pad(array["char"], *args, **char_kwargs)
+        alpha_pad = np.pad(array["alpha"], *args, **alpha_kwargs)
+        padded_data = np.empty(char_pad.shape, dtype=cls._dtype)
+        padded_data["char"] = char_pad
+        padded_data["alpha"] = alpha_pad
+
+        return padded_data
+
+    @classmethod
+    def join_h(cls, *args: "Str2D", sep: str = "") -> "Str2D":
+        """`join_h` joins any number of Str2D objects horizontally.  The `sep` is the
+        separator that will be added between the joined data.
+
+        Parameters
+        ----------
+        args : Tuple[Str2D]
+            The Str2D objects to join horizontally.
+
+        sep : str, optional
+            The separator to insert between the joined data, by default ''.
+
+        Returns
+        -------
+        Str2D
+            A new Str2D object with the joined data.
+
+        See Also
+        --------
+        join_v : Join the data vertically
+
+        Examples
+        --------
+        Let's create several instances of Str2D and assign them to the variables `a`,
+        `b`, and `c`.
+
+        .. testcode::
+
+            from str2d import Str2D
+
+            a = Str2D('a b c d\\ne f g\\nh i\\nj')
+            b = Str2D('1 2 3\\n4 5 6\\n7 8 9')
+            c = Str2D('x y z\\nu v w\\nq r s')
+
+        We can join the data horizontally by passing the Str2D objects to the `join_h`
+        method.
+
+        .. testcode::
+
+            Str2D.join_h(a, b, c)
+
+        .. testoutput::
+
+            a b c d1 2 3x y z
+            e f g  4 5 6u v w
+            h i    7 8 9q r s
+            j
+
+        We can also pass a separator
+
+        .. testcode::
+
+            Str2D.join_h(a, b, c, sep='|')
+
+        .. testoutput::
+
+            a b c d|1 2 3|x y z
+            e f g  |4 5 6|u v w
+            h i    |7 8 9|q r s
+            j      |     |
+
+        """
+        if sep:
+            args = sum(zip([sep] * len(args), args), ())[1:]
+        return reduce(lambda x, y: x + y, args)
+
+    @classmethod
+    def join_v(cls, *args: "Str2D", sep: str = "") -> "Str2D":
+        """`join_v` joins any number of Str2D objects vertically.  The `sep` is the
+        separator that will be added between the joined data.
+
+        Parameters
+        ----------
+        args : Tuple[Str2D]
+            The Str2D objects to join vertically.
+
+        sep : str, optional
+            The separator to insert between the joined data, by default ''.
+
+        Returns
+        -------
+        Str2D
+            A new Str2D object with the joined data.
+
+        See Also
+        --------
+        join_h : Join the data horizontally.
+
+        Examples
+        --------
+        Let's create several instances of Str2D and assign them to the variables `a`,
+        `b`, and `c`.
+
+        .. testcode::
+
+            from str2d import Str2D
+
+            a = Str2D('a b c d\\ne f g\\nh i\\nj')
+            b = Str2D('1 2 3\\n4 5 6\\n7 8 9')
+            c = Str2D('x y z\\nu v w\\nq r s')
+
+        We can join the data vertically by passing the Str2D objects to the `join_v`
+
+        .. testcode::
+
+            Str2D.join_v(a, b, c)
+
+        .. testoutput::
+
+            a b c d
+            e f g
+            h i
+            j
+            1 2 3
+            4 5 6
+            7 8 9
+            x y z
+            u v w
+            q r s
+
+        We can also pass a separator
+
+        .. testcode::
+
+            Str2D.join_v(a, b, c, sep='-')
+
+        .. testoutput::
+
+            a b c d
+            e f g
+            h i
+            j
+            -------
+            1 2 3
+            4 5 6
+            7 8 9
+            -------
+            x y z
+            u v w
+            q r s
+
+        """
+        if sep:
+            args = sum(zip([sep] * len(args), args), ())[1:]
+        return reduce(lambda x, y: x / y, args)
+
+    @classmethod
+    def equal_height(cls, *args: "Str2D") -> List["Str2D"]:
+        """Expand each Str2D object to have the same height.  Useful for when you want
+        all Str2D objects to have the same height.
+
+        Parameters
+        ----------
+        args : Tuple[Str2D]
+            The Str2D objects to expand.
+
+        Returns
+        -------
+        List[Str2D]
+            A list of Str2D objects with the same height.
+
+        """
+        max_height = max(arg.height for arg in args)
+        return [arg.expand(y=max_height - arg.height) for arg in args]
+
+    @classmethod
+    def equal_width(cls, *args: "Str2D") -> List["Str2D"]:
+        """Expand each Str2D object to have the same width.  Useful for when you want
+        all Str2D objects to have the same width.
+
+        Parameters
+        ----------
+        args : Tuple[Str2D]
+            The Str2D objects to expand.
+
+        Returns
+        -------
+        List[Str2D]
+            A list of Str2D objects with the same width.
+
+        """
+        max_width = max(arg.width for arg in args)
+        return [arg.expand(x=max_width - arg.width) for arg in args]
+
+    @classmethod
+    def equal_shape(cls, *args: "Str2D") -> List["Str2D"]:
+        """Expand each Str2D object to have the same shape.  Useful for when you want
+        all Str2D objects to have the same shape.
+
+        Parameters
+        ----------
+        args : Tuple[Str2D]
+            The Str2D objects to expand.
+
+        Returns
+        -------
+        List[Str2D]
+            A list of Str2D objects with the same shape.
+
+        """
+        max_height = max(arg.height for arg in args)
+        max_width = max(arg.width for arg in args)
+        return [
+            arg.expand(x=max_width - arg.width, y=max_height - arg.height)
+            for arg in args
+        ]
+
+    ####################################################################
+    # Attribute properties #############################################
+    ####################################################################
+
     @property
     def height(self) -> int:
         """Return the height of the Str2D object.  This is the number of rows in the
@@ -1050,22 +1616,9 @@ class Str2D:
             "fill": self.fill,
         }
 
-    def show_with_alignment(self, expand=2, box=True) -> "Str2D":
-        """Show the alignment parameters as part of a new Str2D object.  This is useful
-        for debugging and understanding how the alignment parameters affect the output.
-
-        """
-        footer = Str2D(f"v: {self.valign}\nh: {self.halign}")
-        body = self
-        if expand:
-            body = body.expand(expand, expand)
-        if box:
-            body = body.box().view
-
-        body = Str2D(body, valign="middle", halign="center")
-
-        sep = Str2D("-" * max(body.width, footer.width))
-        return body / sep / footer
+    ####################################################################
+    # Transformations ##################################################
+    ####################################################################
 
     TRANSFORMATIONS_DOCSTRING = """
 
@@ -1178,11 +1731,142 @@ class Str2D:
 
     r.__doc__ += TRANSFORMATIONS_DOCSTRING
 
+    def __getattr__(self, name: str) -> Any:
+        """Enables convenient access to the transpose, horizontal flip, vertical flip,
+        and rotation methods in a concatenated manner.
+        """
+        if (p := name[0].lower()) in ["h", "v", "t", "r", "i"]:
+            this = getattr(self, p)
+            if len(name) == 1:
+                return this
+            return getattr(getattr(self, p), name[1:])
+        raise AttributeError(f"'{Str2D.__name__}' object has no attribute '{name}'")
+
+    __getattr__.__doc__ += TRANSFORMATIONS_DOCSTRING
+
+    ####################################################################
+    # Information/Documentation ########################################
+    ####################################################################
+
+    def show_with_alignment(self, expand=2, box=True) -> "Str2D":
+        """Show the alignment parameters with object.
+        This is useful for debugging and understanding how the alignment parameters
+        affect the output.
+
+        Parameters
+        ----------
+        expand : int, optional
+            The amount to expand the Str2D object, by default 2.
+
+        box : bool, optional
+            Whether to box the Str2D object, by default True.
+
+        Returns
+        -------
+        Str2D
+            A new Str2D object with the alignment parameters displayed as text.
+
+        Examples
+        --------
+        Let's create an instance of Str2D and assign it to the variable `a`.
+
+        .. testcode::
+
+            from str2d import Str2D
+
+            a = Str2D('a b c d\\ne f g\\nh i\\nj')
+
+        We can show the alignment parameters as part of a new Str2D object.
+
+        .. testcode::
+
+            a.show_with_alignment()
+
+        .. testoutput::
+
+            ╭─────────╮
+            │a b c d  │
+            │e f g    │
+            │h i      │
+            │j        │
+            │         │
+            │         │
+            ╰─────────╯
+            -----------
+            v: top
+            h: left
+
+        """
+        footer = Str2D(f"v: {self.valign}\nh: {self.halign}")
+        body = self
+        if expand:
+            body = body.expand(expand, expand)
+        if box:
+            body = body.box().view
+
+        body = Str2D(body, valign="middle", halign="center")
+
+        sep = Str2D("-" * max(body.width, footer.width))
+        return body / sep / footer
+
     def transormation_palette(self, sep=" | ", expand=2, box=True) -> "Str2D":
         """Show the transformation palette.  This is a visual representation of the
         identity, transpose, horizontal flip, vertical flip, and 90 degree rotation of
         the data.  The transformations are shown with alignment parameters and can be
-        expanded and boxed."""
+        expanded and boxed.
+
+        Parameters
+        ----------
+        sep : str, optional
+            The separator between the transformations, by default ' | '.
+
+        expand : int, optional
+            The amount to expand the Str2D object, by default 2.
+
+        box : bool, optional
+            Whether to box the Str2D object, by default True.
+
+        See Also
+        --------
+        show_with_alignment : Show the alignment parameters as part of a new Str2D
+            object.
+
+        Returns
+        -------
+        Str2D
+            A new Str2D object with the transformations displayed.
+
+        Examples
+        --------
+
+        Let's create an instance of Str2D and assign it to the variable `a`.
+
+        .. testcode::
+
+            from str2d import Str2D
+
+            a = Str2D('ab\\ncd')
+
+        We can show the transformation palette.
+
+        .. testcode::
+
+            a.transormation_palette()
+
+        .. testoutput::
+
+               i    |    t    |    h     |     v     |    r     |    r2     |    r3
+            ╭────╮  | ╭────╮  |  ╭────╮  |  ╭────╮   |  ╭────╮  |  ╭────╮   |  ╭────╮
+            │ab  │  | │ac  │  |  │  ba│  |  │    │   |  │  ca│  |  │    │   |  │    │
+            │cd  │  | │bd  │  |  │  dc│  |  │    │   |  │  db│  |  │    │   |  │    │
+            │    │  | │    │  |  │    │  |  │cd  │   |  │    │  |  │  dc│   |  │bd  │
+            │    │  | │    │  |  │    │  |  │ab  │   |  │    │  |  │  ba│   |  │ac  │
+            ╰────╯  | ╰────╯  |  ╰────╯  |  ╰────╯   |  ╰────╯  |  ╰────╯   |  ╰────╯
+            ------- | ------- | -------- | --------- | -------- | --------- | ---------
+            v: top  | v: top  | v: top   | v: bottom | v: top   | v: bottom | v: bottom
+            h: left | h: left | h: right | h: left   | h: right | h: right  | h: left
+
+        """
 
         i = self.i.show_with_alignment(expand=expand, box=box)
         t = self.t.show_with_alignment(expand=expand, box=box)
@@ -1202,6 +1886,10 @@ class Str2D:
             Str2D("r3", halign="center") / rrr,
             sep=sep,
         )
+
+    ####################################################################
+    # Methods ##########################################################
+    ####################################################################
 
     def roll(self, x: int, axis: int) -> "Str2D":
         """Roll the data along an axis.  Analogous and wrapper to np.roll.
@@ -1346,19 +2034,6 @@ class Str2D:
         """
         return self.roll(x, axis=0)
 
-    def __getattr__(self, name: str) -> Any:
-        """Enables convenient access to the transpose, horizontal flip, vertical flip,
-        and rotation methods in a concatenated manner.
-        """
-        if (p := name[0].lower()) in ["h", "v", "t", "r", "i"]:
-            this = getattr(self, p)
-            if len(name) == 1:
-                return this
-            return getattr(getattr(self, p), name[1:])
-        raise AttributeError(f"'{Str2D.__name__}' object has no attribute '{name}'")
-
-    __getattr__.__doc__ += TRANSFORMATIONS_DOCSTRING
-
     def pad(self, *args, **kwargs) -> "Str2D":
         """`pad` pads the data with the fill value specified in the 'fill' keyword and
         is a wrapper around the class method `struct_pad` which in turn is a wrapper
@@ -1374,10 +2049,10 @@ class Str2D:
             np.pad but the only other one that makes sense in a character array context
             is 'edge'.
 
-        *args : tuple
+        args : tuple
             Positional arguments to np.pad.
 
-        **kwargs : dict
+        kwargs : dict
             Keyword arguments to np.pad.
 
         Returns
@@ -1486,22 +2161,76 @@ class Str2D:
         return Str2D(data=padded_data, **self.kwargs)
 
     def expand(self, x: int = 0, y: int = 0, **kwargs) -> "Str2D":
-        """Expand the data.
+        """The `expand` method expands the data by adding padding to the top, bottom,
+        left, and right of the data.  This is a wrapper around the `pad` method where
+        we take into account the alignment parameters and adjust the padding
+        accordingly.
 
         Parameters
         ----------
         x : int, optional
             The number of columns to expand, by default 0.
+
         y : int, optional
             The number of rows to expand, by default 0.
-        **kwargs : dict
+
+        kwargs : dict
             Additional keyword arguments to pass to the pad method.
+
 
         Returns
         -------
-        np.ndarray
-            The expanded data.
+        Str2D
+            A new Str2D object with the expanded data.
+
+        Examples
+        --------
+
+        Let's create an instance of Str2D and assign it to the variable `a` and then
+        expand it.
+
+        .. testcode::
+
+            from str2d import Str2D
+
+            a = Str2D('a b c d\\ne f g\\nh i\\nj')
+
+        We can expand the data by passing the number of columns and rows to expand.  In
+        order to see the expansion, we'll use a fill value of '.'.
+
+        .. testcode::
+
+            a.expand(1, 1, fill='.')
+
+        .. testoutput::
+
+            a b c d.
+            e f g  .
+            h i    .
+            j      .
+            ........
+
+        Let's see what happens when the alignment is set to 'center' and 'middle'.  We
+        use an `x` value of 4 and a `y` value of 2 to add 4 columns and 2 rows.
+
+        .. testcode::
+
+            a = Str2D(
+                'a b c d\\ne f g  \\nh i    \\nj      ',
+                valign='middle', halign='center'
+            )
+
+            a.expand(4, 2, fill='.')
+
+            ...........
+            ..a b c d..
+            ..e f g  ..
+            ..h i    ..
+            ..j      ..
+            ...........
+
         """
+        kwargs["fill"] = self.validate_fill(kwargs.get("fill", self.fill))
         top = 0
         left = 0
         if self.halign == "center":
@@ -1516,33 +2245,276 @@ class Str2D:
         bottom = y - top
         return self.pad(((top, bottom), (left, right)), **kwargs)
 
-    def split(self, axis: int, *args: int) -> List["Str2D"]:
-        """Split the data along an axis.
+    def split(self, indices_or_sections, axis=0) -> List["Str2D"]:
+        """`split` is analogous to np.split and splits the data along an axis.  It'll
+        return a list of Str2D objects split along the specified axis at the specified
+        indices.
+
+        The `ary` being passed to `np.split` is the structured array data.
 
         Parameters
         ----------
-        axis : int
-            The axis to split along.
-        *args : int
-            The indices to pass to np.split.
+        indices_or_sections : int or 1-D array
+            If `indices_or_sections` is an integer, N, the array will be divided
+            into N equal arrays along `axis`.  If such a split is not possible,
+            an error is raised.
+
+            If `indices_or_sections` is a 1-D array of sorted integers, the entries
+            indicate where along `axis` the array is split.  For example,
+            ``[2, 3]`` would, for ``axis=0``, result in
+
+            - ary[:2]
+            - ary[2:3]
+            - ary[3:]
+
+            If an index exceeds the dimension of the array along `axis`,
+            an empty sub-array is returned correspondingly.
+
+        axis : int, optional
+            The axis along which to split, default is 0.
 
         Returns
         -------
         List[Str2D]
-            A list of the split data.
+            A list of Str2D applied to the split data.
+
+        Raises
+        ------
+        ValueError
+            If `indices_or_sections` is given as an integer, but
+            a split does not result in equal division.
+
+        See Also
+        --------
+        insert : Insert a separator between the split data.
+
+        Examples
+        --------
+
+        Let's create an instance of Str2D and assign it to the variable `a` and then
+        split it.
+
+        .. testcode::
+
+            from str2d import Str2D
+
+            a = Str2D('abcdef\\nghijkl\\nmnopqr\\nstuvwx')
+            a
+
+        .. testoutput::
+
+            abcdef
+            ghijkl
+            mnopqr
+            stuvwx
+
+        We can split the data into 3 equal parts along the vertical axis.  We'll use the
+        complementary `insert` method to join the split data back together to help
+        visualize the split.
+
+        Two equal parts along the vertical axis.
+        .. testcode::
+
+            a.split(2)
+
+        .. testoutput::
+
+            [abcdef
+            ghijkl,
+            mnopqr
+            stuvwx]
+
+        Using the `insert` method to join the split data back together.
+
+        .. testcode::
+
+            a.insert(2)
+
+        .. testoutput::
+
+            abcdef
+            ghijkl
+
+            mnopqr
+            stuvwx
+
+        3 equal parts along the horizontal axis.
+        Remember that we're using the `insert` method to show the data.  Use the `split`
+        method to get the split data as a list.
+
+        .. testcode::
+
+            a.insert(3, axis=1)
+
+        .. testoutput::
+
+            ab cd ef
+            gh ij kl
+            mn op qr
+            st uv wx
+
+        Split the data at first and fifth columns.
+
+        .. testcode::
+
+            a.insert([1, 5], axis=1)
+
+        .. testoutput::
+
+            a bcde f
+            g hijk l
+            m nopq r
+            s tuvw x
 
         """
-        indices_or_sections, *args = args
         return [
-            Str2D(data=split, **self.kwargs)
-            for split in np.split(self.data, indices_or_sections, *args, axis=axis)
+            Str2D(data=divided, **self.kwargs)
+            for divided in np.split(self.data, indices_or_sections, axis)
         ]
+
+    def insert(self, indices_or_sections, axis=0, sep=" "):
+        """`insert` is a wrapper around the `split` method and is used to visually
+        insert a separator between the split data.  The `sep` is the separator that will
+        be added between the split data.
+
+        If the `sep` is not an empty string, it will be added between the concatenated
+        data. If the `sep` is an empty string, the data will be concatenated without any
+        separation and wll resemble the original data.  This would be silly to do but
+        it's a good way to indicate that the method is doing what it's supposed to do.
+
+        The actual intention is to use a separator to visually separate the data.
+
+        The `ary` being passed to `np.split` is the structured array data.
+
+        Parameters
+        ----------
+        indices_or_sections : int or 1-D array
+            If `indices_or_sections` is an integer, N, the array will be divided
+            into N equal arrays along `axis`.  If such a split is not possible,
+            an error is raised.
+
+            If `indices_or_sections` is a 1-D array of sorted integers, the entries
+            indicate where along `axis` the array is split.  For example,
+            ``[2, 3]`` would, for ``axis=0``, result in
+
+            - ary[:2]
+            - ary[2:3]
+            - ary[3:]
+
+            If an index exceeds the dimension of the array along `axis`,
+            an empty sub-array is returned correspondingly.
+
+        axis : int, optional
+            The axis along which to split, default is 0.
+
+        sep : str, optional
+            The separator to insert between the split data, by default ' '.
+
+        Returns
+        -------
+        Str2D
+            A new Str2D object with the split data and separator.
+
+        See Also
+        --------
+        split : Split the data along an axis.
+
+        Examples
+        --------
+
+        Let's create an instance of Str2D and assign it to the variable `a` and then
+
+        .. testcode::
+
+            from str2d import Str2D
+
+            a = Str2D('abcdef\\nghijkl\\nmnopqr\\nstuvwx')
+            a
+
+        .. testoutput::
+
+            abcdef
+            ghijkl
+            mnopqr
+            stuvwx
+
+        Let's `insert` 4 equal parts along the vertical axis with a separator of '-'
+        followed by an `insert` of 3 equal parts along the horizontal axis with a
+        separator of '|'.
+
+        .. testcode::
+
+            a.insert(4, sep='-').insert(3, axis=1, sep='|')
+
+        .. testoutput::
+
+            ab|cd|ef
+            --|--|--
+            gh|ij|kl
+            --|--|--
+            mn|op|qr
+            --|--|--
+            st|uv|wx
+
+        """
+        if axis == 0:
+            return Str2D.join_v(*self.split(indices_or_sections, axis=axis), sep=sep)
+        return Str2D.join_h(*self.split(indices_or_sections, axis=axis), sep=sep)
 
     def __getitem__(
         self,
         key: Union[int, slice, Tuple[Union[int, slice], ...], List[Union[int, slice]]],
     ) -> "Str2D":
-        """Get the data at the specified indices."""
+        """Passing on the indexing to the structured array data.  This is a wrapper
+        around the structured array data's __getitem__ method and returns a new Str2D
+        object with the sliced data.
+
+        Parameters
+        ----------
+        key : Union[int, slice, Tuple[Union[int, slice], ...], List[Union[int, slice]]
+            The index or slice to pass to the structured array data.
+
+        Returns
+        -------
+        Str2D
+            A new Str2D object with the sliced data.
+
+        Examples
+        --------
+
+        Let's create an instance of Str2D and assign it to the variable `a`.
+
+        .. testcode::
+
+            from str2d import Str2D
+
+            a = Str2D('''\\
+            012345
+            123450
+            234501
+            345012
+            ''')
+            a
+        .. testoutput::
+
+            012345
+            123450
+            234501
+            345012
+
+        We can slice the data by passing a tuple of slices.  The first slice is for the
+        rows and the second slice is for the columns.
+
+        .. testcode::
+
+            a[:-2, 1:]
+
+        .. testoutput::
+
+            12345
+            23450
+        
+        """
         if isinstance(key, tuple):
             new_key = tuple(([k] if np.isscalar(k) else k) for k in key)
         elif np.isscalar(key):
@@ -1552,142 +2524,506 @@ class Str2D:
 
         return Str2D(data=self.data[new_key], **self.kwargs)
 
-    @classmethod
-    def join_h(cls, *args: "Str2D", sep: str = "") -> "Str2D":
-        """Join the data horizontally."""
-        if sep:
-            args = sum(zip([sep] * len(args), args), ())[1:]
-        return reduce(lambda x, y: x + y, args)
+    def circle(self, radius: float, char: str = "*") -> "Str3D":
+        """Create a circle over object. This is a wrapper around the `circle` function
+        and returns a new Str3D object with the circle over the data.
 
-    @classmethod
-    def join_v(cls, *args: "Str2D", sep: str = "") -> "Str2D":
-        """Join the data vertically."""
-        if sep:
-            args = sum(zip([sep] * len(args), args), ())[1:]
-        return reduce(lambda x, y: x / y, args)
+        Parameters
+        ----------
+        radius : float
+            The radius of the circle.  The minimum of the height and width of the data
+            is used as a reference for the radius equal to 1.
 
-    @classmethod
-    def equal_height(cls, *args: "Str2D") -> "Str2D":
-        """Make the data have equal height."""
-        max_height = max(arg.height for arg in args)
-        return [arg.expand(y=max_height - arg.height) for arg in args]
+        char : str, optional
+            The character to use for the circle, by default '*'.
 
-    @classmethod
-    def equal_width(cls, *args: "Str2D") -> "Str2D":
-        """Make the data have equal width."""
-        max_width = max(arg.width for arg in args)
-        return [arg.expand(x=max_width - arg.width) for arg in args]
+        Returns
+        -------
+        Str3D
+            A new Str3D object with the circle over the data.
 
-    @classmethod
-    def equal_shape(cls, *args: "Str2D") -> "Str2D":
-        """Make the data have equal shape."""
-        max_height = max(arg.height for arg in args)
-        max_width = max(arg.width for arg in args)
-        return [
-            arg.expand(x=max_width - arg.width, y=max_height - arg.height)
-            for arg in args
-        ]
+        See Also
+        --------
+        hole : Create a hole over the data.
 
-    # math operations
-    def __add__(self, other: "Str2D", right_side=False) -> "Str2D":
-        """Add the data."""
-        other_expand_kwargs = {}
-        if isinstance(other, str):
-            other_expand_kwargs["mode"] = "edge"
-            if other == "":
-                other_expand_kwargs["mode"] = "constant"
-            other = Str2D(data=other)
+        Examples
+        --------
+        Let's create an instance of Str2D and assign it to the variable `a` and then
 
-        height = max(self.height, other.height)
-        left = self.expand(y=height - self.height)
-        right = other.expand(y=height - other.height, **other_expand_kwargs)
-        if right_side:
-            left, right = right, left
-        return Str2D(data=np.hstack((left.data, right.data)), **self.kwargs)
+        .. testcode::
 
-    def __radd__(self, other: "Str2D") -> "Str2D":
-        """Add the data."""
-        return self.__add__(other, right_side=True)
+            from str2d import Str2D
 
-    def add(self, *args, **kwargs) -> "Str2D":
-        """Add the data."""
-        return Str2D.join_h(self, *args, **kwargs)
+            a = 3 * Str2D('abcdef\\nghijkl\\nmnopqr\\nstuvwx') * 4
+            a
 
-    def __mul__(self, other: int) -> "Str2D":
-        """Multiply the data."""
-        return Str2D(data=np.hstack([self.data] * other), **self.kwargs)
+        .. testoutput::
 
-    def __rmul__(self, other: int) -> "Str2D":
-        """Multiply the data."""
-        return Str2D(data=np.vstack([self.data] * other), **self.kwargs)
+            abcdefabcdefabcdefabcdef
+            ghijklghijklghijklghijkl
+            mnopqrmnopqrmnopqrmnopqr
+            stuvwxstuvwxstuvwxstuvwx
+            abcdefabcdefabcdefabcdef
+            ghijklghijklghijklghijkl
+            mnopqrmnopqrmnopqrmnopqr
+            stuvwxstuvwxstuvwxstuvwx
+            abcdefabcdefabcdefabcdef
+            ghijklghijklghijklghijkl
+            mnopqrmnopqrmnopqrmnopqr
+            stuvwxstuvwxstuvwxstuvwx
 
-    def __truediv__(self, other: "Str2D", right_side=False) -> "Str2D":
-        """Divide the data."""
-        other_expand_kwargs = {}
-        if isinstance(other, str):
-            other_expand_kwargs["mode"] = "edge"
-            if other == "":
-                other_expand_kwargs["mode"] = "constant"
-            other = Str2D(data=other)
+        We can create a circle over the data.
 
-        width = max(self.width, other.width)
-        left = self.expand(x=width - self.width)
-        right = other.expand(x=width - other.width, **other_expand_kwargs)
-        if right_side:
-            left, right = right, left
-        return Str2D(data=np.vstack((left.data, right.data)), **self.kwargs)
+        .. testcode::
 
-    def __rtruediv__(self, other: "Str2D") -> "Str2D":
-        """Divide the data."""
-        return self.__truediv__(other, right_side=True)
+            a.circle(1, char=' ')
 
-    def circle(self, radius, char="*"):
-        """Create a circle."""
+        .. testoutput::
+
+            abcde              bcdef
+            ghi   ghijklghijkl   jkl
+            m   qrmnopqrmnopqrmn   r
+              uvwxstuvwxstuvwxstuv
+             bcdefabcdefabcdefabcde
+             hijklghijklghijklghijk
+             nopqrmnopqrmnopqrmnopq
+             tuvwxstuvwxstuvwxstuvw
+              cdefabcdefabcdefabcd
+            g   klghijklghijklgh   l
+            mno   mnopqrmnopqr   pqr
+            stuvw              tuvwx
+
+
+        """
         c = circle(radius, self.height, self.width, char)
         return Str3D([c, self])
 
     def hole(self, radius, char="*"):
-        """Create a hole."""
+        """
+        Create a hole over the object. This is a wrapper around the `hole` function and
+        returns a new Str3D object with the hole over the data.  This effectively hides
+        the surrounding data and only shows the hole.
+
+        Parameters
+        ----------
+        radius : float
+            The radius of the hole.  The minimum of the height and width of the data is
+            used as a reference for the radius equal to 1.
+
+        char : str, optional
+            The character to use for the hole, by default '*'.
+
+        Returns
+        -------
+        Str3D
+            A new Str3D object with the hole over the data.
+
+        See Also
+        --------
+        circle : Create a circle over the data.
+
+        Examples
+        --------
+
+        Let's create an instance of Str2D and assign it to the variable `a` and then
+        create a hole over it.
+
+        .. testcode::
+
+            from str2d import Str2D
+
+            a = 3 * Str2D('abcdef\\nghijkl\\nmnopqr\\nstuvwx') * 4
+
+        .. testoutput::
+
+            abcdefabcdefabcdefabcdef
+            ghijklghijklghijklghijkl
+            mnopqrmnopqrmnopqrmnopqr
+            stuvwxstuvwxstuvwxstuvwx
+            abcdefabcdefabcdefabcdef
+            ghijklghijklghijklghijkl
+            mnopqrmnopqrmnopqrmnopqr
+            stuvwxstuvwxstuvwxstuvwx
+            abcdefabcdefabcdefabcdef
+            ghijklghijklghijklghijkl
+            mnopqrmnopqrmnopqrmnopqr
+            stuvwxstuvwxstuvwxstuvwx
+
+        .. testcode::
+
+            a.hole(1, char=' ')
+
+        .. testoutput::
+
+                   bcdefabcde
+                klghijklghijklgh
+              opqrmnopqrmnopqrmnop
+             tuvwxstuvwxstuvwxstuvw
+            abcdefabcdefabcdefabcdef
+            ghijklghijklghijklghijkl
+            mnopqrmnopqrmnopqrmnopqr
+            stuvwxstuvwxstuvwxstuvwx
+             bcdefabcdefabcdefabcde
+              ijklghijklghijklghij
+                qrmnopqrmnopqrmn
+                   tuvwxstuvw
+
+
+        """
         c = hole(radius, self.height, self.width, char)
         return Str3D([c, self])
 
-    def box_over(self, style):
-        """Create a box over the data."""
+    def box_over(self, style: Union[BoxStyle, str] = BoxStyle.SINGLE_ROUND) -> "Str3D":
+        """Create a box over the data.  The difference between this and `box_around` is
+        that this method creates a box over the data and the other method creates a box
+        around the data.  The box that is created will cover the edges of the data.
+        This is useful when preserving the size is important.
+
+        Parameters
+        ----------
+        style : Union[BoxStyle, str], optional
+            The style of the box, by default BoxStyle.single_round.
+
+        Returns
+        -------
+        Str3D
+            A new Str3D object with the box over the data.
+
+        See Also
+        --------
+        box_around : Create a box around the data.
+        box : Create a box around the data.
+
+        Examples
+        --------
+        Let's create an instance of Str2D and assign it to the variable `a` and then
+        create a box over it.
+
+        .. testcode::
+
+            from str2d import Str2D
+
+            a = Str2D('abcdef\\nghijkl\\nmnopqr\\nstuvwx')
+            a
+
+        .. testoutput::
+
+            abcdef
+            ghijkl
+            mnopqr
+            stuvwx
+
+        .. testcode::
+
+            a.box_over()
+
+        .. testoutput::
+
+            ╭────╮
+            │hijk│
+            │nopq│
+            ╰────╯
+
+        """
         box = Box([self.height - 2], [self.width - 2], style)
         return Str3D([box, self])
 
-    def box_around(self, style):
-        """Create a box around the data."""
+    def box_around(
+        self, style: Union[BoxStyle, str] = BoxStyle.SINGLE_ROUND
+    ) -> "Str3D":
+        """Create a box around the data.  The difference between this and `box_over` is
+        that this method creates a box around the data and the other method creates a
+        box over the data.  The box that is created will surround the data.  This is
+        useful when preserving the content is important.
+
+        Parameters
+        ----------
+        style : Union[BoxStyle, str], optional
+            The style of the box, by default BoxStyle.single_round.
+
+        Returns
+        -------
+        Str3D
+            A new Str3D object with the box around the data.
+
+        See Also
+        --------
+        box_over : Create a box over the data.
+        box : Create a box around the data.
+
+        Examples
+        --------
+        Let's create an instance of Str2D and assign it to the variable `a` and then
+        create a box around it.
+
+        .. testcode::
+
+            from str2d import Str2D
+
+            a = Str2D('abcdef\\nghijkl\\nmnopqr\\nstuvwx')
+            a
+
+        .. testoutput::
+
+            abcdef
+            ghijkl
+            mnopqr
+            stuvwx
+
+        .. testcode::
+
+            a.box_around()
+
+        .. testoutput::
+
+            ╭──────╮
+            │abcdef│
+            │ghijkl│
+            │mnopqr│
+            │stuvwx│
+            ╰──────╯
+
+        """
         s = self.pad(((1, 1), (1, 1)))
         box = Box([self.height], [self.width], style)
         return Str3D([box, s])
 
-    def box(self, style="single_round", around=True):
-        """Create a box around the data."""
+    def box(
+        self, style: Union[BoxStyle, str] = BoxStyle.SINGLE_ROUND, around: bool = True
+    ) -> "Str3D":
+        """Wrapper around `box_over` and `box_around` methods.  This method will create
+        a box around or over the data.
+
+        Parameters
+        ----------
+        style : str, optional
+            The style of the box, by default "single_round".
+
+        around : bool, optional
+            Whether to create a box around the data or over the data, by default True.
+
+        Returns
+        -------
+        Str3D
+            A new Str3D object with the box around or over the data.
+
+        See Also
+        --------
+        box_over : Create a box over the data.
+        box_around : Create a box around the data.
+
+        Examples
+        --------
+        Let's create an instance of Str2D and assign it to the variable `a` and then
+        create a box around it.
+
+        .. testcode::
+
+            from str2d import Str2D
+
+            a = Str2D('abcdef\\nghijkl\\nmnopqr\\nstuvwx')
+            a
+
+        .. testoutput::
+
+            abcdef
+            ghijkl
+            mnopqr
+            stuvwx
+
+        .. testcode::
+
+            a.box()
+
+        .. testoutput::
+
+            ╭──────╮
+            │abcdef│
+            │ghijkl│
+            │mnopqr│
+            │stuvwx│
+            ╰──────╯
+
+        We can also create a box over the data.
+
+        .. testcode::
+
+            a.box(around=False)
+
+        .. testoutput::
+
+            ╭────╮
+            │hijk│
+            │nopq│
+            ╰────╯
+
+        """
         if around:
             return self.box_around(style)
         return self.box_over(style)
 
     def pi(self):
-        """Replace the data with pi."""
-        i, j = self.data["alpha"].nonzero()
+        """Replace the data with digits of pi.  This is a wrapper around the `pi`
+        function and returns a new Str2D object with the data replaced with the digits
+
+        Returns
+        -------
+        Str2D
+            A new Str2D object with the data replaced with the digits of pi.
+
+        Examples
+        --------
+        Let's create an instance of Str2D and assign it to the variable `a` and then
+
+        .. testcode::
+
+            from str2d import Str2D
+
+            a = Str2D('abcdef\\nghijkl\\nmnopqr\\nstuvwx')
+            a
+
+        .. testoutput::
+
+            abcdef
+            ghijkl
+            mnopqr
+            stuvwx
+
+        .. testcode::
+
+            a.pi()
+
+        .. testoutput::
+
+            3.1415
+            926535
+            897932
+            384626
+
+        """
+        data = self.data.copy()
+        i, j = data["alpha"].nonzero()
         old_dps = mp.mp.dps
         n = len(i)
         mp.mp.dps = n
-        self.data["char"][i, j] = [*str(mp.pi)][:n]
+        data["char"][i, j] = [*str(mp.pi)][:n]
         mp.mp.dps = old_dps
-        return self
+        return Str2D(data=data, **self.kwargs)
 
     def hide(self, char=" "):
-        """Hide the data."""
+        """Hide where character array is char.  This sets the alpha array to 0 where the
+        character array is equal to char.
+
+        Parameters
+        ----------
+        char : str, optional
+            The character to hide, by default ' '.
+
+        Returns
+        -------
+        Str2D
+            A new Str2D object with the data hidden.
+
+        Examples
+        --------
+        Let's create an instance of Str2D and assign it to the variable `a` and then
+        hide the data.
+
+        .. testcode::
+
+            from str2d import Str2D
+
+            a = Str2D('abcdef\\nghijkl\\nmnopqr\\nstuvwx')
+            a
+
+        .. testoutput::
+
+            abcdef
+            ghijkl
+            mnopqr
+            stuvwx
+
+
+        The hiddent data doesn't replace the character with a space but sets the alpha
+        array to 0 where the character array is equal to the character to hide.  So, in
+        a singular context, we can still see the character and must fill the 0s with a
+        character to hide the data.
+
+        .. testcode::
+
+            a.hide(char='m').fill_with(char=' ')
+
+        .. testoutput::
+
+            abcdef
+            ghijkl
+            mno qr
+            stuvwx
+
+        """
         data = self.data.copy()
         i, j = (data["char"] == char).nonzero()
         data["alpha"][i, j] = 0
         return Str2D(data=data, **self.kwargs)
 
-    def div(self, *args, **kwargs) -> "Str2D":
-        """Divide the data."""
-        return Str2D.join_v(self, *args, **kwargs)
+    def fill_with(self, char=" ") -> "Str2D":
+        """Fill the data with the character.  This is a wrapper around the `fill` method
+        from the structured array data.
+
+        Parameters
+        ----------
+        char : str, optional
+            The character to fill with, by default ' '.
+
+        Returns
+        -------
+        Str2D
+            A new Str2D object with the data filled with the character.
+
+        See Also
+        --------
+        hide : Hide the data.
+
+        Examples
+        --------
+
+        Let's create an instance of Str2D and assign it to the variable `a` and then
+        fill.
+
+        .. testcode::
+
+            from str2d import Str2D
+
+            a = Str2D('abcdefg\\nhijklm\\nnopqr\\nstuv\\nwxy\\nz')
+            a
+
+        .. testoutput::
+
+            abcdefg
+            hijklm
+            nopqr
+            stuv
+            wxy
+            z
+
+        We can fill the data with a character.
+
+        .. testcode::
+
+            a.fill_with(char='.')
+
+            abcdefg
+            hijklm.
+            nopqr..
+            stuv...
+            wxy....
+            z......
+
+        """
+        kwargs = self.kwargs
+        kwargs["fill"] = (char, 0)
+        data = np.where(self.data["alpha"], self.data["char"], char)
+        return Str2D(data=data, **kwargs)
 
     def __str__(self) -> str:
         """Return the string representation of the data."""
@@ -1697,8 +3033,9 @@ class Str2D:
         """Return the string representation of the data."""
         return str(self)
 
-    # string operation methods that return a new Str2D object
-    # ... and whose result is a new character array
+    ####################################################################
+    # String operations whose result is a new Str2D ####################
+    ####################################################################
     def lower(self) -> "Str2D":
         """Return the lowercase version of the data."""
         data = self.data.copy()
@@ -1711,8 +3048,29 @@ class Str2D:
         data["char"] = np.char.upper(data["char"])
         return Str2D(data=data, **self.kwargs)
 
-    def replace(self, old, new) -> "Str2D":
-        """Replace the data."""
+    def replace(self, old: str, new: str) -> "Str2D":
+        """Replace the data.
+
+        Parameters
+        ----------
+        old : str
+            The string to replace.
+
+        new : str
+            The string to replace with.
+
+        Returns
+        -------
+        Str2D
+            A new Str2D object with the data replaced.
+
+        Raises
+        ------
+        ValueError
+            If the length of the old and new strings are not the same.
+        """
+        if len(old) != len(new):
+            raise ValueError("old and new must have the same length.")
         data = self.data.copy()
         data["char"] = np.char.replace(data["char"], old, new)
         return Str2D(data=data, **self.kwargs)
@@ -1725,25 +3083,29 @@ class Str2D:
         return Str2D(data=data, **self.kwargs)
 
     def strip(self, *args, **kwargs) -> "Str2D":
-        """Return the stripped version of the data."""
+        """Strip line by line.  Return the stripped version of the data.  This is a
+        wrapper around the `strip` method from the str class."""
         data = self.data.copy()
         char = ["".join(row).strip(*args, **kwargs) for row in data["char"]]
         return Str2D(data=char, **self.kwargs)
 
     def lstrip(self, *args, **kwargs) -> "Str2D":
-        """Return the left stripped version of the data."""
+        """Left strip line by line.  Return the left stripped version of the data.  This
+        is a wrapper around the `lstrip` method from the str class."""
         data = self.data.copy()
         char = ["".join(row).lstrip(*args, **kwargs) for row in data["char"]]
         return Str2D(data=char, **self.kwargs)
 
     def rstrip(self, *args, **kwargs) -> "Str2D":
-        """Return the right stripped version of the data."""
+        """Right strip line by line.  Return the right stripped version of the data.
+        This is a wrapper around the `rstrip` method from the str class."""
         data = self.data.copy()
         char = ["".join(row).rstrip(*args, **kwargs) for row in data["char"]]
         return Str2D(data=char, **self.kwargs)
 
-    # string operation methods that return a new Str2D object
-    # ... and whose result is a new boolean array
+    ####################################################################
+    # String operations whose result is a new boolean array ############
+    ####################################################################
     def isdigit(self) -> "Str2D":
         """Return whether the data is a digit."""
         data = self.data.copy()
@@ -1768,22 +3130,105 @@ class Str2D:
         return ~eq
 
     def strip2d(self, char=" ") -> "Str2D":
-        """Strip the data."""
+        """Strip the data 2-dimensionally.  This method checks how much it can trim from
+        each side of the data before it reaches a non-matching character.  It then trims
+        the data accordingly.
+        
+        Parameters
+        ----------
+        char : str, optional
+            The character to strip, by default ' '.  This is the character that will be
+            trimmed from the data.
+
+        Returns
+        -------
+        Str2D
+            A new Str2D object with the data stripped.
+
+        Examples
+        --------
+
+        Let's create an instance of Str2D and assign it to the variable `a` and then
+        strip the data.
+
+        .. testcode::
+
+            from str2d import Str2D
+
+            a = Str2D('''\\
+            ............
+            ...xxxxxxx..
+            ...xxxxxxx..
+            ...xxxxxxx..
+            ............
+            ............
+            ''')
+
+        Striping '.' from the data will leave just the core of 'x's.
+
+        .. testoutput::
+
+            a.strip2d(char='.')
+
+        .. testoutput::
+
+            xxxxxxx
+            xxxxxxx
+            xxxxxxx
+
+        """
         mask = self != char
         x0, x1 = np.flatnonzero(mask.any(axis=1))[[0, -1]]
         y0, y1 = np.flatnonzero(mask.any(axis=0))[[0, -1]]
         return self[x0 : x1 + 1, y0 : y1 + 1]
 
-    def fill_with(self, char=" ") -> "Str2D":
-        """Fill the data with a character."""
-        kwargs = self.kwargs
-        kwargs["fill"] = (char, 0)
-        data = np.where(self.data["alpha"], self.data["char"], char)
-        return Str2D(data=data, **kwargs)
-
 
 class Box(Str2D):
-    """Create a box around the data."""
+    """Subclass of Str2D that is a Box or Window.
+    I wanted to be able to make window pains with arbitrary number of rows and columns.
+
+    I had to override the transformation methods `i`, `t`, `h`, `v`, and `r` because I
+    wanted to preserve the box characters orientation.
+
+    Parameters
+    ----------
+    spec_v : List[int], optional
+        The vertical specification, by default None.  This is a list of integers that
+        represent the height of the rows.
+
+    spec_h : List[int], optional
+        The horizontal specification, by default None.  This is a list of integers that
+        represent the width of the columns.
+
+    style : Union[BoxStyle, str], optional
+        The style of the box, by default BoxStyle.SINGLE_ROUND.
+
+    Examples
+    --------
+
+    Let's create a box with a single round style.
+
+    .. testcode::
+
+        from str2d import Box
+
+        Box(spec_v=[1, 2, 3], spec_h=[1, 2, 3])
+
+    .. testoutput::
+
+        ╭─┬──┬───╮
+        │ │  │   │
+        ├─┼──┼───┤
+        │ │  │   │
+        │ │  │   │
+        ├─┼──┼───┤
+        │ │  │   │
+        │ │  │   │
+        │ │  │   │
+        ╰─┴──┴───╯
+
+
+    """
 
     @staticmethod
     def spec_to_positions(spec):
@@ -1802,7 +3247,7 @@ class Box(Str2D):
         self,
         spec_v: Optional[List[int]] = None,
         spec_h: Optional[List[int]] = None,
-        style: Union[BoxStyle, str] = BoxStyle.SINGLE,
+        style: Union[BoxStyle, str] = BoxStyle.SINGLE_ROUND,
     ) -> Str2D:
         """Create a box around the data."""
 

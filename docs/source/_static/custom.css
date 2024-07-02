@@ -26,34 +26,43 @@
     background-color: var(--doc-table-desc-color);
 }
 
-
+.highlight-python,
+.highlight-none {
+    position: relative;
+    container-type: inline-size;
+}
 .highlight-python {
     border: var(--py-input-border-width)
             solid
             var(--py-input-border-color)
             !important;
-    position: relative;
-}
-.highlight-python::after {
-    content: 'INPUT';
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-    font-size: 12px;
-    color: rgba(0, 0, 0, 0.5); /* Adjust opacity for watermark effect */
 }
 .highlight-none {
     border: var(--py-output-border-width)
             solid
             var(--py-output-border-color)
             !important;
-    position: relative;
+}
+
+.highlight-python::after {
+    content: 'INPUT';
 }
 .highlight-none::after {
     content: 'OUTPUT';
+}
+.highlight-python::after,
+.highlight-none::after {
     position: absolute;
     bottom: 5px;
     right: 5px;
     font-size: 12px;
     color: rgba(0, 0, 0, 0.5); /* Adjust opacity for watermark effect */
+}
+
+/* Media query to apply the watermark conditionally */
+@container  (max-width: 400px) {
+    .highlight-python::after,
+    .highlight-none::after {
+        display: none; /* Hide the watermark on smaller screens */
+    }
 }
