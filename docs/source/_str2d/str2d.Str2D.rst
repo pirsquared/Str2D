@@ -120,3 +120,5 @@
       :toctree: generated/
 
       ~Str2D.pi
+      ~Str2D.e
+      ~Str2D.phi

@@ -1,6 +1,6 @@
 """Manipulate 2D strings in Python."""
 
-from functools import reduce, cached_property, lru_cache
+from functools import reduce, cached_property, lru_cache, partial
 from dataclasses import dataclass
 from textwrap import indent
 from enum import Enum
@@ -8,6 +8,7 @@ from typing import List, Tuple, Union, Any, Optional
 from pandas import DataFrame, Series
 import numpy as np
 import mpmath as mp
+from numba import njit
 
 
 @dataclass
@@ -2910,6 +2911,102 @@ class Str2D:
         mp.mp.dps = old_dps
         return Str2D(data=data, **self.kwargs)
 
+    def e(self):
+        """Replace the data with digits of e.  This is a wrapper around the `e`
+        function and returns a new Str2D object with the data replaced with the digits
+
+        Returns
+        -------
+        Str2D
+            A new Str2D object with the data replaced with the digits of e.
+
+        Examples
+        --------
+        Let's create an instance of Str2D and assign it to the variable `a` and then
+
+        .. testcode::
+
+            from str2d import Str2D
+
+            a = Str2D('abcdef\\nghijkl\\nmnopqr\\nstuvwx')
+            a
+
+        .. testoutput::
+
+            abcdef
+            ghijkl
+            mnopqr
+            stuvwx
+
+        .. testcode::
+
+            a.e()
+
+        .. testoutput::
+
+            2.7182
+            818284
+            590452
+            353602
+
+        """
+        data = self.data.copy()
+        i, j = data["alpha"].nonzero()
+        old_dps = mp.mp.dps
+        n = len(i)
+        mp.mp.dps = n
+        data["char"][i, j] = [*str(mp.e)][:n]
+        mp.mp.dps = old_dps
+        return Str2D(data=data, **self.kwargs)
+
+    def phi(self):
+        """Replace the data with digits of phi.  This is a wrapper around the `phi`
+        function and returns a new Str2D object with the data replaced with the digits
+
+        Returns
+        -------
+        Str2D
+            A new Str2D object with the data replaced with the digits of phi.
+
+        Examples
+        --------
+        Let's create an instance of Str2D and assign it to the variable `a` and then
+
+        .. testcode::
+
+            from str2d import Str2D
+
+            a = Str2D('abcdef\\nghijkl\\nmnopqr\\nstuvwx')
+            a
+
+        .. testoutput::
+
+            abcdef
+            ghijkl
+            mnopqr
+            stuvwx
+
+        .. testcode::
+
+            a.phi()
+
+        .. testoutput::
+
+            1.6180
+            339887
+            498948
+            482045
+
+        """
+        data = self.data.copy()
+        i, j = data["alpha"].nonzero()
+        old_dps = mp.mp.dps
+        n = len(i)
+        mp.mp.dps = n
+        data["char"][i, j] = [*str(mp.phi)][:n]
+        mp.mp.dps = old_dps
+        return Str2D(data=data, **self.kwargs)
+
     def hide(self, char=" "):
         """Hide where character array is char.  This sets the alpha array to 0 where the
         character array is equal to char.
@@ -3248,7 +3345,7 @@ class Box(Str2D):
         spec_v: Optional[List[int]] = None,
         spec_h: Optional[List[int]] = None,
         style: Union[BoxStyle, str] = BoxStyle.SINGLE_ROUND,
-    ) -> Str2D:
+    ) -> "Box":
         """Create a box around the data."""
 
         spec_v = [0] if spec_v is None else spec_v
@@ -3468,3 +3565,43 @@ def hole(radius, height, width, char="*"):
     )
 
     return Str2D(~mask, char=char)
+
+
+def mandelbrot(height, width, x_range, y_range, char="*"):
+    """Create a Mandelbrot set."""
+    mask = region(is_in_mandelbrot, height, width, x_range, y_range)
+    return Str2D(mask, char=char)
+
+
+def is_in_mandelbrot(x: float, y: float, max_iterations: int = 25) -> bool:
+    """
+    Determines if the point (x, y) is in the Mandelbrot set.
+
+    Args:
+        x (float): The real part of the complex number.
+        y (float): The imaginary part of the complex number.
+        max_iterations (int): The maximum number of iterations to perform.
+
+    Returns:
+        bool: True if the point (x, y) is in the Mandelbrot set, False otherwise.
+    """
+    if np.isscalar(x):
+        x = np.array([x])
+    if np.isscalar(y):
+        y = np.array([y])
+
+    n = len(y.ravel())
+    m = len(x.ravel())
+
+    c = np.empty((n, m), dtype=np.complex128)
+    c.real = x.reshape(1, -1)
+    c.imag = y.reshape(-1, 1)
+
+    z = np.zeros((n, m), dtype=np.complex128)
+    absz = abs(z)
+    thresh = 10
+
+    for _ in range(max_iterations):
+        z = np.where(absz < thresh, z * z + c, thresh)
+        absz = abs(z)
+    return absz < 2

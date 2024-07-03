@@ -10,13 +10,13 @@ from setuptools import setup, find_packages
 
 setup(
     name="Str2D",
-    version="0.2.2",  # Update this version number before releasing a new version
+    version="0.2.3",  # Update this version number before releasing a new version
     description="Manipulate 2D strings in Python.",
     author="Sean Smith",
     author_email="pirsquared.pirr@gmail.com",
     url="https://github.com/pirsquared/Str2D",
     packages=find_packages(),
-    install_requires=["numpy", "pandas", "mpmath"],
+    install_requires=["numpy", "pandas", "mpmath", "numba"],
     extras_require={
         "dev": [
             "pytest",
