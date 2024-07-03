@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>str2d.Str2D.roll_v &mdash; Str2D 0.2.0 documentation</title>
+  <title>str2d.Str2D.phi &mdash; Str2D 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -27,8 +27,8 @@
     <link rel="author" title="About these documents" href="../../about.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="str2d.Str2D.hide" href="str2d.Str2D.hide.html" />
-    <link rel="prev" title="str2d.Str2D.roll_h" href="str2d.Str2D.roll_h.html" /> 
+    <link rel="next" title="str2d.BoxParts" href="../str2d.BoxParts.html" />
+    <link rel="prev" title="str2d.Str2D.e" href="str2d.Str2D.e.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -92,10 +92,7 @@
 <li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.insert.html">str2d.Str2D.insert</a></li>
 <li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.roll.html">str2d.Str2D.roll</a></li>
 <li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.roll_h.html">str2d.Str2D.roll_h</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">str2d.Str2D.roll_v</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#str2d.Str2D.roll_v"><code class="docutils literal notranslate"><span class="pre">Str2D.roll_v()</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.roll_v.html">str2d.Str2D.roll_v</a></li>
 <li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.hide.html">str2d.Str2D.hide</a></li>
 <li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.fill_with.html">str2d.Str2D.fill_with</a></li>
 <li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.lower.html">str2d.Str2D.lower</a></li>
@@ -120,7 +117,10 @@
 <li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.kwargs.html">str2d.Str2D.kwargs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.pi.html">str2d.Str2D.pi</a></li>
 <li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.e.html">str2d.Str2D.e</a></li>
-<li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.phi.html">str2d.Str2D.phi</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">str2d.Str2D.phi</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#str2d.Str2D.phi"><code class="docutils literal notranslate"><span class="pre">Str2D.phi()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../str2d.BoxParts.html">BoxParts</a></li>
@@ -150,9 +150,9 @@
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../str2d.html">str2d module</a></li>
           <li class="breadcrumb-item"><a href="../str2d.Str2D.html">str2d.Str2D</a></li>
-      <li class="breadcrumb-item active">str2d.Str2D.roll_v</li>
+      <li class="breadcrumb-item active">str2d.Str2D.phi</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../_sources/_str2d/generated/str2d.Str2D.roll_v.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/_str2d/generated/str2d.Str2D.phi.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -160,35 +160,42 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="str2d-str2d-roll-v">
-<h1>str2d.Str2D.roll_v<a class="headerlink" href="#str2d-str2d-roll-v" title="Link to this heading"></a></h1>
+  <section id="str2d-str2d-phi">
+<h1>str2d.Str2D.phi<a class="headerlink" href="#str2d-str2d-phi" title="Link to this heading"></a></h1>
 <dl class="py method">
-<dt class="sig sig-object py" id="str2d.Str2D.roll_v">
-<span class="sig-prename descclassname"><span class="pre">Str2D.</span></span><span class="sig-name descname"><span class="pre">roll_v</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../str2d.Str2D.html#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="../../_modules/str2d.html#Str2D.roll_v"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.roll_v" title="Link to this definition"></a></dt>
-<dd><p>Roll the data vertically.</p>
+<dt class="sig sig-object py" id="str2d.Str2D.phi">
+<span class="sig-prename descclassname"><span class="pre">Str2D.</span></span><span class="sig-name descname"><span class="pre">phi</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/str2d.html#Str2D.phi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.phi" title="Link to this definition"></a></dt>
+<dd><p>Replace the data with digits of phi.  This is a wrapper around the <cite>phi</cite>
+function and returns a new Str2D object with the data replaced with the digits</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>x</strong> (<em>int</em>) – The number of positions to roll.</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A new Str2D object with the data replaced with the digits of phi.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference internal" href="../str2d.Str2D.html#str2d.Str2D" title="str2d.Str2D">Str2D</a></p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<p>Let’s create an instance of Str2D and assign it to the variable <cite>a</cite>.</p>
+<p>Let’s create an instance of Str2D and assign it to the variable <cite>a</cite> and then</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">str2d</span> <span class="kn">import</span> <span class="n">Str2D</span>
 
-<span class="n">a</span> <span class="o">=</span> <span class="n">Str2D</span><span class="p">(</span><span class="s1">&#39;a b c d</span><span class="se">\n</span><span class="s1">e f g</span><span class="se">\n</span><span class="s1">h i</span><span class="se">\n</span><span class="s1">j&#39;</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">Str2D</span><span class="p">(</span><span class="s1">&#39;abcdef</span><span class="se">\n</span><span class="s1">ghijkl</span><span class="se">\n</span><span class="s1">mnopqr</span><span class="se">\n</span><span class="s1">stuvwx&#39;</span><span class="p">)</span>
+<span class="n">a</span>
 </pre></div>
 </div>
-<p>We can roll the data vertically by passing the number of positions to roll.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">roll_v</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>abcdef
+ghijkl
+mnopqr
+stuvwx
 </pre></div>
 </div>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>j
-a b c d
-e f g
-h i
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">phi</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>1.6180
+339887
+498948
+482045
 </pre></div>
 </div>
 </dd></dl>
@@ -199,8 +206,8 @@ h i
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="str2d.Str2D.roll_h.html" class="btn btn-neutral float-left" title="str2d.Str2D.roll_h" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="str2d.Str2D.hide.html" class="btn btn-neutral float-right" title="str2d.Str2D.hide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="str2d.Str2D.e.html" class="btn btn-neutral float-left" title="str2d.Str2D.e" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../str2d.BoxParts.html" class="btn btn-neutral float-right" title="str2d.BoxParts" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
