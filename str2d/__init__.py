@@ -1,14 +1,12 @@
 """Manipulate 2D strings in Python."""
 
-from functools import reduce, cached_property, lru_cache, partial
+from functools import reduce, cached_property, lru_cache
 from dataclasses import dataclass
-from textwrap import indent
 from enum import Enum
 from typing import List, Tuple, Union, Any, Optional
 from pandas import DataFrame, Series
 import numpy as np
 import mpmath as mp
-from numba import njit
 
 
 @dataclass

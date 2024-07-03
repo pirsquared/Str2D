@@ -16,7 +16,7 @@ setup(
     author_email="pirsquared.pirr@gmail.com",
     url="https://github.com/pirsquared/Str2D",
     packages=find_packages(),
-    install_requires=["numpy", "pandas", "mpmath", "numba"],
+    install_requires=["numpy", "pandas", "mpmath"],
     extras_require={
         "dev": [
             "pytest",
