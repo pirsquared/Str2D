@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>str2d.Str2D.lower &mdash; Str2D 0.2.0 documentation</title>
+  <title>str2d.Str2D.pre &mdash; Str2D 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -27,8 +27,8 @@
     <link rel="author" title="About these documents" href="../../about.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="str2d.Str2D.lstrip" href="str2d.Str2D.lstrip.html" />
-    <link rel="prev" title="str2d.Str2D.fill_with" href="str2d.Str2D.fill_with.html" /> 
+    <link rel="next" title="str2d.Str2D.__getattr__" href="str2d.Str2D.__getattr__.html" />
+    <link rel="prev" title="str2d.Str2D.transormation_palette" href="str2d.Str2D.transormation_palette.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -79,7 +79,10 @@
 <li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.equal_shape.html">str2d.Str2D.equal_shape</a></li>
 <li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.show_with_alignment.html">str2d.Str2D.show_with_alignment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.transormation_palette.html">str2d.Str2D.transormation_palette</a></li>
-<li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.pre.html">str2d.Str2D.pre</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">str2d.Str2D.pre</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#str2d.Str2D.pre"><code class="docutils literal notranslate"><span class="pre">Str2D.pre()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.__getattr__.html">str2d.Str2D.__getattr__</a></li>
 <li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.__getitem__.html">str2d.Str2D.__getitem__</a></li>
 <li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.box.html">str2d.Str2D.box</a></li>
@@ -96,10 +99,7 @@
 <li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.roll_v.html">str2d.Str2D.roll_v</a></li>
 <li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.hide.html">str2d.Str2D.hide</a></li>
 <li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.fill_with.html">str2d.Str2D.fill_with</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">str2d.Str2D.lower</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#str2d.Str2D.lower"><code class="docutils literal notranslate"><span class="pre">Str2D.lower()</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.lower.html">str2d.Str2D.lower</a></li>
 <li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.lstrip.html">str2d.Str2D.lstrip</a></li>
 <li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.replace.html">str2d.Str2D.replace</a></li>
 <li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.rstrip.html">str2d.Str2D.rstrip</a></li>
@@ -151,9 +151,9 @@
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../str2d.html">str2d module</a></li>
           <li class="breadcrumb-item"><a href="../str2d.Str2D.html">str2d.Str2D</a></li>
-      <li class="breadcrumb-item active">str2d.Str2D.lower</li>
+      <li class="breadcrumb-item active">str2d.Str2D.pre</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../_sources/_str2d/generated/str2d.Str2D.lower.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/_str2d/generated/str2d.Str2D.pre.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -161,12 +161,24 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="str2d-str2d-lower">
-<h1>str2d.Str2D.lower<a class="headerlink" href="#str2d-str2d-lower" title="Link to this heading"></a></h1>
+  <section id="str2d-str2d-pre">
+<h1>str2d.Str2D.pre<a class="headerlink" href="#str2d-str2d-pre" title="Link to this heading"></a></h1>
 <dl class="py method">
-<dt class="sig sig-object py" id="str2d.Str2D.lower">
-<span class="sig-prename descclassname"><span class="pre">Str2D.</span></span><span class="sig-name descname"><span class="pre">lower</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../str2d.Str2D.html#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="../../_modules/str2d.html#Str2D.lower"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.lower" title="Link to this definition"></a></dt>
-<dd><p>Return the lowercase version of the data.</p>
+<dt class="sig sig-object py" id="str2d.Str2D.pre">
+<span class="sig-prename descclassname"><span class="pre">Str2D.</span></span><span class="sig-name descname"><span class="pre">pre</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">HTML</span></span></span><a class="reference internal" href="../../_modules/str2d.html#Str2D.pre"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.pre" title="Link to this definition"></a></dt>
+<dd><p>Return HTML prefformatted text.  This is useful for displaying the Str2D
+with different style settings in Jupyter notebooks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>font_size</strong> (<em>int</em><em>, </em><em>optional</em>) – The font size, by default 1.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The HTML preformatted text.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>HTML</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
@@ -175,8 +187,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="str2d.Str2D.fill_with.html" class="btn btn-neutral float-left" title="str2d.Str2D.fill_with" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="str2d.Str2D.lstrip.html" class="btn btn-neutral float-right" title="str2d.Str2D.lstrip" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="str2d.Str2D.transormation_palette.html" class="btn btn-neutral float-left" title="str2d.Str2D.transormation_palette" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="str2d.Str2D.__getattr__.html" class="btn btn-neutral float-right" title="str2d.Str2D.__getattr__" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

@@ -48,6 +48,7 @@
 
       ~Str2D.show_with_alignment
       ~Str2D.transormation_palette
+      ~Str2D.pre
 
    .. rubric:: Special Dunder Methods
    .. autosummary::
