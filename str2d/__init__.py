@@ -3,8 +3,11 @@
 from functools import reduce, cached_property, lru_cache
 from dataclasses import dataclass
 from enum import Enum
+from textwrap import dedent
+import uuid
 from typing import List, Tuple, Union, Any, Optional
 from pandas import DataFrame, Series
+from IPython.display import HTML
 import numpy as np
 import mpmath as mp
 
@@ -1886,6 +1889,22 @@ class Str2D:
             sep=sep,
         )
 
+    def pre(self, **kwargs) -> HTML:
+        """Return HTML prefformatted text.  This is useful for displaying the Str2D
+        with different style settings in Jupyter notebooks.
+
+        Parameters
+        ----------
+        font_size : int, optional
+            The font size, by default 1.
+
+        Returns
+        -------
+        HTML
+            The HTML preformatted text.
+        """
+        return pre(self, **kwargs)
+
     ####################################################################
     # Methods ##########################################################
     ####################################################################
@@ -3603,3 +3622,30 @@ def is_in_mandelbrot(x: float, y: float, max_iterations: int = 25) -> bool:
         z = np.where(absz < thresh, z * z + c, thresh)
         absz = abs(z)
     return absz < 2
+
+
+def pre(
+    s: Str2D, font_size: int = 1, bg: Optional[str] = None, fg: Optional[str] = None
+) -> HTML:
+    """Create a preformatted HTML object."""
+    this_id = str(uuid.uuid4())
+    bg = bg or "rgba(0, 0, 0, 0)"
+    fg = fg or "rgba(255, 255, 255, 1)"
+    return HTML(
+        dedent(
+            f"""\
+        <meta charset="UTF-8">
+        <style>
+            #_{this_id} {{
+                font-family: monospace;
+                font-size: {font_size}px;
+                background-color: {bg};
+                color: {fg};
+                width: fit-content;
+                height: fit-content;
+            }}
+        </style>
+        <pre id="_{this_id}">{s!s}</pre>
+    """
+        )
+    )
