@@ -3513,8 +3513,54 @@ class Str3D:
         raise AttributeError(f"'{Str3D.__name__}' object has no attribute '{name}'")
 
 
-def space(mn, mx, w):
-    """Create a space."""
+def space(mn: float, mx: float, w: int) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Return left, center, and right points of a space.
+    Imagine an integer number of cells.  I want to assign the left side of the left most
+    cell to be `mn` and the right side of the right most cell to be `mx`.  This function
+    returns 3 arrays.  The first array consists of the left side of each cell.  The
+    second array consists of the center of each cell.  The third array consists of the
+    right side of each cell.
+
+    Let's imagine `w=5` and `mn=0` and `mx=1`.  The space is divided into 5 cells.
+
+    .. testoutput::
+
+                 mn=0         0.2         0.4         0.6         0.8         mx=1
+                   │           │           │           │           │           │
+                   ╭───────────┬───────────┬───────────┬───────────┬───────────╮
+                   │           │           │           │           │           │
+                   │           │           │           │           │           │
+                   │           │           │           │           │           │
+                   │           │           │           │           │           │
+                   │           │           │           │           │           │
+                   ├─────┬─────┼─────┬─────┼─────┬─────┼─────┬─────┼─────┬─────┤
+        left      0.0    │    0.2    │    0.4    │    0.6    │    0.8    │     │
+        center          0.1    │    0.3    │    0.5    │    0.7    │    0.9    │
+        right                 0.2         0.4         0.6         0.8         1.0
+
+    We can use these arrays to more accurately model x, y coordinates for ascii plots.
+
+    Parameters
+    ----------
+    mn : float
+        The minimum value of the space.
+
+    mx : float
+        The maximum value of the space.
+
+    w : int
+        The number of cells.
+
+    Returns
+    -------
+    Tuple[np.ndarray, np.ndarray, np.ndarray]
+        The left, center, and right points of the space.
+
+    Raises
+    ------
+    ValueError
+        If `w` is less than 1.
+    """
     if w < 1:
         raise ValueError(f"{w=} must be >= 1")
 
@@ -3523,14 +3569,151 @@ def space(mn, mx, w):
 
 
 def region(func, height, width, x_range, y_range):
-    """Create a region."""
+    """Create a mask where func is True.
+    Imagine a 2D space that is subdivided into `height` rows and `width` columns.  The
+    edges of the space are defined by `x_range` and `y_range`.  This function returns a
+    mask where `func` is True for the center of each cell.
+
+    Parameters
+    ----------
+    func : Callable[[np.ndarray, np.ndarray], np.ndarray]
+        The function that returns True if the point is in the region.
+
+    height : int
+        The number of rows.
+
+    width : int
+        The number of columns.
+
+    x_range : Tuple[float, float]
+        The range of the x values.
+
+    y_range : Tuple[float, float]
+        The range of the y values.
+
+    Returns
+    -------
+    np.ndarray
+        A mask where `func` is True for the center of each cell.
+
+    See Also
+    --------
+    boundary : Create a mask where func is True and False.
+
+
+    Examples
+    --------
+
+    Let's imagine `height=10` and `width=20` and `x_range=[0, 1]` and `y_range=[0, 1]`.
+
+    Now we'll assume a simple function that returns True if the 1 less the x coordinate
+    is less than the y coordinate.
+
+    ... testinput::
+
+        height = 10
+        width = 20
+        x_range = [0, 1]
+        y_range = [0, 1]
+
+        def func(x, y):
+            return 1 - x < y
+
+        mask = region(func, height, width, x_range, y_range)
+
+        Str2D(mask, char='*')
+
+    .. testoutput::
+
+        *******************
+          *****************
+            ***************
+              *************
+                ***********
+                  *********
+                    *******
+                      *****
+                        ***
+                          *
+
+
+    """
     _, center, _ = space(*x_range, width)
     _, middle, _ = space(*y_range[::-1], height)
     return func(center.reshape(1, -1), middle.reshape(-1, 1))
 
 
 def boundary(func, height, width, x_range, y_range):
-    """Create a boundary."""
+    """Create a mask where func is True and False.
+    Imagine a 2D space that is subdivided into `height` rows and `width` columns.  The
+    edges of the space are defined by `x_range` and `y_range`.  The mask being returned
+    is a proxy for each of the cells.  The truth of each cell is determined by whether
+    `func` is True for at least one of the corners of the cell while also being False
+    for at least one of the corners of the cell.  That implies that the function crosses
+    from being True to False or False to True within the cell and thus a boundary.
+
+    Parameters
+    ----------
+    func : Callable[[np.ndarray, np.ndarray], np.ndarray]
+        The function that returns True if the point is in the region.
+
+    height : int
+        The number of rows.
+
+    width : int
+        The number of columns.
+
+    x_range : Tuple[float, float]
+        The range of the x values.
+
+    y_range : Tuple[float, float]
+        The range of the y values.
+
+    Returns
+    -------
+    np.ndarray
+        A mask where `func` is True for the center of each cell.
+
+    See Also
+    --------
+    region : Create a mask where func is True.
+
+    Examples
+    --------
+
+    Let's imagine `height=10` and `width=20` and `x_range=[0, 1]` and `y_range=[0, 1]`.
+
+    Now we'll assume a simple function that returns True if the 1 less the x coordinate
+    is less than the y coordinate.
+
+    ... testinput::
+
+        height = 10
+        width = 20
+        x_range = [0, 1]
+        y_range = [0, 1]
+
+        def func(x, y):
+            return 1 - x < y
+
+        mask = boundary(func, height, width, x_range, y_range)
+
+        Str2D(mask, char='*')
+
+    .. testoutput::
+
+        ***
+          ***
+            ***
+              ***
+                ***
+                  ***
+                    ***
+                      ***
+                        ***
+                          **
+
+    """
     left, _, right = space(*x_range, width)
     bottom, _, top = space(*y_range[::-1], height)
     mask = np.stack(
@@ -3545,7 +3728,35 @@ def boundary(func, height, width, x_range, y_range):
 
 
 def circle(radius, height, width, char="*"):
-    """Create a circle."""
+    """Create a circle.
+    This is a special application of the `boundary` function.  The function that
+    determines the circle is `lambda x, y: x**2 + y**2 < radius**2`.
+
+    Parameters
+    ----------
+    radius : float
+        The radius of the circle.
+
+    height : int
+        The number of rows.
+
+    width : int
+        The number of columns.
+
+    char : str, optional
+        The character to use, by default '*'.
+
+    Returns
+    -------
+    Str2D
+        A new Str2D object with the circle.
+
+    See Also
+    --------
+    boundary : Create a mask where func is True and False.
+    Str2D.circle : Create a circle.
+
+    """
     height_limited = True
     if width < height * 2:
         height_limited = False
@@ -3565,7 +3776,35 @@ def circle(radius, height, width, char="*"):
 
 
 def hole(radius, height, width, char="*"):
-    """Create a hole."""
+    """Create a hole.
+    This is a special application of the `region` function.  The function that
+    determines the hole is `lambda x, y: x**2 + y**2 <= radius**2`.
+
+    Parameters
+    ----------
+    radius : float
+        The radius of the hole.
+
+    height : int
+        The number of rows.
+
+    width : int
+        The number of columns.
+
+    char : str, optional
+        The character to use, by default '*'.
+
+    Returns
+    -------
+    Str2D
+        A new Str2D object with the hole.
+
+    See Also
+    --------
+    region : Create a mask where func is True.
+    Str2D.hole : Create a hole.
+
+    """
     height_limited = True
     if width < height * 2:
         height_limited = False
@@ -3584,24 +3823,31 @@ def hole(radius, height, width, char="*"):
     return Str2D(~mask, char=char)
 
 
-def mandelbrot(height, width, x_range, y_range, char="*"):
-    """Create a Mandelbrot set."""
-    mask = region(is_in_mandelbrot, height, width, x_range, y_range)
-    return Str2D(mask, char=char)
-
-
-def is_in_mandelbrot(x: float, y: float, max_iterations: int = 25) -> bool:
+def is_in_mandelbrot(
+    x: float, y: float, max_iterations: int = 25
+) -> Union[bool, np.ndarray]:
     """
     Determines if the point (x, y) is in the Mandelbrot set.
 
-    Args:
-        x (float): The real part of the complex number.
-        y (float): The imaginary part of the complex number.
-        max_iterations (int): The maximum number of iterations to perform.
+    Parameters
+    ----------
+    x : float
+        The x-coordinate of the point.
 
-    Returns:
-        bool: True if the point (x, y) is in the Mandelbrot set, False otherwise.
+    y : float
+        The y-coordinate of the point.
+
+    max_iterations : int, optional
+        The maximum number of iterations, by default 25.
+
+
+    Returns
+    -------
+    Union[bool, np.ndarray]
+        True if the point is in the Mandelbrot set, False otherwise.
+
     """
+
     if np.isscalar(x):
         x = np.array([x])
     if np.isscalar(y):
@@ -3622,6 +3868,93 @@ def is_in_mandelbrot(x: float, y: float, max_iterations: int = 25) -> bool:
         z = np.where(absz < thresh, z * z + c, thresh)
         absz = abs(z)
     return absz < 2
+
+
+def mandelbrot(height, width, x_range, y_range, char="*"):
+    """Create a Mandelbrot set.
+    Visualize the Mandelbrot set.  The Mandelbrot set as a Str2d object.
+
+    Parameters
+    ----------
+    height : int
+        The number of rows.
+
+    width : int
+        The number of columns.
+
+    x_range : Tuple[float, float]
+        The range of the x values.
+
+    y_range : Tuple[float, float]
+        The range of the y values.
+
+    char : str, optional
+        The character to use, by default '*'.
+
+    Returns
+    -------
+    Str2D
+        A new Str2D object with the Mandelbrot set.
+
+    See Also
+    --------
+    is_in_mandelbrot : Determines if the point is in the Mandelbrot set.
+
+    Examples
+    --------
+
+    Let's create a Mandelbrot set.
+
+    .. testcode::
+
+        str2d.mandelbrot(
+            44, 88,
+            (-2, .5),
+            (-1.25, 1.25),
+            '*'
+        ).strip2d().box()
+
+    .. testoutput::
+
+        ╭───────────────────────────────────────────────────────────────╮
+        │                                           ****                │
+        │                                        * ***** *              │
+        │                                       *********               │
+        │                                        ********               │
+        │                           ***     * * * *******  *  *         │
+        │                            **** ********************      * * │
+        │                             *******************************   │
+        │                            *******************************    │
+        │                        *************************************  │
+        │            *            **************************************│
+        │                        ***************************************│
+        │       *** *******     *************************************** │
+        │       *************   ****************************************│
+        │     **************** *****************************************│
+        │    ********************************************************** │
+        │************************************************************   │
+        │************************************************************   │
+        │    ********************************************************** │
+        │     **************** *****************************************│
+        │       *************   ****************************************│
+        │       *** *******     *************************************** │
+        │                        ***************************************│
+        │            *            **************************************│
+        │                        *************************************  │
+        │                            *******************************    │
+        │                             *******************************   │
+        │                            **** ********************      * * │
+        │                           ***     * * * *******  *  *         │
+        │                                        ********               │
+        │                                       *********               │
+        │                                        * ***** *              │
+        │                                           ****                │
+        ╰───────────────────────────────────────────────────────────────╯
+
+
+    """
+    mask = region(is_in_mandelbrot, height, width, x_range, y_range)
+    return Str2D(mask, char=char)
 
 
 def pre(
