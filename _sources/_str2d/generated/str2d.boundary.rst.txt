@@ -1,0 +1,6 @@
+﻿str2d.boundary
+==============
+
+.. currentmodule:: str2d
+
+.. autofunction:: boundary

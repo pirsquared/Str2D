@@ -1,0 +1,6 @@
+﻿str2d.mandelbrot
+================
+
+.. currentmodule:: str2d
+
+.. autofunction:: mandelbrot

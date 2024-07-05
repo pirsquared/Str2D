@@ -1,0 +1,6 @@
+﻿str2d.region
+============
+
+.. currentmodule:: str2d
+
+.. autofunction:: region

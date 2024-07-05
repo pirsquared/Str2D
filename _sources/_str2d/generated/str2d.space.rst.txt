@@ -1,0 +1,6 @@
+﻿str2d.space
+===========
+
+.. currentmodule:: str2d
+
+.. autofunction:: space

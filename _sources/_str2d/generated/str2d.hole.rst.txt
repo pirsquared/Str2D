@@ -1,0 +1,6 @@
+﻿str2d.hole
+==========
+
+.. currentmodule:: str2d
+
+.. autofunction:: hole

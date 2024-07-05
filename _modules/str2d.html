@@ -3755,24 +3755,215 @@
         <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">Str3D</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&#39; object has no attribute &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">space</span><span class="p">(</span><span class="n">mn</span><span class="p">,</span> <span class="n">mx</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a space.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="space">
+<a class="viewcode-back" href="../_str2d/generated/str2d.space.html#str2d.space">[docs]</a>
+<span class="k">def</span> <span class="nf">space</span><span class="p">(</span><span class="n">mn</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">mx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">w</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return left, center, and right points of a space.</span>
+<span class="sd">    Imagine an integer number of cells.  I want to assign the left side of the left most</span>
+<span class="sd">    cell to be `mn` and the right side of the right most cell to be `mx`.  This function</span>
+<span class="sd">    returns 3 arrays.  The first array consists of the left side of each cell.  The</span>
+<span class="sd">    second array consists of the center of each cell.  The third array consists of the</span>
+<span class="sd">    right side of each cell.</span>
+
+<span class="sd">    Let&#39;s imagine `w=5` and `mn=0` and `mx=1`.  The space is divided into 5 cells.</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">                 mn=0         0.2         0.4         0.6         0.8         mx=1</span>
+<span class="sd">                   │           │           │           │           │           │</span>
+<span class="sd">                   ╭───────────┬───────────┬───────────┬───────────┬───────────╮</span>
+<span class="sd">                   │           │           │           │           │           │</span>
+<span class="sd">                   │           │           │           │           │           │</span>
+<span class="sd">                   │           │           │           │           │           │</span>
+<span class="sd">                   │           │           │           │           │           │</span>
+<span class="sd">                   │           │           │           │           │           │</span>
+<span class="sd">                   ├─────┬─────┼─────┬─────┼─────┬─────┼─────┬─────┼─────┬─────┤</span>
+<span class="sd">        left      0.0    │    0.2    │    0.4    │    0.6    │    0.8    │     │</span>
+<span class="sd">        center          0.1    │    0.3    │    0.5    │    0.7    │    0.9    │</span>
+<span class="sd">        right                 0.2         0.4         0.6         0.8         1.0</span>
+
+<span class="sd">    We can use these arrays to more accurately model x, y coordinates for ascii plots.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    mn : float</span>
+<span class="sd">        The minimum value of the space.</span>
+
+<span class="sd">    mx : float</span>
+<span class="sd">        The maximum value of the space.</span>
+
+<span class="sd">    w : int</span>
+<span class="sd">        The number of cells.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Tuple[np.ndarray, np.ndarray, np.ndarray]</span>
+<span class="sd">        The left, center, and right points of the space.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If `w` is less than 1.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">w</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">w</span><span class="si">=}</span><span class="s2"> must be &gt;= 1&quot;</span><span class="p">)</span>
 
     <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">mn</span><span class="p">,</span> <span class="n">mx</span><span class="p">,</span> <span class="n">w</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">a</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">(</span><span class="n">a</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">return</span> <span class="n">a</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">(</span><span class="n">a</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span></div>
 
 
+
+<div class="viewcode-block" id="region">
+<a class="viewcode-back" href="../_str2d/generated/str2d.region.html#str2d.region">[docs]</a>
 <span class="k">def</span> <span class="nf">region</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">x_range</span><span class="p">,</span> <span class="n">y_range</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a region.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a mask where func is True.</span>
+<span class="sd">    Imagine a 2D space that is subdivided into `height` rows and `width` columns.  The</span>
+<span class="sd">    edges of the space are defined by `x_range` and `y_range`.  This function returns a</span>
+<span class="sd">    mask where `func` is True for the center of each cell.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    func : Callable[[np.ndarray, np.ndarray], np.ndarray]</span>
+<span class="sd">        The function that returns True if the point is in the region.</span>
+
+<span class="sd">    height : int</span>
+<span class="sd">        The number of rows.</span>
+
+<span class="sd">    width : int</span>
+<span class="sd">        The number of columns.</span>
+
+<span class="sd">    x_range : Tuple[float, float]</span>
+<span class="sd">        The range of the x values.</span>
+
+<span class="sd">    y_range : Tuple[float, float]</span>
+<span class="sd">        The range of the y values.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    np.ndarray</span>
+<span class="sd">        A mask where `func` is True for the center of each cell.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    boundary : Create a mask where func is True and False.</span>
+
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">    Let&#39;s imagine `height=10` and `width=20` and `x_range=[0, 1]` and `y_range=[0, 1]`.</span>
+
+<span class="sd">    Now we&#39;ll assume a simple function that returns True if the 1 less the x coordinate</span>
+<span class="sd">    is less than the y coordinate.</span>
+
+<span class="sd">    ... testinput::</span>
+
+<span class="sd">        height = 10</span>
+<span class="sd">        width = 20</span>
+<span class="sd">        x_range = [0, 1]</span>
+<span class="sd">        y_range = [0, 1]</span>
+
+<span class="sd">        def func(x, y):</span>
+<span class="sd">            return 1 - x &lt; y</span>
+
+<span class="sd">        mask = region(func, height, width, x_range, y_range)</span>
+
+<span class="sd">        Str2D(mask, char=&#39;*&#39;)</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">        *******************</span>
+<span class="sd">          *****************</span>
+<span class="sd">            ***************</span>
+<span class="sd">              *************</span>
+<span class="sd">                ***********</span>
+<span class="sd">                  *********</span>
+<span class="sd">                    *******</span>
+<span class="sd">                      *****</span>
+<span class="sd">                        ***</span>
+<span class="sd">                          *</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">_</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">space</span><span class="p">(</span><span class="o">*</span><span class="n">x_range</span><span class="p">,</span> <span class="n">width</span><span class="p">)</span>
     <span class="n">_</span><span class="p">,</span> <span class="n">middle</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">space</span><span class="p">(</span><span class="o">*</span><span class="n">y_range</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">height</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="n">center</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">middle</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="n">center</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">middle</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span></div>
 
 
+
+<div class="viewcode-block" id="boundary">
+<a class="viewcode-back" href="../_str2d/generated/str2d.boundary.html#str2d.boundary">[docs]</a>
 <span class="k">def</span> <span class="nf">boundary</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">x_range</span><span class="p">,</span> <span class="n">y_range</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a boundary.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a mask where func is True and False.</span>
+<span class="sd">    Imagine a 2D space that is subdivided into `height` rows and `width` columns.  The</span>
+<span class="sd">    edges of the space are defined by `x_range` and `y_range`.  The mask being returned</span>
+<span class="sd">    is a proxy for each of the cells.  The truth of each cell is determined by whether</span>
+<span class="sd">    `func` is True for at least one of the corners of the cell while also being False</span>
+<span class="sd">    for at least one of the corners of the cell.  That implies that the function crosses</span>
+<span class="sd">    from being True to False or False to True within the cell and thus a boundary.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    func : Callable[[np.ndarray, np.ndarray], np.ndarray]</span>
+<span class="sd">        The function that returns True if the point is in the region.</span>
+
+<span class="sd">    height : int</span>
+<span class="sd">        The number of rows.</span>
+
+<span class="sd">    width : int</span>
+<span class="sd">        The number of columns.</span>
+
+<span class="sd">    x_range : Tuple[float, float]</span>
+<span class="sd">        The range of the x values.</span>
+
+<span class="sd">    y_range : Tuple[float, float]</span>
+<span class="sd">        The range of the y values.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    np.ndarray</span>
+<span class="sd">        A mask where `func` is True for the center of each cell.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    region : Create a mask where func is True.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">    Let&#39;s imagine `height=10` and `width=20` and `x_range=[0, 1]` and `y_range=[0, 1]`.</span>
+
+<span class="sd">    Now we&#39;ll assume a simple function that returns True if the 1 less the x coordinate</span>
+<span class="sd">    is less than the y coordinate.</span>
+
+<span class="sd">    ... testinput::</span>
+
+<span class="sd">        height = 10</span>
+<span class="sd">        width = 20</span>
+<span class="sd">        x_range = [0, 1]</span>
+<span class="sd">        y_range = [0, 1]</span>
+
+<span class="sd">        def func(x, y):</span>
+<span class="sd">            return 1 - x &lt; y</span>
+
+<span class="sd">        mask = boundary(func, height, width, x_range, y_range)</span>
+
+<span class="sd">        Str2D(mask, char=&#39;*&#39;)</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">        ***</span>
+<span class="sd">          ***</span>
+<span class="sd">            ***</span>
+<span class="sd">              ***</span>
+<span class="sd">                ***</span>
+<span class="sd">                  ***</span>
+<span class="sd">                    ***</span>
+<span class="sd">                      ***</span>
+<span class="sd">                        ***</span>
+<span class="sd">                          **</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">left</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="n">space</span><span class="p">(</span><span class="o">*</span><span class="n">x_range</span><span class="p">,</span> <span class="n">width</span><span class="p">)</span>
     <span class="n">bottom</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">top</span> <span class="o">=</span> <span class="n">space</span><span class="p">(</span><span class="o">*</span><span class="n">y_range</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">height</span><span class="p">)</span>
     <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span>
@@ -3783,11 +3974,42 @@
             <span class="n">func</span><span class="p">(</span><span class="n">left</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:],</span> <span class="n">bottom</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]),</span>
         <span class="p">]</span>
     <span class="p">)</span>
-    <span class="k">return</span> <span class="n">mask</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">mask</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">mask</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">mask</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
 
 
+
+<div class="viewcode-block" id="circle">
+<a class="viewcode-back" href="../_str2d/generated/str2d.circle.html#str2d.circle">[docs]</a>
 <span class="k">def</span> <span class="nf">circle</span><span class="p">(</span><span class="n">radius</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">char</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a circle.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a circle.</span>
+<span class="sd">    This is a special application of the `boundary` function.  The function that</span>
+<span class="sd">    determines the circle is `lambda x, y: x**2 + y**2 &lt; radius**2`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    radius : float</span>
+<span class="sd">        The radius of the circle.</span>
+
+<span class="sd">    height : int</span>
+<span class="sd">        The number of rows.</span>
+
+<span class="sd">    width : int</span>
+<span class="sd">        The number of columns.</span>
+
+<span class="sd">    char : str, optional</span>
+<span class="sd">        The character to use, by default &#39;*&#39;.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Str2D</span>
+<span class="sd">        A new Str2D object with the circle.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    boundary : Create a mask where func is True and False.</span>
+<span class="sd">    Str2D.circle : Create a circle.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">height_limited</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="k">if</span> <span class="n">width</span> <span class="o">&lt;</span> <span class="n">height</span> <span class="o">*</span> <span class="mi">2</span><span class="p">:</span>
         <span class="n">height_limited</span> <span class="o">=</span> <span class="kc">False</span>
@@ -3803,11 +4025,42 @@
         <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">&lt;</span> <span class="n">radius</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">x_range</span><span class="p">,</span> <span class="n">y_range</span>
     <span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">Str2D</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">char</span><span class="o">=</span><span class="n">char</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Str2D</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">char</span><span class="o">=</span><span class="n">char</span><span class="p">)</span></div>
 
 
+
+<div class="viewcode-block" id="hole">
+<a class="viewcode-back" href="../_str2d/generated/str2d.hole.html#str2d.hole">[docs]</a>
 <span class="k">def</span> <span class="nf">hole</span><span class="p">(</span><span class="n">radius</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">char</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a hole.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a hole.</span>
+<span class="sd">    This is a special application of the `region` function.  The function that</span>
+<span class="sd">    determines the hole is `lambda x, y: x**2 + y**2 &lt;= radius**2`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    radius : float</span>
+<span class="sd">        The radius of the hole.</span>
+
+<span class="sd">    height : int</span>
+<span class="sd">        The number of rows.</span>
+
+<span class="sd">    width : int</span>
+<span class="sd">        The number of columns.</span>
+
+<span class="sd">    char : str, optional</span>
+<span class="sd">        The character to use, by default &#39;*&#39;.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Str2D</span>
+<span class="sd">        A new Str2D object with the hole.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    region : Create a mask where func is True.</span>
+<span class="sd">    Str2D.hole : Create a hole.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">height_limited</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="k">if</span> <span class="n">width</span> <span class="o">&lt;</span> <span class="n">height</span> <span class="o">*</span> <span class="mi">2</span><span class="p">:</span>
         <span class="n">height_limited</span> <span class="o">=</span> <span class="kc">False</span>
@@ -3823,27 +4076,35 @@
         <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">&lt;=</span> <span class="n">radius</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">x_range</span><span class="p">,</span> <span class="n">y_range</span>
     <span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">Str2D</span><span class="p">(</span><span class="o">~</span><span class="n">mask</span><span class="p">,</span> <span class="n">char</span><span class="o">=</span><span class="n">char</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Str2D</span><span class="p">(</span><span class="o">~</span><span class="n">mask</span><span class="p">,</span> <span class="n">char</span><span class="o">=</span><span class="n">char</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">mandelbrot</span><span class="p">(</span><span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">x_range</span><span class="p">,</span> <span class="n">y_range</span><span class="p">,</span> <span class="n">char</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a Mandelbrot set.&quot;&quot;&quot;</span>
-    <span class="n">mask</span> <span class="o">=</span> <span class="n">region</span><span class="p">(</span><span class="n">is_in_mandelbrot</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">x_range</span><span class="p">,</span> <span class="n">y_range</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">Str2D</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">char</span><span class="o">=</span><span class="n">char</span><span class="p">)</span>
 
-
-<span class="k">def</span> <span class="nf">is_in_mandelbrot</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">max_iterations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">25</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">is_in_mandelbrot</span><span class="p">(</span>
+    <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">max_iterations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Determines if the point (x, y) is in the Mandelbrot set.</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        x (float): The real part of the complex number.</span>
-<span class="sd">        y (float): The imaginary part of the complex number.</span>
-<span class="sd">        max_iterations (int): The maximum number of iterations to perform.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x : float</span>
+<span class="sd">        The x-coordinate of the point.</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        bool: True if the point (x, y) is in the Mandelbrot set, False otherwise.</span>
+<span class="sd">    y : float</span>
+<span class="sd">        The y-coordinate of the point.</span>
+
+<span class="sd">    max_iterations : int, optional</span>
+<span class="sd">        The maximum number of iterations, by default 25.</span>
+
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Union[bool, np.ndarray]</span>
+<span class="sd">        True if the point is in the Mandelbrot set, False otherwise.</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="p">])</span>
     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
@@ -3864,6 +4125,96 @@
         <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">absz</span> <span class="o">&lt;</span> <span class="n">thresh</span><span class="p">,</span> <span class="n">z</span> <span class="o">*</span> <span class="n">z</span> <span class="o">+</span> <span class="n">c</span><span class="p">,</span> <span class="n">thresh</span><span class="p">)</span>
         <span class="n">absz</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">absz</span> <span class="o">&lt;</span> <span class="mi">2</span>
+
+
+<div class="viewcode-block" id="mandelbrot">
+<a class="viewcode-back" href="../_str2d/generated/str2d.mandelbrot.html#str2d.mandelbrot">[docs]</a>
+<span class="k">def</span> <span class="nf">mandelbrot</span><span class="p">(</span><span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">x_range</span><span class="p">,</span> <span class="n">y_range</span><span class="p">,</span> <span class="n">char</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a Mandelbrot set.</span>
+<span class="sd">    Visualize the Mandelbrot set.  The Mandelbrot set as a Str2d object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    height : int</span>
+<span class="sd">        The number of rows.</span>
+
+<span class="sd">    width : int</span>
+<span class="sd">        The number of columns.</span>
+
+<span class="sd">    x_range : Tuple[float, float]</span>
+<span class="sd">        The range of the x values.</span>
+
+<span class="sd">    y_range : Tuple[float, float]</span>
+<span class="sd">        The range of the y values.</span>
+
+<span class="sd">    char : str, optional</span>
+<span class="sd">        The character to use, by default &#39;*&#39;.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Str2D</span>
+<span class="sd">        A new Str2D object with the Mandelbrot set.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    is_in_mandelbrot : Determines if the point is in the Mandelbrot set.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">    Let&#39;s create a Mandelbrot set.</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        str2d.mandelbrot(</span>
+<span class="sd">            44, 88,</span>
+<span class="sd">            (-2, .5),</span>
+<span class="sd">            (-1.25, 1.25),</span>
+<span class="sd">            &#39;*&#39;</span>
+<span class="sd">        ).strip2d().box()</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">        ╭───────────────────────────────────────────────────────────────╮</span>
+<span class="sd">        │                                           ****                │</span>
+<span class="sd">        │                                        * ***** *              │</span>
+<span class="sd">        │                                       *********               │</span>
+<span class="sd">        │                                        ********               │</span>
+<span class="sd">        │                           ***     * * * *******  *  *         │</span>
+<span class="sd">        │                            **** ********************      * * │</span>
+<span class="sd">        │                             *******************************   │</span>
+<span class="sd">        │                            *******************************    │</span>
+<span class="sd">        │                        *************************************  │</span>
+<span class="sd">        │            *            **************************************│</span>
+<span class="sd">        │                        ***************************************│</span>
+<span class="sd">        │       *** *******     *************************************** │</span>
+<span class="sd">        │       *************   ****************************************│</span>
+<span class="sd">        │     **************** *****************************************│</span>
+<span class="sd">        │    ********************************************************** │</span>
+<span class="sd">        │************************************************************   │</span>
+<span class="sd">        │************************************************************   │</span>
+<span class="sd">        │    ********************************************************** │</span>
+<span class="sd">        │     **************** *****************************************│</span>
+<span class="sd">        │       *************   ****************************************│</span>
+<span class="sd">        │       *** *******     *************************************** │</span>
+<span class="sd">        │                        ***************************************│</span>
+<span class="sd">        │            *            **************************************│</span>
+<span class="sd">        │                        *************************************  │</span>
+<span class="sd">        │                            *******************************    │</span>
+<span class="sd">        │                             *******************************   │</span>
+<span class="sd">        │                            **** ********************      * * │</span>
+<span class="sd">        │                           ***     * * * *******  *  *         │</span>
+<span class="sd">        │                                        ********               │</span>
+<span class="sd">        │                                       *********               │</span>
+<span class="sd">        │                                        * ***** *              │</span>
+<span class="sd">        │                                           ****                │</span>
+<span class="sd">        ╰───────────────────────────────────────────────────────────────╯</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">region</span><span class="p">(</span><span class="n">is_in_mandelbrot</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">x_range</span><span class="p">,</span> <span class="n">y_range</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Str2D</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">char</span><span class="o">=</span><span class="n">char</span><span class="p">)</span></div>
+
 
 
 <span class="k">def</span> <span class="nf">pre</span><span class="p">(</span>

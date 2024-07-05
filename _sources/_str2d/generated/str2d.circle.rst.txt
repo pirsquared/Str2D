@@ -1,0 +1,6 @@
+﻿str2d.circle
+============
+
+.. currentmodule:: str2d
+
+.. autofunction:: circle
