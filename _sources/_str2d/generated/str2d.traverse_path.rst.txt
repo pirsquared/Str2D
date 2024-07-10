@@ -1,0 +1,6 @@
+﻿str2d.traverse\_path
+====================
+
+.. currentmodule:: str2d
+
+.. autofunction:: traverse_path

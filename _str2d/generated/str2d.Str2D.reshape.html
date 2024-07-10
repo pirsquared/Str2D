@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>str2d.Str2D.isdigit &mdash; Str2D 0.2.0 documentation</title>
+  <title>str2d.Str2D.reshape &mdash; Str2D 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -27,8 +27,8 @@
     <link rel="author" title="About these documents" href="../../about.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="str2d.Str2D.i" href="str2d.Str2D.i.html" />
-    <link rel="prev" title="str2d.Str2D.upper" href="str2d.Str2D.upper.html" /> 
+    <link rel="next" title="str2d.Str2D.roll" href="str2d.Str2D.roll.html" />
+    <link rel="prev" title="str2d.Str2D.insert" href="str2d.Str2D.insert.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -91,7 +91,10 @@
 <li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.pad.html">str2d.Str2D.pad</a></li>
 <li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.split.html">str2d.Str2D.split</a></li>
 <li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.insert.html">str2d.Str2D.insert</a></li>
-<li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.reshape.html">str2d.Str2D.reshape</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">str2d.Str2D.reshape</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#str2d.Str2D.reshape"><code class="docutils literal notranslate"><span class="pre">Str2D.reshape()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.roll.html">str2d.Str2D.roll</a></li>
 <li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.roll_h.html">str2d.Str2D.roll_h</a></li>
 <li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.roll_v.html">str2d.Str2D.roll_v</a></li>
@@ -105,10 +108,7 @@
 <li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.strip2d.html">str2d.Str2D.strip2d</a></li>
 <li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.title.html">str2d.Str2D.title</a></li>
 <li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.upper.html">str2d.Str2D.upper</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">str2d.Str2D.isdigit</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#str2d.Str2D.isdigit"><code class="docutils literal notranslate"><span class="pre">Str2D.isdigit()</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.isdigit.html">str2d.Str2D.isdigit</a></li>
 <li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.i.html">str2d.Str2D.i</a></li>
 <li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.t.html">str2d.Str2D.t</a></li>
 <li class="toctree-l3"><a class="reference internal" href="str2d.Str2D.h.html">str2d.Str2D.h</a></li>
@@ -153,9 +153,9 @@
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../str2d.html">str2d module</a></li>
           <li class="breadcrumb-item"><a href="../str2d.Str2D.html">str2d.Str2D</a></li>
-      <li class="breadcrumb-item active">str2d.Str2D.isdigit</li>
+      <li class="breadcrumb-item active">str2d.Str2D.reshape</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../_sources/_str2d/generated/str2d.Str2D.isdigit.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/_str2d/generated/str2d.Str2D.reshape.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -163,12 +163,45 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="str2d-str2d-isdigit">
-<h1>str2d.Str2D.isdigit<a class="headerlink" href="#str2d-str2d-isdigit" title="Link to this heading"></a></h1>
+  <section id="str2d-str2d-reshape">
+<h1>str2d.Str2D.reshape<a class="headerlink" href="#str2d-str2d-reshape" title="Link to this heading"></a></h1>
 <dl class="py method">
-<dt class="sig sig-object py" id="str2d.Str2D.isdigit">
-<span class="sig-prename descclassname"><span class="pre">Str2D.</span></span><span class="sig-name descname"><span class="pre">isdigit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../str2d.Str2D.html#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="../../_modules/str2d.html#Str2D.isdigit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.isdigit" title="Link to this definition"></a></dt>
-<dd><p>Return whether the data is a digit.</p>
+<dt class="sig sig-object py" id="str2d.Str2D.reshape">
+<span class="sig-prename descclassname"><span class="pre">Str2D.</span></span><span class="sig-name descname"><span class="pre">reshape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../str2d.Str2D.html#str2d.Str2D" title="str2d.Str2D"><span class="pre">Str2D</span></a></span></span><a class="reference internal" href="../../_modules/str2d.html#Str2D.reshape"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#str2d.Str2D.reshape" title="Link to this definition"></a></dt>
+<dd><p>Reshape the Str2D object.  This is a wrapper around the <cite>reshape</cite> method of
+the structured array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>shape</strong> (<em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em>) – The new shape of the Str2D object.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A new Str2D object with the reshaped data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../str2d.Str2D.html#str2d.Str2D" title="str2d.Str2D">Str2D</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Let’s create an instance of Str2D and assign it to the variable <cite>a</cite>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">str2d</span> <span class="kn">import</span> <span class="n">Str2D</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">Str2D</span><span class="p">(</span><span class="s1">&#39;a b c d</span><span class="se">\n</span><span class="s1">e f g</span><span class="se">\n</span><span class="s1">h i</span><span class="se">\n</span><span class="s1">j&#39;</span><span class="p">)</span>
+<span class="n">a</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>a b c d
+e f g
+h i
+j
+</pre></div>
+</div>
+<p>We can reshape the Str2D object to have a shape of (2, 8).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>a b c de f g  h i    j
+</pre></div>
+</div>
 </dd></dl>
 
 </section>
@@ -177,8 +210,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="str2d.Str2D.upper.html" class="btn btn-neutral float-left" title="str2d.Str2D.upper" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="str2d.Str2D.i.html" class="btn btn-neutral float-right" title="str2d.Str2D.i" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="str2d.Str2D.insert.html" class="btn btn-neutral float-left" title="str2d.Str2D.insert" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="str2d.Str2D.roll.html" class="btn btn-neutral float-right" title="str2d.Str2D.roll" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

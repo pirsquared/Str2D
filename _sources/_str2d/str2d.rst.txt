@@ -22,3 +22,4 @@ Functions
    ~str2d.circle
    ~str2d.hole
    ~str2d.mandelbrot
+   ~str2d.traverse_path

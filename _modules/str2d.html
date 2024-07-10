@@ -86,6 +86,7 @@
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">reduce</span><span class="p">,</span> <span class="n">cached_property</span><span class="p">,</span> <span class="n">lru_cache</span>
 <span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">textwrap</span> <span class="kn">import</span> <span class="n">dedent</span>
 <span class="kn">import</span> <span class="nn">uuid</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
@@ -901,6 +902,10 @@
     <span class="c1"># Math Operations ##################################################</span>
     <span class="c1">####################################################################</span>
 
+    <span class="k">def</span> <span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return True if the Str2D object has any characters.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
 <div class="viewcode-block" id="Str2D.__add__">
 <a class="viewcode-back" href="../_str2d/generated/str2d.Str2D.__add__.html#str2d.Str2D.__add__">[docs]</a>
     <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="s2">&quot;Str2D&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">right_side</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Str2D&quot;</span><span class="p">:</span>
@@ -1575,7 +1580,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">sep</span><span class="p">:</span>
             <span class="n">args</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><span class="n">sep</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">),</span> <span class="n">args</span><span class="p">),</span> <span class="p">())[</span><span class="mi">1</span><span class="p">:]</span>
-        <span class="k">return</span> <span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">/</span> <span class="n">y</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="n">args</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">/</span> <span class="n">y</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Str2D</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="Str2D.equal_height">
@@ -1909,6 +1916,55 @@
     <span class="c1">####################################################################</span>
     <span class="c1"># Information/Documentation ########################################</span>
     <span class="c1">####################################################################</span>
+
+<div class="viewcode-block" id="Str2D.reshape">
+<a class="viewcode-back" href="../_str2d/generated/str2d.Str2D.reshape.html#str2d.Str2D.reshape">[docs]</a>
+    <span class="k">def</span> <span class="nf">reshape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;Str2D&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Reshape the Str2D object.  This is a wrapper around the `reshape` method of</span>
+<span class="sd">        the structured array.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        shape : Tuple[int, int]</span>
+<span class="sd">            The new shape of the Str2D object.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Str2D</span>
+<span class="sd">            A new Str2D object with the reshaped data.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+
+<span class="sd">        Let&#39;s create an instance of Str2D and assign it to the variable `a`.</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from str2d import Str2D</span>
+
+<span class="sd">            a = Str2D(&#39;a b c d\\ne f g\\nh i\\nj&#39;)</span>
+<span class="sd">            a</span>
+
+<span class="sd">        .. testoutput::</span>
+
+<span class="sd">            a b c d</span>
+<span class="sd">            e f g</span>
+<span class="sd">            h i</span>
+<span class="sd">            j</span>
+
+<span class="sd">        We can reshape the Str2D object to have a shape of (2, 8).</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            a.reshape((1, -1))</span>
+
+<span class="sd">        .. testoutput::</span>
+
+<span class="sd">            a b c de f g  h i    j</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Str2D</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape</span><span class="p">),</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span></div>
+
 
 <div class="viewcode-block" id="Str2D.show_with_alignment">
 <a class="viewcode-back" href="../_str2d/generated/str2d.Str2D.show_with_alignment.html#str2d.Str2D.show_with_alignment">[docs]</a>
@@ -4242,6 +4298,55 @@
 <span class="s2">    &quot;&quot;&quot;</span>
         <span class="p">)</span>
     <span class="p">)</span>
+
+
+<div class="viewcode-block" id="traverse_path">
+<a class="viewcode-back" href="../_str2d/generated/str2d.traverse_path.html#str2d.traverse_path">[docs]</a>
+<span class="k">def</span> <span class="nf">traverse_path</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">box_style</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Traverse a path and return a string representation of the path.</span>
+<span class="sd">    This function is a recursive function that traverses a path and returns a string</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    path : Path</span>
+<span class="sd">        The path to traverse.</span>
+
+<span class="sd">    box_style : BoxStyle</span>
+<span class="sd">        The style connecting lines.</span>
+
+<span class="sd">    depth : int, optional</span>
+<span class="sd">        The depth to traverse, by default 0.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        The string representation of the path.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">depth</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ls</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">iterdir</span><span class="p">())</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ls</span><span class="p">)</span>
+        <span class="n">to_be_joined</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ls</span><span class="p">):</span>
+            <span class="n">last</span> <span class="o">=</span> <span class="n">i</span> <span class="o">==</span> <span class="n">k</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="n">char</span> <span class="o">=</span> <span class="n">box_style</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">ll</span> <span class="k">if</span> <span class="n">last</span> <span class="k">else</span> <span class="n">box_style</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">l</span>
+            <span class="n">char</span> <span class="o">+=</span> <span class="n">box_style</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">h</span>
+            <span class="n">buff</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot; &quot;</span> <span class="k">if</span> <span class="n">last</span> <span class="k">else</span> <span class="n">box_style</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">v</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span>
+            <span class="n">pstr</span> <span class="o">=</span> <span class="n">Str2D</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+                <span class="n">to_be_joined</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">char</span> <span class="o">+</span> <span class="n">pstr</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="n">p</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+                <span class="n">head</span> <span class="o">=</span> <span class="n">char</span> <span class="o">+</span> <span class="n">pstr</span>
+                <span class="n">tail</span> <span class="o">=</span> <span class="n">traverse_path</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">box_style</span><span class="p">,</span> <span class="n">depth</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">tail</span><span class="p">:</span>
+                    <span class="n">to_be_joined</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">head</span> <span class="o">/</span> <span class="p">(</span><span class="n">buff</span> <span class="o">+</span> <span class="n">tail</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">to_be_joined</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">head</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Str2D</span><span class="o">.</span><span class="n">join_v</span><span class="p">(</span><span class="o">*</span><span class="n">to_be_joined</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span></div>
+
 </pre></div>
 
            </div>
