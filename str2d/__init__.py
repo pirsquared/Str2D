@@ -3,6 +3,7 @@
 from functools import reduce, cached_property, lru_cache
 from dataclasses import dataclass
 from enum import Enum
+from pathlib import Path
 from textwrap import dedent
 import uuid
 from typing import List, Tuple, Union, Any, Optional
@@ -786,6 +787,10 @@ class Str2D:
     # Math Operations ##################################################
     ####################################################################
 
+    def __bool__(self) -> bool:
+        """Return True if the Str2D object has any characters."""
+        return self.shape != (0, 0)
+
     def __add__(self, other: Union["Str2D", str], right_side=False) -> "Str2D":
         """Adding one Str2D object to another or a string to a Str2D object is the main
         point of this class.  We can add a Str2D object to another Str2D object in order
@@ -1428,7 +1433,9 @@ class Str2D:
         """
         if sep:
             args = sum(zip([sep] * len(args), args), ())[1:]
-        return reduce(lambda x, y: x / y, args)
+        if args:
+            return reduce(lambda x, y: x / y, args)
+        return Str2D()
 
     @classmethod
     def equal_height(cls, *args: "Str2D") -> List["Str2D"]:
@@ -1749,6 +1756,52 @@ class Str2D:
     ####################################################################
     # Information/Documentation ########################################
     ####################################################################
+
+    def reshape(self, shape: Tuple[int, int]) -> "Str2D":
+        """Reshape the Str2D object.  This is a wrapper around the `reshape` method of
+        the structured array.
+
+        Parameters
+        ----------
+        shape : Tuple[int, int]
+            The new shape of the Str2D object.
+
+        Returns
+        -------
+        Str2D
+            A new Str2D object with the reshaped data.
+
+        Examples
+        --------
+
+        Let's create an instance of Str2D and assign it to the variable `a`.
+
+        .. testcode::
+
+            from str2d import Str2D
+
+            a = Str2D('a b c d\\ne f g\\nh i\\nj')
+            a
+
+        .. testoutput::
+
+            a b c d
+            e f g
+            h i
+            j
+
+        We can reshape the Str2D object to have a shape of (2, 8).
+
+        .. testcode::
+
+            a.reshape((1, -1))
+
+        .. testoutput::
+
+            a b c de f g  h i    j
+
+        """
+        return Str2D(data=self.data.reshape(shape), **self.kwargs)
 
     def show_with_alignment(self, expand=2, box=True) -> "Str2D":
         """Show the alignment parameters with object.
@@ -3982,3 +4035,49 @@ def pre(
     """
         )
     )
+
+
+def traverse_path(path, box_style, depth=0):
+    """Traverse a path and return a string representation of the path.
+    This function is a recursive function that traverses a path and returns a string
+
+    Parameters
+    ----------
+    path : Path
+        The path to traverse.
+
+    box_style : BoxStyle
+        The style connecting lines.
+
+    depth : int, optional
+        The depth to traverse, by default 0.
+
+    Returns
+    -------
+    str
+        The string representation of the path.
+
+    """
+    if depth > 0:
+        ls = list(path.iterdir())
+        k = len(ls)
+        to_be_joined = []
+        for i, p in enumerate(ls):
+            last = i == k - 1
+            char = box_style.value.ll if last else box_style.value.l
+            char += box_style.value.h
+            buff = (" " if last else box_style.value.v) + " "
+            pstr = Str2D(p.name)
+
+            if p.is_file():
+                to_be_joined.append(char + pstr)
+
+            elif p.is_dir():
+                head = char + pstr
+                tail = traverse_path(p, box_style, depth - 1)
+                if tail:
+                    to_be_joined.append(head / (buff + tail))
+                else:
+                    to_be_joined.append(head)
+        return Str2D.join_v(*to_be_joined)
+    return ""

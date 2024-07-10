@@ -70,6 +70,7 @@
       ~Str2D.pad
       ~Str2D.split
       ~Str2D.insert
+      ~Str2D.reshape
       ~Str2D.roll
       ~Str2D.roll_h
       ~Str2D.roll_v

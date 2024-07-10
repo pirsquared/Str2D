@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "Str2D"
-version = "0.2.5"  # Update this version number before you upload a new version to PyPI
+version = "0.2.6"  # Update this version number before you upload a new version to PyPI
 description = "Manipulate 2D strings in Python."
 readme = "README.md"
 license = { text = "MIT" }

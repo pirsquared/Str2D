@@ -10,7 +10,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="Str2D",
-    version="0.2.5",  # Update this version number before releasing a new version
+    version="0.2.6",  # Update this version number before releasing a new version
     description="Manipulate 2D strings in Python.",
     author="Sean Smith",
     author_email="pirsquared.pirr@gmail.com",
